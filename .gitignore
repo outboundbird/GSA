@@ -1,0 +1,7 @@
+# work env
+*.code-workspace
+
+# output types
+*.html
+
+# spcific files
