@@ -17,13 +17,14 @@ knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = 
 options(width = 100)
 #+ libs
 library(here)
+library(clusterProfiler)
 #' # Experiment Data
 #'
 #' This pathway analysis will be using the smoking study data GDS3713 (GSE18723).
 #' The results from DEA will be used for ORA.
 #+ io
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
-
+gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #' In this micro-array data due to that there are multiple probes match to
 #' the same gene. For illustration of the PA purpose I simply removed the
 #' duplicated gene probes.In pratice these duplicates should be removed with cautions.
@@ -46,6 +47,8 @@ gs2 <- sample(rst$ID, 10)
 #' five genes not differentially expressed.
 gs3 <- c(head(rst$ID, 5), tail(rst$ID, 5))
 
+print(glue::glue('geneset 1: {paste0(gs1, collapse = ", ")}
+geneset 2: {paste0(gs2, collapse =", ")}\ngeneset 3: {paste0(gs3, collapse =", ")}'))
 
 #' ## define differentially expressed gene
 #'
@@ -79,11 +82,22 @@ table(rst[, c("gs3", "de")])
 
 conttab_gs1 <- as.table(table(rst[, c("gs1", "de")]))
 chisq.test(conttab_gs1)
-fisher.test(conttab_gs1)
+fisher.test(conttab_gs1, alternative = "greater")
 #' ### Gene set 3
 conttab_gs3 <- as.table(table(rst[, c("gs3", "de")]))
 chisq.test(conttab_gs3)
-fisher.test(conttab_gs3)
+fisher.test(conttab_gs3 , alternative = "greater")
+
+#' ## Over-respensentation analysis from R package
+#' The advantage of ORA using R packages, most popular one `clusterProfile` is
+#' that the functions combine the step of database query and the step of testing
+#' in one go. The `clusterProfile` package currently provide following
+#' biological database.
+#' ![curtesy of clusterProfiler](https://yulab-smu.top/biomedical-knowledge-mining-book/figures/clusterProfiler-diagram.png)
+#' As shown in the graph, the ORA tests with different db queries are prefixed
+#' with `enrich`, such as `enrichGO`, `enrichDO`.
+#' Taking the geneset examples above, imagine I'd like to query the biological
+#' pathways of above selected genes in the geneset 3.
 
 #' <details><summary>Session Info</summary>
 sessionInfo()
