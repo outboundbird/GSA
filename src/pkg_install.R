@@ -2,7 +2,11 @@
  attached <- (.packages())
  req_libs <- c(
    "GEOquery",
-   "logger"
+   "logger",
+   "meshes",
+   "RDAVIDWebService",
+   "MeSH.Hsa.eg.db",
+
  )
  to_install <- req_libs[!req_libs %in% env_pkgs]
 
@@ -12,14 +16,16 @@ if (length(to_install)) {
     tryCatch(
       {
         message(sprintf("Installing %s", pkg))
-        install.packages(to_install,
-          dependencies = TRUE,
-          INSTALL_opts = c("--no-lock")
-        )
+        BiocManager::install(pkg)
+
       },
       error = function(e) {
         message(e)
-        BiocManager::install(pkg)
+                install.packages(to_install,
+          dependencies = TRUE,
+          INSTALL_opts = c("--no-lock")
+        )
+
       }
     )
   })
