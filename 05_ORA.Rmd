@@ -1,23 +1,6 @@
----
-title: Over-representation Analysis
-subtitle: 'SAR: NA , Study: NA'
-author:  Siying Huang (E0482362), Biomarker statistics team
-date: 'created: 2023-06-01 , updated (`r Sys.Date()`)'
-always_allow_html: true
-output:
-  html_document:
-    css: sanofi.css
-    code_folding: "show"
-    toc: yes
-    toc_float:
-      collapse: no
----
+# Over-representation Analysis
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
-options(width = 100)
-```
-```{r libs}
+```{r }
 library(here)
 library(DT)
 library(clusterProfiler)
@@ -339,5 +322,5 @@ sessionInfo()
 ```{r echo = F, eval = F}
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/05_ORA.R', output_dir = 'output')
-knitr::spin("src/05_ORA.R", format = "Rmd", knit = F)
+# knitr::spin("src/05_ORA.R", format = "Rmd", knit = F)
 ```

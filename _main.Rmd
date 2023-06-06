@@ -1,0 +1,716 @@
+# Preface
+
+hello
+
+<!--chapter:end:index.Rmd-->
+
+# Intro
+
+
+
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>
+
+<!--chapter:end:01_intro.Rmd-->
+
+# Extracting data from NCBI Gene Expression Omnibus databse
+```{r , include = FALSE}
+knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=T)
+options(width = 100)
+
+```
+```{r }
+library(here)
+library(GEOquery)
+library(dplyr)
+
+# require data from NCBI Gene Expression Omnibus (GEO) [database](https://www.ncbi.nlm.nih.gov/gds)
+# datasets:
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5022 AMI
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5074 AMI 48 hrs
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4500 AML train set
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4501 AML test set
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4181 AML
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4844 CF
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3115 CHF
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3383 chronic stress
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS838 CML
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3503 exercise
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4345 GI cancer muscle tissue
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS1412 hormone therapy
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3005 IL1 and IL6
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5260 Psoriasis
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3628 RA
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5403 RA and OA
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4266 renal transplant
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5186 RIA
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3898 social isolation
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4193 SLE
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3713 smoking
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS1436 smoking
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS1269 smoking
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS534 smoking
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3318 scikle cell disease
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4719 SLE
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3920 MS
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3886 MS
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4270 UC
+```
+
+# Download data to the current working environment
+
+Using `GEOquery` library to retrieve data from NCBI database. The GDS dataset
+is stored in the `gds` R4 class object.
+
+```{r }
+gds <- getGEO("GDS3713")
+# gds@header # meta data of the experiment
+# gds@dataTable@table # expression data
+# gds@dataTable@columns # phenotype data
+```
+
+structure of the gds object
+
+```{r }
+str(gds, max.level = 3)
+```
+
+## Summary of experiment
+
+```{r }
+show(Meta(gds))
+```
+
+## Assigning the expression and phenotype data
+The expression data is stored in the `gds@dataTable@tabl` with gene in
+The rows and subjects in the columns.
+The phenotype data is store at `gds@dataTable@columns`.
+
+```{r }
+expr <- Table(gds)
+summary(expr[, 1:4])
+pheno <- Columns(gds)
+summary(pheno)
+```
+
+# convert to GDS to expression set
+Converting the gds object to expression set will generate a series of sub documents, including an annotation file of the genes in the expression data.
+
+```{r }
+eset <- GDS2eSet(gds)
+dim(pData(eset)) # pheno data, data.frame
+str(eset, max.level =4)
+# gene annotations
+annot_cols <- eset@featureData@varMetadata
+annot_data <- eset@featureData@data
+# experiment info
+# eset@experimentData
+# assay <- eset@assayData
+
+```
+```{r save, eval= F, echo = F}
+saveRDS(expr, "data/expr.rds")
+saveRDS(pheno, "data/pheno.rds")
+saveRDS(annot_data, 'data/annot.rds')
+```
+
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>
+
+```{r }
+# Markdown --------------------------------------------------------
+# rmarkdown::render('src/02_req_data.R', output_dir = 'output')
+# knitr::spin('src/02_req_data.R', format = 'Rmd', knit = FALSE)
+```
+
+<!--chapter:end:02_req_data.Rmd-->
+
+# Query bioloical pathway databases
+
+
+```{r }
+library(here)
+require(clusterProfiler)
+require(enrichplot)
+require(DOSE)
+require(org.Hs.eg.db)
+library(biomaRt)
+library(DT)
+```
+
+# Study dataset
+
+In this tutorial, I still use the pulic smoking study dataset from NCBI GEO
+database - GDS3713 (GSE18723).
+
+
+```{r }
+rst <- readRDS(file.path(here(), "data/de_rst.rds"))
+annot <- readRDS(file.path(here(), "data/annot.rds")) %>%
+  data.frame()
+```
+
+# Annotation of genes
+The GDS3713 dataset comes with an annotation file that has information
+for genes in the array:
+
+```{r }
+cat(paste0(names(annot), collapse = '\t'))
+```
+
+One can directly query a specific gene from this file. For example, we can
+look up the ICOSLG information.
+
+```{r }
+datatable(annot[which(annot$Gene.symbol == "ICOSLG"), ],
+  rownames = F
+)
+```
+
+However, most of time, we don't have such a file that comes with the
+trancriptomic data. We will then need to annotate the genes.
+
+# Convert gene symbol to gene ID using `biomaRt`.
+Since many pathway database requires entrez gene IDs as entries and most of
+sequencing/ microarray output provides gene symbols or ensembl IDs, we'll
+need to convert gene symbol to entrez IDs for the pathway analysis.
+
+We can query from the [ensembl](http://www.ensembl.org/index.html) site manually.
+Or we can do better using`biomaRt`package.
+ For a full tutorial of `biomaRt` package, see [here](https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html). It covers
+some more advanced use case. Here I only cover basic usage of this package.
+
+## 1. Connect to the selected *BioMart* database using `useEnsembl` function.
+Before connecting to a specific database, we can first check available
+databases.
+
+### List of available BioMart databases hosted by Ensembl
+
+```{r }
+# available database
+datatable(listEnsembl())
+# available biological species for the gene databases
+mart <- useEnsembl("genes", mirror = 'www')
+datatable(listDatasets(mart))
+```
+
+Since we want to convert gene symbol to Entrez gene IDs in human subjects,
+we select `biomart = 'genes'` and `dataset= 'hsapiens_gene_ensembl'`.
+Use `useEnsembl` function to setup the connection with ensembl site host.
+
+```{r }
+# convert from gene symbol to gene ID
+
+ensembl <- useEnsembl(
+  biomart = "genes",
+  dataset = "hsapiens_gene_ensembl",
+  mirror = "www"
+)
+```
+
+## 2. Annotate genes
+Here instead of selecting genes in a biological pathway, I simply randomly
+choose some genes in the dataset.
+
+
+```{r }
+set.seed(123)
+gs1 <- sample(rst$ID, 10)
+gs2 <- sample(rst$ID, 10)
+```
+
+Here I choose five most significantly differentially expressed genes,
+five genes not differentially expressed.
+
+```{r }
+gs3 <- c(head(rst$ID, 5), tail(rst$ID, 5))
+print(glue::glue('geneset 1: {paste0(gs1, collapse = ", ")}
+geneset 2: {paste0(gs2, collapse =", ")}\ngeneset 3: {paste0(gs3, collapse =", ")}'))
+```
+
+Retreive the annotated file with `getBM` function. Since we use gene symbols
+to match aginst gene IDs, we'll need to specify the type of input data in
+the `filter` argument (`filters = "hgnc_symbol"`). We would like to output
+the `hgnc_symbol`,`entrezgene_id` reference.
+
+
+```{r }
+annotgs3 <- getBM(
+  attributes = c("hgnc_symbol", "entrezgene_id"),
+  filters = "hgnc_symbol",
+  values = gs3,
+  mart = ensembl
+)
+print(annotgs3)
+
+```
+```{r echo = F, cache = T, eval = F}
+annot_list <- lapply(list(gs1, gs2, gs3), function(gs) {
+  getBM(
+    attributes = c("hgnc_symbol", "entrezgene_id"),
+    filters = "hgnc_symbol",
+    values = gs,
+    mart = ensembl
+  )
+}) %>% setNames(c("gs1", "gs2", "gs3"))
+```
+
+**Note that not all gene symbols can be perfectly match against gene ID.**
+Alternatively, you can annotate all the gene in the dataset then extract
+the ones in the genesets. For simplicity, I removed duplicated genes of which
+have multiple probes correspond to the same gene (isoforms). In practice, the
+removal of these isoforms should be done with examination of coefficient
+variation (CV).
+
+```{r }
+all_genes <- rst$ID[!duplicated(rst$ID)]
+```
+
+Upon removal of duplicates, there are `r length(all_genes)` genes left in
+the dataset. We annotate these genes.
+
+```{r cache = T, eval = F}
+annot_all <- getBM(
+  attributes = c("hgnc_symbol", "entrezgene_id"),
+  filters = "hgnc_symbol",
+  values = all_genes,
+  mart = ensembl
+)
+```
+```{r eval = F, echo = F}
+saveRDS(annot_all, file.path(here(), "data/gene_id.rds"))
+```
+
+## Alternative methods for annotation
+
+Alternatively one can use `bitr` function from `clusterProfiler` package.
+Here we need to specify the database for curation. This requires the pacakge
+`org.Hs.eg.db`. If you decide to go with method, make sure to update this
+package often to obtain the most current information. The `org.Hs.eg.db`
+package is updated biannually.
+
+```{r }
+bitr(gs1,
+  fromType = "SYMBOL",
+  toType = c("ENTREZID", "SYMBOL"),
+  OrgDb = org.Hs.eg.db
+)
+```
+
+# Curate biological functions
+
+Upon selection genes of interest, we can start to curate the biological
+functions of these genes. The most popular databases are GO, KEGG, Reactome,
+etc. For full understanding the property of each of these databases, see
+these references [xxx].
+
+For example, I'd like to query the biological functions of genes in the set 3
+. One can use the `groupGO` function to look up biological functions:
+
+>  - MF: Molecular Function
+>     - molecular activities of gene products
+>  - CC: Cellular Component
+>     - where gene products are active
+>  - BP: Biological Process
+>     - pathways and larger processes made up of the activities of multiple
+gene products
+
+Additionally, one can look up onto [KEGG](https://www.genome.jp/kegg/ko.html),
+[WikiPathway](https://www.wikipathways.org/), [Reactome](https://reactome.org/),
+[Diease Ontology (DO)](https://disease-ontology.org/),
+[Medical Subject Headings (MeSH)](https://www.nlm.nih.gov/mesh/meshhome.html),
+[Molecular Signatures Database (MSigDb)](https://www.gsea-msigdb.org/gsea/msigdb).
+I didn't find any ready to use functions from `clusterProfile` package,except
+for `GO` query. However, personally, I don't think statiticians are experts to
+interpret the finding in biological sense. Since this is less of interest for
+analysts, the `clusterProfiler` simplifed this curation process and combined
+with the tests (ORA, GSEA) in their function construction. For details see
+separate files.
+
+```{r cache = T}
+ggo <- groupGO(
+  gene = as.character(annotgs3$entrezgene_id),
+  OrgDb = org.Hs.eg.db,
+  ont = "BP",
+  level = 3,
+  readable = TRUE
+)
+tail(ggo)
+```
+
+# Reference
+
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>
+
+```{r echo = F, eval = F}
+# Markdown --------------------------------------------------------
+# rmarkdown::render('src/03_db_query.R', output_dir = 'output')
+# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)
+```
+
+<!--chapter:end:03_db_query.Rmd-->
+
+# Over-representation Analysis
+
+```{r }
+library(here)
+library(DT)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+```
+
+# Experiment Data
+
+This pathway analysis will be using the smoking study data
+GDS3713 (GSE18723).
+The results from DEA will be used for ORA.
+
+```{r io}
+rst <- readRDS(file.path(here(), "data/de_rst.rds"))
+gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
+```
+
+In this micro-array data due to that there are multiple probes match to
+the same gene. For illustration of the PA purpose I simply removed the
+duplicated gene probes.In pratice these duplicates should be removed with cautions.
+
+```{r }
+rm_idx <- duplicated(rst$ID)
+rst <- rst[!rm_idx, ]
+```
+
+This leaves `r nrow(rst)` genes in the dataset.
+
+# Gene set selection
+ Normally these gene sets should represent major players in biological
+pathways. This can be achieved through the query from the biological
+databases or from other analytical approach such as co-expression analysis.
+For illustration purpose, here I randomly select 10 genes for each gene set.
+
+```{r }
+set.seed(123)
+gs1 <- sample(rst$ID, 10)
+```
+
+Here I choose five most significantly differentially expressed genes,
+five genes not differentially expressed.
+
+```{r }
+gs2 <- c(head(rst$ID, 5), tail(rst$ID, 5))
+
+print(glue::glue('geneset 1: {paste0(gs1, collapse = ", ")}
+geneset 2: {paste0(gs2, collapse =", ")}'))
+```
+
+## Define differentially expressed gene
+
+Here I define differentially expressed genes with following criterion:
+
+- adjusted p-value < 0.001
+- log fold change > 5
+
+These thresholds are not fixed can be varied depending on the context.
+Or it can be obtained from other analytical methods.
+
+
+```{r }
+rst <- rst %>%
+  mutate(
+    de = adj.P.Val < 0.001 & abs(logFC) > 5,
+    gs1 = ID %in% gs1,
+    gs2 = ID %in% gs2,
+  )
+
+table(rst[, c("gs1", "de")])
+table(rst[, c("gs2", "de")])
+```
+
+# Over-representation test {.tabset}
+**The null hypothesis of ORA test:** being differentally expressed and
+belong to a particular pathway (gene set) are independent.
+
+**Common statistical tests: ** chi-square test, Fisher's exact test. Note
+that when counts in a cell of a contigency table is small, chi-square
+approximation may not be accurate.
+
+The following examples tests the hypothesis for the gene sets described above
+. Note that this is different from the R package example below.
+
+## Gene set 1
+
+```{r }
+conttab_gs1 <- as.table(table(rst[, c("gs1", "de")]))
+chisq.test(conttab_gs1)
+fisher.test(conttab_gs1, alternative = "greater")
+```
+
+## Gene set 2
+
+```{r }
+conttab_gs2 <- as.table(table(rst[, c("gs2", "de")]))
+chisq.test(conttab_gs2)
+fisher.test(conttab_gs2, alternative = "greater")
+```
+
+# Over-respensentation analysis from R package
+The advantage of ORA using R packages, most popular one `clusterProfile`
+(which is the fusion of a few packages) is
+that the functions combine the step of database query and the step of testing
+in one go. The `clusterProfile` package currently provide following
+biological database.
+![curtesy of clusterProfiler](https://yulab-smu.top/biomedical-knowledge-mining-book/figures/clusterProfiler-diagram.png)
+
+As shown in the graph, the ORA tests with different db queries are prefixed
+with `enrich`, such as `enrichGO`, `enrichDO`. Note that these functions
+are different than the test above. They first query the biological process
+databases and find the genes lie in the pathway(s). Then it will perform the test to see if the genes in the pathways are differentially expressed compared
+to the background genes. For example, I'm interested in
+the top 10 most significantly differentially expressed genes. I would like
+to query the pathways that these genes involve in then test if these pathways
+are significantly differentially expressed.
+
+```{r }
+gs3 <- head(rst$ID, 10)
+gs3_ids <- gene_ids[which(gene_ids$hgnc_symbol %in% gs3), "entrezgene_id"] %>%
+  as.character()
+```
+
+Gene IDs of geneset 3: `r gs3_ids`
+**Note that not all gene symols can be mapped to the gene IDs**
+In this dataset, we have
+`r length(gene_ids$entrezgene_id) - sum(duplicated(gene_ids$entrezgene_id))`
+non-duplicated gene IDs.
+
+## Test set up and Result interpretations
+Setup parameters:
+
+- gene: a **character** vector of gene entrez ID in a gene set to be tested
+- universe: a **character** vector of gene entrez ID in the background gene set
+- ontology type: biological ontology type. This varies from different reference database. Check specific database for details.
+- reference database: some function requires the input of database. one can
+either use the connection to online db or download to local. This takes big
+storage space.
+
+Interpretation of results:
+
+I use the result from GO enrichment analysis for illustration. This applies
+to the analytical results queried from other databases. From the result object,
+one can see that the these top genes were mapped onto 94 gene sets (GO terms).
+Out of these 94 sets, 31 were tested significant. The significance cutoff set
+up is illustrated in the result object.
+To interpret the result table, take the examplle of GO term `GO:0043186` as
+an example. This GO term contains 10 genes, out of the 10 genes, only one
+gene is found in our queried list, which contains 6 genes. So the `GeneRatio`
+is 1/6. The pathway. In the background gene set (BgRatio), there are 10
+out of 11599 genes. From this we can construct a contingency table below and
+perform the Fisher test:
+
+|| GO term| non-Go term|
+| --- | --- | --- |
+|geneset|1|5|
+|background| 9 |11583|
+
+```{r }
+tab <- as.table(matrix(c(1, 9, 5, 11583), ncol = 2))
+fisher.test(tab, alternative = "greater")
+```
+
+## Examples {.tabset}
+I list the example queries in the mostly used databases.
+If not specified, all the functions are from the `clusterProfile` package.
+
+### GO
+[Gene Ontology](http://geneontology.org/)
+
+
+```{r ora, cache = T}
+rst_go <- enrichGO(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id),
+  OrgDb = org.Hs.eg.db,
+  ont = "CC",
+  pAdjustMethod = "BH",
+  readable = F
+)
+
+str(rst_go, max.level = 2)
+datatable(rst_go@result)
+rst_go@geneSets["GO:0043186"]
+```
+
+### KEGG
+[Kyoto Encyclopedia of Genes and Genomes](https://www.genome.jp/kegg/)
+I ran into bug from the older version of `clusterProfiler`.
+In order to get this function work, update R version and upgrade `DOSE`
+ package if you use online reference. Alternatively download KEGG
+reference and set `use_internal_data = TRUE`.
+I can't upgrade R in my local enviroment and don't have space to download
+massive data. So I won't be able to illustrate KEGG here.
+
+```{r cache = T, warning = T}
+rst_kegg <- enrichKEGG(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id),
+  minGSSize = 1,
+  pvalueCutoff = 0.3,
+  organism = "hsa",
+  use_internal_data = F
+)
+```
+
+KEGG module
+
+```{r }
+rst_mkegg <- enrichMKEGG(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id),
+  organism = "hsa"
+)
+
+str(rst_mkegg, max.levels = 1)
+datatable(rst_mkegg@result, rownames = F)
+```
+
+### WikiPathways
+[WikiPathways](https://www.wikipathways.org/)
+
+```{r cache = T}
+enrichWP(gs3_ids,
+  organism = "Homo sapiens",
+  universe = as.character(gene_ids$entrezgene_id)
+)
+```
+
+### Reactome
+[Reactome](https://reactome.org/)
+
+```{r cache = T}
+rst_react <- ReactomePA::enrichPathway(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id),
+  qvalueCutoff = 0.1
+)
+
+str(rst_react, max.level = 2)
+datatable(rst_react@result, rownames = F)
+```
+
+### DO
+[Disease Ontology](https://disease-ontology.org/)
+
+```{r }
+cache <- T
+DOSE::enrichDO(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id)
+)
+```
+
+### DisGeNET
+[DisGeNET](https://www.disgenet.org/)
+
+```{r cache = T}
+rst_dgn <- DOSE::enrichDGN(gs3_ids,
+  universe = as.character(gene_ids$entrezgene_id),
+  readable = F
+)
+str(rst_dgn, max.level = 2)
+datatable(rst_dgn@result, rownames = F)
+```
+
+### MeSH
+[MeSH](https://www.ncbi.nlm.nih.gov/mesh/)
+
+The enrichement test function requires the feed the reference argument. One
+can either download the whole reference or connect on online db.
+ The following code  will create a local database in the cache directory.
+The location of the local cache can be found (and updated)
+with `getAnnotationHubCache` and `setAnnotationHubCache`;
+`removeCache` removes all cache resources.
+
+```{r eval = F}
+annot <- AnnotationHub::AnnotationHub(localHub = F)
+print(annot)
+# query annotation hub for MeSH database
+hsa <- AnnotationHub::query(annot, c("MeSHDb", "Homo sapiens"))
+print(str(hsa))
+# download rosources to local cache directory
+ref_hsa <- hsa[[1]]
+MeSHDB <- MeSHDbi::MeSHDb(ref_hsa)
+```
+
+Otherwise one can install `MeSH.Hsa.eg.db` package in the local environment.
+
+```{r cache = T}
+# require installation of `MeSH.Hsa.eg.db` package.
+# replace `MeSHDb = MeSHDB` if using local reference database.
+rst_mesh <- meshes::enrichMeSH(gs3_ids,
+  MeSHDb = "MeSH.Hsa.eg.db"
+)
+str(rst_mesh, max.level = 2)
+datatable(rst_mesh@result, rownames = F)
+
+
+# library(RDAVIDWebService)
+# enrichDAVID(gs3_ids,
+# universe = as.character(gene_ids$entrezgene_id)
+# )
+```
+
+# Pros and Cons of ORA
+
+- Simple and straitforward
+- can be used for exploratory analysis when there's no prior hypothesis about
+any biological mechanism.
+- However, can not infer the directly of differentially expressed pathway
+e.g. up-regulated or down-regulated. This is not so helpful when particularly
+interested in the pathways that a drug modulate.
+- does not address the intercorelations of genes.
+
+# Reference
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>
+
+```{r echo = F, eval = F}
+# Markdown --------------------------------------------------------
+# rmarkdown::render('src/05_ORA.R', output_dir = 'output')
+# knitr::spin("src/05_ORA.R", format = "Rmd", knit = F)
+```
+
+<!--chapter:end:05_ORA.Rmd-->
+
+# Gene set enrichment analysis
+
+# Data
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>
+
+```{r echo = F, eval = F}
+# Markdown --------------------------------------------------------
+# rmarkdown::render('src/06_GSEA.R', output_dir = 'output')
+# knitr::spin('src/06_GSEA.R', format = 'Rmd', knit = FALSE )
+```
+
+<!--chapter:end:06_GSEA.Rmd-->
+

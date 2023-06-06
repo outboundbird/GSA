@@ -1,23 +1,7 @@
----
-title: Query bioloical pathway databases
-subtitle: 'SAR: NA , Study: NA'
-author:  Siying Huang (E0482362), Biomarker statistics team
-date: 'created: 2023-06-02 , updated (`r Sys.Date()`)'
-always_allow_html: true
-output:
-  html_document:
-    css: sanofi.css
-    code_folding: "show"
-    toc: yes
-    toc_float:
-      collapse: no
----
+# Query bioloical pathway databases
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = T, error = F)
-options(width = 100)
-```
-```{r libs}
+
+```{r }
 library(here)
 require(clusterProfiler)
 require(enrichplot)
@@ -242,4 +226,3 @@ sessionInfo()
 # rmarkdown::render('src/03_db_query.R', output_dir = 'output')
 # knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)
 ```
-

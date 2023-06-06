@@ -1,0 +1,11 @@
+# Intro
+
+
+
+<details><summary>Session Info</summary>
+
+```{r }
+sessionInfo()
+```
+
+</details>

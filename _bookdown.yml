@@ -1,0 +1,13 @@
+---
+title: "Notes ofr pathway analysis"
+author: "Siying Huang"
+date: "`r Sys.Date()`"
+site: "bookdown::bookdown_site"
+output:
+  bookdown::gitbook: default
+output_dir: "docs"
+documentclass: book
+bibliography: ["book.bib", "packages.bib"]
+biblio-style: apalike
+link-citations: yes
+---
