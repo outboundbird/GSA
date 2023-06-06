@@ -282,3 +282,4 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/ORA.R', output_dir = 'output')
+knitr::spin("src/05_ORA.R", format = "Rmd", knit = F)

@@ -97,4 +97,5 @@ saveRDS(annot_data, 'data/annot.rds')
 sessionInfo()
 #' </details>
 # Markdown --------------------------------------------------------
-# rmarkdown::render('src/req_data.R', output_dir = 'output')
+# rmarkdown::render('src/02_req_data.R', output_dir = 'output')
+# knitr::spin('src/02_req_data.R', format = 'Rmd', knit = FALSE)

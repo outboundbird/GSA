@@ -63,7 +63,7 @@ datatable(annot[which(annot$Gene.symbol == "ICOSLG"), ],
 # available database
 datatable(listEnsembl())
 # available biological species for the gene databases
-mart <- useEnsembl("genes")
+mart <- useEnsembl("genes", mirror = 'www')
 datatable(listDatasets(mart))
 #' Since we want to convert gene symbol to Entrez gene IDs in human subjects,
 #' we select `biomart = 'genes'` and `dataset= 'hsapiens_gene_ensembl'`.
@@ -192,4 +192,5 @@ sessionInfo()
 #' </details>
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
-# rmarkdown::render('src/db_query.R', output_dir = 'output')
+# rmarkdown::render('src/03_db_query.R', output_dir = 'output')
+# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)

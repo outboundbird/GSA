@@ -6,6 +6,7 @@
    "meshes",
    "RDAVIDWebService",
    "MeSH.Hsa.eg.db",
+   "bookdown"
 
  )
  to_install <- req_libs[!req_libs %in% env_pkgs]
@@ -30,3 +31,12 @@ if (length(to_install)) {
     )
   })
 }
+
+
+# stable version on CRAN
+install.packages("bookdown",
+  dependencies = TRUE,
+  INSTALL_opts = c("--no-lock")
+)
+# or development version on GitHub
+# remotes::install_github('rstudio/bookdown')
