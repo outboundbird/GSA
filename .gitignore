@@ -6,3 +6,4 @@
 
 # spcific files or director
 src/db_query_cache/
+*_cache/
