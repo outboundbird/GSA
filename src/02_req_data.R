@@ -1,5 +1,5 @@
 #' ---
-#' title: Extracting data from NCBI Gene Expression Omnibus databse
+#' title: Study dataset
 #' subtitle: 'SAR: NA , Study: pathway analysis'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
 #' date: 'created: 2023-06-01 , updated (`r Sys.Date()`)'
@@ -13,14 +13,10 @@
 #'       collapse: no
 #' ---
 #+ setup, include = FALSE
-knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
-options(width = 100)
+/*knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
+options(width = 100)*/
 
-#+ libs
-library(here)
-library(GEOquery)
-library(dplyr)
-
+/*
 # require data from NCBI Gene Expression Omnibus (GEO) [database](https://www.ncbi.nlm.nih.gov/gds)
 # datasets:
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5022 AMI
@@ -51,23 +47,35 @@ library(dplyr)
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4719 SLE
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3920 MS
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3886 MS
-# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4270 UC
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4270 UC*/
 
-#' # Download data to the current working environment
+#' # Study dataset
+#'
+#' In this tutorial, I still use the pulic smoking study dataset from NCBI
+#' Gene Expression Omnibus (GEO) [database](https://www.ncbi.nlm.nih.gov/gds)
+#' - GDS3713 (GSE18723).
+#'
+#' ## Extracting data from NCBI Gene Expression Omnibus databse
 #'
 #' Using `GEOquery` library to retrieve data from NCBI database. The GDS dataset
 #' is stored in the `gds` R4 class object.
+#+ cache = T
+library(here)
+library(GEOquery)
+library(dplyr)
 gds <- getGEO("GDS3713")
 # gds@header # meta data of the experiment
 # gds@dataTable@table # expression data
 # gds@dataTable@columns # phenotype data
-#' structure of the gds object
+#' structure of the `gds` object
 str(gds, max.level = 3)
 
-#' ## Summary of experiment
-show(Meta(gds))
+#' ### Summary of the study
+#' This study aim to analyze peripheral circulating B cells from smoking and non-smoking healthy US white females. B cells are directly associated with the onset and development of many smoking-induced diseases. Results provide insight into the molecular basis of B cell involvement in smoking-related pathogenesis. It contains 39 smoker and 40 non-smokers. A total of 22283 genes of whom the expession levels are measured on Affymetrix HG-133A GeneChip microarray.
+#'
+/*show(Meta(gds))*/
 
-#' ## Assigning the expression and phenotype data
+#' ### Assigning the expression and phenotype data
 #' The expression data is stored in the `gds@dataTable@tabl` with gene in
 #' The rows and subjects in the columns.
 #' The phenotype data is store at `gds@dataTable@columns`.
@@ -76,7 +84,7 @@ summary(expr[, 1:4])
 pheno <- Columns(gds)
 summary(pheno)
 
-#' # convert to GDS to expression set
+#' ## convert to GDS to expression set
 #' Converting the gds object to expression set will generate a series of sub documents, including an annotation file of the genes in the expression data.
 
 eset <- GDS2eSet(gds)
@@ -85,17 +93,21 @@ str(eset, max.level =4)
 # gene annotations
 annot_cols <- eset@featureData@varMetadata
 annot_data <- eset@featureData@data
-# experiment info
+
+/*# experiment info
 # eset@experimentData
 # assay <- eset@assayData
-
-#+ save, eval= F, echo = F
+*/
+/*#+ save, eval= F, echo = F
 saveRDS(expr, "data/expr.rds")
 saveRDS(pheno, "data/pheno.rds")
-saveRDS(annot_data, 'data/annot.rds')
+saveRDS(annot_data, "data/annot.rds")*/
+
+/*
 #' <details><summary>Session Info</summary>
 sessionInfo()
 #' </details>
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/02_req_data.R', output_dir = 'output')
 # knitr::spin('src/02_req_data.R', format = 'Rmd', knit = FALSE)
+*/

@@ -1,4 +1,4 @@
-#' ---
+/*#' ---
 #' title: Over-representation Analysis
 #' subtitle: 'SAR: NA , Study: NA'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
@@ -15,17 +15,15 @@
 #+ setup, include = FALSE
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
 options(width = 100)
-#+ libs
+#+ echo = F
 library(here)
 library(DT)
 library(clusterProfiler)
-library(org.Hs.eg.db)
-#' # Experiment Data
-#'
-#' This pathway analysis will be using the smoking study data
-#' GDS3713 (GSE18723).
-#' The results from DEA will be used for ORA.
-#+ io
+library(org.Hs.eg.db)*/
+#' In this chapter, I will illustrate the principle of overpresentation analysis. There exist a variety of tools with different statistical methods.
+#' A few review papers for details: @huangBioinformaticsEnrichmentTools2009
+#' ## Data prepartion
+#+ echo = F
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #' In this micro-array data due to that there are multiple probes match to
@@ -36,7 +34,7 @@ rm_idx <- duplicated(rst$ID)
 rst <- rst[!rm_idx, ]
 #' This leaves `r nrow(rst)` genes in the dataset.
 #'
-#' # Gene set selection
+#' ## Gene set selection
 #'  Normally these gene sets should represent major players in biological
 #' pathways. This can be achieved through the query from the biological
 #' databases or from other analytical approach such as co-expression analysis.
@@ -52,14 +50,14 @@ gs2 <- c(head(rst$ID, 5), tail(rst$ID, 5))
 print(glue::glue('geneset 1: {paste0(gs1, collapse = ", ")}
 geneset 2: {paste0(gs2, collapse =", ")}'))
 
-#' ## Define differentially expressed gene
+#' ### Define differentially expressed gene
 #'
 #' Here I define differentially expressed genes with following criterion:
 #'
 #' - adjusted p-value < 0.001
 #' - log fold change > 5
 #'
-#' These thresholds are not fixed can be varied depending on the context.
+#' These threshold criterion are not fixed can be varied depending on the context.
 #' Or it can be obtained from other analytical methods.
 #'
 rst <- rst %>%
@@ -68,10 +66,15 @@ rst <- rst %>%
     gs1 = ID %in% gs1,
     gs2 = ID %in% gs2,
   )
+table(rst[, c("de", "gs1")])
+table(rst[, c("de", "gs2")])
 
-table(rst[, c("gs1", "de")])
-table(rst[, c("gs2", "de")])
-#' # Over-representation test {.tabset}
+#' ## Over-representation analysis
+#'
+#' > Over-representation analysis (ORA) is used to determine which a priori defined
+#' > gene sets are more present (over-represented) in a subset of “interesting”
+#' > genes than what would be expected by chance @huangBioinformaticsEnrichmentTools2009.
+#' 
 #' **The null hypothesis of ORA test:** being differentally expressed and
 #' belong to a particular pathway (gene set) are independent.
 #'
@@ -80,19 +83,19 @@ table(rst[, c("gs2", "de")])
 #' approximation may not be accurate.
 #'
 #' The following examples tests the hypothesis for the gene sets described above
-#' . Note that this is different from the R package example below.
+#' .
 #'
-#' ## Gene set 1
+#' **Gene set 1**
 
 conttab_gs1 <- as.table(table(rst[, c("gs1", "de")]))
 chisq.test(conttab_gs1)
 fisher.test(conttab_gs1, alternative = "greater")
-#' ## Gene set 2
+#' **Gene set 2**
 conttab_gs2 <- as.table(table(rst[, c("gs2", "de")]))
 chisq.test(conttab_gs2)
 fisher.test(conttab_gs2, alternative = "greater")
 
-#' # Over-respensentation analysis from R package
+#' ## Over-respensentation analysis from R package
 #' The advantage of ORA using R packages, most popular one `clusterProfile`
 #' (which is the fusion of a few packages) is
 #' that the functions combine the step of database query and the step of testing
@@ -119,8 +122,8 @@ gs3_ids <- gene_ids[which(gene_ids$hgnc_symbol %in% gs3), "entrezgene_id"] %>%
 #' `r length(gene_ids$entrezgene_id) - sum(duplicated(gene_ids$entrezgene_id))`
 #' non-duplicated gene IDs.
 #'
-#' ## Test set up and Result interpretations
-#' Setup parameters:
+#' ## Test set up and result interpretations
+#' **Setup parameters:**
 #'
 #' - gene: a **character** vector of gene entrez ID in a gene set to be tested
 #' - universe: a **character** vector of gene entrez ID in the background gene set
@@ -129,9 +132,9 @@ gs3_ids <- gene_ids[which(gene_ids$hgnc_symbol %in% gs3), "entrezgene_id"] %>%
 #' either use the connection to online db or download to local. This takes big
 #' storage space.
 #'
-#' Interpretation of results:
+#' **Interpretation of results:**
 #'
-#' I use the result from GO enrichment analysis for illustration. This applies
+#' I use the result from the following GO enrichment analysis for illustration. This applies
 #' to the analytical results queried from other databases. From the result object,
 #' one can see that the these top genes were mapped onto 94 gene sets (GO terms).
 #' Out of these 94 sets, 31 were tested significant. The significance cutoff set
@@ -217,7 +220,7 @@ datatable(rst_react@result, rownames = F)
 
 #' ### DO
 #' [Disease Ontology](https://disease-ontology.org/)
-cache <- T
+#+ cache = T
 DOSE::enrichDO(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id)
 )
@@ -265,7 +268,7 @@ datatable(rst_mesh@result, rownames = F)
 # enrichDAVID(gs3_ids,
 # universe = as.character(gene_ids$entrezgene_id)
 # )
-#' # Pros and Cons of ORA
+#' ## Pros and Cons of ORA
 #'
 #' - Simple and straitforward
 #' - can be used for exploratory analysis when there's no prior hypothesis about
@@ -275,11 +278,13 @@ datatable(rst_mesh@result, rownames = F)
 #' interested in the pathways that a drug modulate.
 #' - does not address the intercorelations of genes.
 #'
-#' # Reference
+#' ## Reference
+/*
 #' <details><summary>Session Info</summary>
 sessionInfo()
 #' </details>
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
-# rmarkdown::render('src/ORA.R', output_dir = 'output')
-# knitr::spin("src/05_ORA.R", format = "Rmd", knit = F)
+# rmarkdown::render('src/04_ORA.R', output_dir = 'output')
+# knitr::spin("src/04_ORA.R", format = "Rmd", knit = F)
+*/

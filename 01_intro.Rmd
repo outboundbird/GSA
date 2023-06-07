@@ -1,11 +1,8 @@
-# Intro
+# Gene sets and pathways
+
+::: {.definition #label name="definition name"}
+gene set , biological pathway
+:::
 
 
-
-<details><summary>Session Info</summary>
-
-```{r }
-sessionInfo()
-```
-
-</details>
+## Biological process data bases

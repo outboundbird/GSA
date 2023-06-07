@@ -1,4 +1,23 @@
-# Query bioloical pathway databases
+---
+title: Query bioloical pathway databases
+subtitle: 'SAR: NA , Study: NA'
+author:  Siying Huang (E0482362), Biomarker statistics team
+date: 'created: 2023-06-02 , updated (`r Sys.Date()`)'
+always_allow_html: true
+output:
+  html_document:
+    css: sanofi.css
+    code_folding: "show"
+    toc: yes
+    toc_float:
+      collapse: no
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = T, error = F)
+options(width = 100)
+```
+
 library setup and data import
 
 ```{r libs}
@@ -45,7 +64,7 @@ Or we can do better using`biomaRt`package.
  For a full tutorial of `biomaRt` package, see [here](https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html). It covers
 some more advanced use case. Here I only cover basic usage of this package.
 
-### 1. Connect to the selected *BioMart* database using `useEnsembl` function.
+### Connect to the selected *BioMart* database using `useEnsembl` function.
 Before connecting to a specific database, we can first check available
 databases.
 
@@ -73,7 +92,7 @@ ensembl <- useEnsembl(
 )
 ```
 
-### 2. Annotate genes
+###  Annotate genes
 Here instead of selecting genes in a biological pathway, I simply randomly
 choose some genes in the dataset.
 
@@ -203,3 +222,4 @@ tail(ggo)
 ```
 
 ## Reference
+

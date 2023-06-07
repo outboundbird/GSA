@@ -15,6 +15,7 @@
 #+ setup, include = FALSE
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = T, error = F)
 options(width = 100)
+#' For this practice, we'll use the 
 #+ libs
 library(here)
 require(clusterProfiler)
@@ -24,16 +25,11 @@ require(org.Hs.eg.db)
 library(biomaRt)
 library(DT)
 
-#' # Study dataset
-#'
-#' In this tutorial, I still use the pulic smoking study dataset from NCBI GEO
-#' database - GDS3713 (GSE18723).
-#'
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 annot <- readRDS(file.path(here(), "data/annot.rds")) %>%
   data.frame()
 
-#' # Annotation of genes
+#' ## Gene annotation
 #' The GDS3713 dataset comes with an annotation file that has information
 #' for genes in the array:
 cat(paste0(names(annot), collapse = '\t'))
@@ -45,7 +41,7 @@ datatable(annot[which(annot$Gene.symbol == "ICOSLG"), ],
 #' However, most of time, we don't have such a file that comes with the
 #' trancriptomic data. We will then need to annotate the genes.
 #'
-#' # Convert gene symbol to gene ID using `biomaRt`.
+#' ## Convert gene symbol to gene ID using `biomaRt`.
 #' Since many pathway database requires entrez gene IDs as entries and most of
 #' sequencing/ microarray output provides gene symbols or ensembl IDs, we'll
 #' need to convert gene symbol to entrez IDs for the pathway analysis.
@@ -55,11 +51,11 @@ datatable(annot[which(annot$Gene.symbol == "ICOSLG"), ],
 #'  For a full tutorial of `biomaRt` package, see [here](https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html). It covers
 #' some more advanced use case. Here I only cover basic usage of this package.
 #'
-#' ## 1. Connect to the selected *BioMart* database using `useEnsembl` function.
+#' ### Connect to the selected *BioMart* database using `useEnsembl` function.
 #' Before connecting to a specific database, we can first check available
 #' databases.
 #'
-#' ### List of available BioMart databases hosted by Ensembl
+#' #### List of available BioMart databases hosted by Ensembl
 # available database
 datatable(listEnsembl())
 # available biological species for the gene databases
@@ -76,7 +72,7 @@ ensembl <- useEnsembl(
   mirror = "www"
 )
 
-#' ## 2. Annotate genes
+#' ###  Annotate genes
 #' Here instead of selecting genes in a biological pathway, I simply randomly
 #' choose some genes in the dataset.
 #'
@@ -133,21 +129,21 @@ annot_all <- getBM(
 #+ eval = F, echo = F
 saveRDS(annot_all, file.path(here(), "data/gene_id.rds"))
 
-#' ## Alternative methods for annotation
+#' ### Alternative methods for annotation
 #'
 #' Alternatively one can use `bitr` function from `clusterProfiler` package.
 #' Here we need to specify the database for curation. This requires the pacakge
 #' `org.Hs.eg.db`. If you decide to go with method, make sure to update this
 #' package often to obtain the most current information. The `org.Hs.eg.db`
 #' package is updated biannually.
-
+#+ cache = T
 bitr(gs1,
   fromType = "SYMBOL",
   toType = c("ENTREZID", "SYMBOL"),
   OrgDb = org.Hs.eg.db
 )
 
-#' # Curate biological functions
+#' ## Curate biological functions
 #'
 #' Upon selection genes of interest, we can start to curate the biological
 #' functions of these genes. The most popular databases are GO, KEGG, Reactome,
@@ -171,11 +167,10 @@ bitr(gs1,
 #' [Medical Subject Headings (MeSH)](https://www.nlm.nih.gov/mesh/meshhome.html),
 #' [Molecular Signatures Database (MSigDb)](https://www.gsea-msigdb.org/gsea/msigdb).
 #' I didn't find any ready to use functions from `clusterProfile` package,except
-#' for `GO` query. However, personally, I don't think statiticians are experts to
+#' for `GO` query. However, personally, I don't think statiticians are the experts to
 #' interpret the finding in biological sense. Since this is less of interest for
 #' analysts, the `clusterProfiler` simplifed this curation process and combined
-#' with the tests (ORA, GSEA) in their function construction. For details see
-#' separate files.
+#' with the tests (ORA, GSEA) in their function construction.
 #+ cache = T
 ggo <- groupGO(
   gene = as.character(annotgs3$entrezgene_id),
@@ -185,12 +180,12 @@ ggo <- groupGO(
   readable = TRUE
 )
 tail(ggo)
-#' # Reference
+#' ## Reference
 #'
-#' <details><summary>Session Info</summary>
+/*#' <details><summary>Session Info</summary>
 sessionInfo()
 #' </details>
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/03_db_query.R', output_dir = 'output')
-# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)
+# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)*/

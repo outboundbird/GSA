@@ -6,7 +6,8 @@
    "meshes",
    "RDAVIDWebService",
    "MeSH.Hsa.eg.db",
-   "bookdown"
+   "bookdown",
+   'rmarkdown'
 
  )
  to_install <- req_libs[!req_libs %in% env_pkgs]
@@ -34,7 +35,7 @@ if (length(to_install)) {
 
 
 # stable version on CRAN
-install.packages("bookdown",
+install.packages("rmarkdown",
   dependencies = TRUE,
   INSTALL_opts = c("--no-lock")
 )

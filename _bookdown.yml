@@ -1,5 +1,5 @@
 ---
-title: "Notes ofr pathway analysis"
+title: "Notes for pathway analysis"
 author: "Siying Huang"
 date: "`r Sys.Date()`"
 site: "bookdown::bookdown_site"
@@ -11,3 +11,4 @@ bibliography: ["book.bib", "packages.bib"]
 biblio-style: apalike
 link-citations: yes
 ---
+

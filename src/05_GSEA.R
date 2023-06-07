@@ -13,12 +13,12 @@
 #'       collapse: no
 #' ---
 #+ setup, include = FALSE
-knitr::opts_knit$set(root_dir='/mnt/c/Users/e0482362/Work/pathway_analysis/src')
-knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
+knitr::opts_knit$set(root_dir = "/mnt/c/Users/e0482362/Work/pathway_analysis/src")
+knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
 options(width = 100)
 #+ libs
 library(here)
-#' # Data
+#' # Gene Set Enrichment analysis
 
 #' <details><summary>Session Info</summary>
 sessionInfo()

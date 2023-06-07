@@ -1,3 +1,26 @@
-# Preface
+---
+title: "Pathway analysis methods"
+author: "Siying Huang (E0482362)"
+date: "`r Sys.Date()`"
+bibliography:
+  - literature.bib
+biblio-style: apalike
+description: This notebook is dedicated to genetic pathway analysis methods.
+# documentclass: krantz
+link-citations: yes
+colorlinks: yes
+graphics: yes
+lot: yes
+lof: yes
+fontsize: 11pt
+site: bookdown::bookdown_site
+gitlab-repo: https://emea-aws-gitlab.sanofi.com:3001/Siying.H/pathway_analysis
+url: ''
+---
 
-hello
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=T)
+options(width = 100)
+
+```
+# Prefeace {-}

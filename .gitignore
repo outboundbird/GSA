@@ -8,3 +8,7 @@ src/db_query_cache/
 *_cache/
 figure/
 _main_cache/
+_main_files/
+_bookdown_files/
+output/
+docs/
