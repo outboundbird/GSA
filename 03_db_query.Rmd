@@ -1,7 +1,8 @@
 # Query bioloical pathway databases
-library setup and data import
+For this practice, we'll use the result from differential gene expression
+analysis.
 
-```{r libs}
+```{r echo = F}
 library(here)
 require(clusterProfiler)
 require(enrichplot)
@@ -45,7 +46,7 @@ Or we can do better using`biomaRt`package.
  For a full tutorial of `biomaRt` package, see [here](https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html). It covers
 some more advanced use case. Here I only cover basic usage of this package.
 
-### 1. Connect to the selected *BioMart* database using `useEnsembl` function.
+### Connect to the selected *BioMart* database using `useEnsembl` function.
 Before connecting to a specific database, we can first check available
 databases.
 
@@ -73,7 +74,7 @@ ensembl <- useEnsembl(
 )
 ```
 
-### 2. Annotate genes
+###  Annotate genes
 Here instead of selecting genes in a biological pathway, I simply randomly
 choose some genes in the dataset.
 
@@ -203,3 +204,4 @@ tail(ggo)
 ```
 
 ## Reference
+

@@ -1,4 +1,4 @@
-#' ---
+/*#' ---
 #' title: Query bioloical pathway databases
 #' subtitle: 'SAR: NA , Study: NA'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
@@ -14,9 +14,11 @@
 #' ---
 #+ setup, include = FALSE
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = T, error = F)
-options(width = 100)
-#' For this practice, we'll use the 
-#+ libs
+options(width = 100)*/
+#' # Query bioloical pathway databases
+#' For this practice, we'll use the result from differential gene expression
+#' analysis.
+#+ echo = F
 library(here)
 require(clusterProfiler)
 require(enrichplot)
@@ -188,4 +190,5 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/03_db_query.R', output_dir = 'output')
-# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)*/
+# knitr::spin('src/03_db_query.R', format = 'Rmd', knit = FALSE)
+*/

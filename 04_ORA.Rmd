@@ -201,7 +201,7 @@ rst_kegg <- enrichKEGG(gs3_ids,
 
 KEGG module
 
-```{r , cache=T}
+```{r }
 rst_mkegg <- enrichMKEGG(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id),
   organism = "hsa"
@@ -214,7 +214,7 @@ datatable(rst_mkegg@result, rownames = F)
 ### WikiPathways
 [WikiPathways](https://www.wikipathways.org/)
 
-```{r ,cache = T}
+```{r cache = T}
 enrichWP(gs3_ids,
   organism = "Homo sapiens",
   universe = as.character(gene_ids$entrezgene_id)
@@ -303,5 +303,11 @@ any biological mechanism.
 e.g. up-regulated or down-regulated. This is not so helpful when particularly
 interested in the pathways that a drug modulate.
 - does not address the intercorelations of genes.
+## Further info
+Below is an incomplete sumamry of the ORA.
+
+```{r }
+datatable(ora, rownames = F)
+```
 
 ## Reference

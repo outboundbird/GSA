@@ -20,8 +20,10 @@ library(here)
 library(DT)
 library(clusterProfiler)
 library(org.Hs.eg.db)*/
+#' # Over-representation Analysis
 #' In this chapter, I will illustrate the principle of overpresentation analysis. There exist a variety of tools with different statistical methods.
 #' A few review papers for details: @huangBioinformaticsEnrichmentTools2009
+#'
 #' ## Data prepartion
 #+ echo = F
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
@@ -74,7 +76,7 @@ table(rst[, c("de", "gs2")])
 #' > Over-representation analysis (ORA) is used to determine which a priori defined
 #' > gene sets are more present (over-represented) in a subset of “interesting”
 #' > genes than what would be expected by chance @huangBioinformaticsEnrichmentTools2009.
-#' 
+#'
 #' **The null hypothesis of ORA test:** being differentally expressed and
 #' belong to a particular pathway (gene set) are independent.
 #'
@@ -277,7 +279,9 @@ datatable(rst_mesh@result, rownames = F)
 #' e.g. up-regulated or down-regulated. This is not so helpful when particularly
 #' interested in the pathways that a drug modulate.
 #' - does not address the intercorelations of genes.
-#'
+#' ## Further info
+#' Below is an incomplete sumamry of the ORA.
+datatable(ora, rownames = F)
 #' ## Reference
 /*
 #' <details><summary>Session Info</summary>
