@@ -113,12 +113,9 @@ annot_list <- lapply(list(gs1, gs2, gs3), function(gs) {
 
 #' **Note that not all gene symbols can be perfectly match against gene ID.**
 #' Alternatively, you can annotate all the gene in the dataset then extract
-#' the ones in the genesets. For simplicity, I removed duplicated genes of which
-#' have multiple probes correspond to the same gene (isoforms). In practice, the
-#' removal of these isoforms should be done with examination of coefficient
-#' variation (CV).
+#' the ones in the genesets.
 
-all_genes <- rst$ID[!duplicated(rst$ID)]
+all_genes <- rst$ID
 #' Upon removal of duplicates, there are `r length(all_genes)` genes left in
 #' the dataset. We annotate these genes.
 #+ cache = T, eval = F

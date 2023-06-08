@@ -28,13 +28,7 @@ library(org.Hs.eg.db)*/
 #+ echo = F
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
-#' In this micro-array data due to that there are multiple probes match to
-#' the same gene. For illustration of the PA purpose I simply removed the
-#' duplicated gene probes.In pratice these duplicates should be removed with cautions.
-
-rm_idx <- duplicated(rst$ID)
-rst <- rst[!rm_idx, ]
-#' This leaves `r nrow(rst)` genes in the dataset.
+#' There are `r nrow(rst)` genes in the dataset.
 #'
 #' ## Gene set selection
 #'  Normally these gene sets should represent major players in biological
@@ -119,10 +113,6 @@ gs3_ids <- gene_ids[which(gene_ids$hgnc_symbol %in% gs3), "entrezgene_id"] %>%
   as.character()
 #' Gene IDs of geneset 3: `r gs3_ids`
 #' **Note that not all gene symols can be mapped to the gene IDs**
-
-#' In this dataset, we have
-#' `r length(gene_ids$entrezgene_id) - sum(duplicated(gene_ids$entrezgene_id))`
-#' non-duplicated gene IDs.
 #'
 #' ## Test set up and result interpretations
 #' **Setup parameters:**
@@ -173,7 +163,10 @@ rst_go <- enrichGO(gs3_ids,
 )
 
 str(rst_go, max.level = 2)
-datatable(rst_go@result)
+datatable(rst_go@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 rst_go@geneSets["GO:0043186"]
 
 #' ### KEGG
@@ -199,7 +192,10 @@ rst_mkegg <- enrichMKEGG(gs3_ids,
 )
 
 str(rst_mkegg, max.levels = 1)
-datatable(rst_mkegg@result, rownames = F)
+datatable(rst_mkegg@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 
 #' ### WikiPathways
 #' [WikiPathways](https://www.wikipathways.org/)
@@ -218,7 +214,10 @@ rst_react <- ReactomePA::enrichPathway(gs3_ids,
 )
 
 str(rst_react, max.level = 2)
-datatable(rst_react@result, rownames = F)
+datatable(rst_react@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 
 #' ### DO
 #' [Disease Ontology](https://disease-ontology.org/)
@@ -235,7 +234,10 @@ rst_dgn <- DOSE::enrichDGN(gs3_ids,
   readable = F
 )
 str(rst_dgn, max.level = 2)
-datatable(rst_dgn@result, rownames = F)
+datatable(rst_dgn@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 
 #' ### MeSH
 #' [MeSH](https://www.ncbi.nlm.nih.gov/mesh/)
@@ -263,7 +265,10 @@ rst_mesh <- meshes::enrichMeSH(gs3_ids,
   MeSHDb = "MeSH.Hsa.eg.db"
 )
 str(rst_mesh, max.level = 2)
-datatable(rst_mesh@result, rownames = F)
+datatable(rst_mesh@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 
 
 # library(RDAVIDWebService)
@@ -281,7 +286,10 @@ datatable(rst_mesh@result, rownames = F)
 #' - does not address the intercorelations of genes.
 #' ## Further info
 #' Below is an incomplete sumamry of the ORA.
-datatable(ora, rownames = F)
+datatable(ora,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 #' ## Reference
 /*
 #' <details><summary>Session Info</summary>
