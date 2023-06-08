@@ -33,8 +33,17 @@ pheno <- readRDS(file.path(here(), "data/pheno.rds"))
 # data management
 pheno <- pheno %>%
   mutate(status = as.factor(as.integer(stress)))
+#' In this micro-array data due to that there are multiple probes match to
+#' the same gene (isoforms).
+#' For simplicity, I removed duplicated genes of which
+#' have multiple probes correspond to the same gene . In practice, the
+#' removal of these isoforms should be done with examination of coefficient
+#' variation (CV). Before removing the isforms, there are {{nrow(expr)}} rows.
+expr <- expr[!duplicated(expr$IDENTIFIER), ]
+#' Removing the multiple isoforms leaves {{nrow(expr)}} in the dataset.
 
-/*# match(names(expr[, 3:ncol(expr)]), pheno$sample)*/
+/*# match(names(expr[, 3:ncol(expr)]), pheno$sample)
+*/
 
 #' ## Comparison between smokers and non-smokers
 #' A linear model is used with the constrast made between smokers and controls.
@@ -53,7 +62,8 @@ contr <- makeContrasts(
 )
 tmp <- contrasts.fit(fit, contr)
 ebfit <- eBayes(tmp, robust = T)
-rst_eb <- topTable(ebfit, number = Inf)
+rst_eb <- topTable(ebfit, number = Inf) %>%
+  tibble::rownames_to_column('ID')
 rst <- setNames(rst_eb, c("ID", "estimate", "AveExp", "t", "p.value", "FDR", "B"))
 #' ## Results visualization
 #' The marked genes pass the FDR significant threshold at adjusted p-value <= 0.01.
