@@ -24,10 +24,10 @@ rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
 #' # Gene Set Enrichment analysis
-#' ![](https://www.gsea-msigdb.org/gsea/images/GSEA-logo.gif)
 #' The idea of gene set enrichment analysis was proposed first by Mootha et al @moothaPGC1aresponsiveGenesInvolved2003 .
 #' Later on, Subramanian et al @subramanianGeneSetEnrichment2005 made the modifictions based on their idea. This method now is widely used in the genetic study nowadays.
 #' I'd like to point out that this enrichment analysis can be applied in other omic data, not soley in the transcriptomic field.
+#' ![](https://www.pnas.org/cms/10.1073/pnas.0506580102/asset/c5e213a9-4247-4506-bae4-908054152f97/assets/graphic/zpq0370595180001.jpeg)
 #'
 #' ## Enrichment test
 #' I demonstrate the principle of GSEA using the DGEA results.
@@ -64,7 +64,7 @@ axis(
 
 #' ### Calculating Enrichment Score
 #'
-#' > The score is calculated by walking down the list L, increasing a running-sum statistic when we encounter a gene in S and decreasing it when we encounter genes not in S. The magnitude of the increment depends on the correlation of the gene with the phenotype. The enrichment score is the maximum deviation from zero encountered in the random walk; [cite gsea]
+#' > The score is calculated by  down the list L, increasing a running-sum statistic when we encounter a gene in S and decreasing it when we encounter genes not in S. The magnitude of the increment depends on the correlation of the gene with the phenotype. The enrichment score is the maximum deviation from zero encountered in the random walk; [cite gsea]
 #'
 #' Here I use *gene set 1* as an example to illustrate the calculation of enrichment score (ES).
 #'
@@ -95,7 +95,7 @@ rst <- rst %>%
     score2_gs1 = case_when(row_number() == 1 ~ 0, TRUE ~ score2_gs1),
     es2_gs1 = cumsum(score2_gs1)
   )
-  #+ walking plot, fig.dim = c(8, 4), cache = T
+  #+  plot, fig.dim = c(8, 4), cache = T
   par(mfrow = c(1, 2), cex = 0.8)
   plot(rst$es_gs1, type = "l", ylab = "Enrichment score", main = "ES (Mootha et al)")
   abline(h = 0, lty = 2, col = "red")
@@ -112,7 +112,7 @@ rst <- rst %>%
     labels = F
   )
 
-#' Similarily, I can calculate the ES for gene set 2 and gene set 3 (Figure below). And one can clearly see the extreme pattern in the walking plot due to the way that genes were selected in the sets.
+#' Similarily, I can calculate the ES for gene set 2 and gene set 3 (Figure below). And one can clearly see the extreme pattern in the random walk plot due to the way that genes were selected in the sets.
 #'
 #+ fig.dim = c(8,4)
 par(mfrow = c(1, 2), cex = 0.8)
@@ -192,7 +192,12 @@ calc_enrich_score(rst, gs1, "ID", "t")
 abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
+#' ## Null distribution of GSEA
+#' The null distribution of GSEA is bimodal.
+#' TBC
+#' 
 #' ## GSEA using R packages
+#'
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()
