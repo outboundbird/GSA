@@ -22,7 +22,7 @@ library(pheatmap)
 library(GSVA)
 source(file.path(here(), "src/utils.R"))
 #' # Gene set variation analysis (GSVA)
-#' The gene set variation analysis (GSVA) was developed by Hänzelmann et al in 2013, which is a a non-parametric, unsupervised method. @hanzelmannGSVAGeneSet2013 All quoted text are from original paper.
+#' The gene set variation analysis (GSVA) was developed by *Hänzelmann et al* in 2013, which is a non-parametric, unsupervised method for gene set enrichement analysis. @hanzelmannGSVAGeneSet2013 ^[All quoted text are from original paper.]
 #'
 #' > GSVA calculates sample-wise gene set enrichment scores as a function of
 #' > genes inside and outside the gene set, analogously to a competitive gene
@@ -110,9 +110,9 @@ invisible(lapply(seq(2, length(gs1)), function(i) {
 legend("topleft", gs1, col = 1:10, lty = 1:10, cex = 0.6, bty = "n")
 
 # cdf before normaliization
-plot(ecdf(expr_g[gs1[1], ]),
+plot(ecdf(as.numeric(expr_g[gs1[1], ])),
   verticals = T, do.points = F, xlim = c(0, 12),
-  main <- "Empricial CDF of gene expression levels"
+  main = "Empricial CDF of gene expression levels"
 )
 invisible(lapply(seq(2, length(gs1)), function(i) {
   g <- gs1[i]
@@ -141,8 +141,11 @@ gd <- apply(gd, 2, function(x) ifelse(x == 1, 0.99, x))
 gene_density <- data.frame(log(gd / (1 - gd)))
 
 #' Here I plot the **emprical CDF** instead of the explicit CDF mentioned in the paper for the purpose of illustration. For microarray data or continous data, the kernel for estimating CDF is Gaussian function, whereas in the count data, the kernel for CDF estimation is Poisson function.
-#' ![Gaussian kernel](/mnt/c/Users/e0482362/Work/pathway_analysis/figure/gaus_kernel.png)
-#' ![](/mnt/c/Users/e0482362/Work/pathway_analysis/figure/pois_kernel.png)
+#'
+#' ![Gaussian kernel](images/gaus_kernel.png){width="300"}
+#'
+#' ![Possion kernel](images/pois_kernel.png){width="300" height="86"}
+#'
 #+ cdf , echo = F, fig.dim = c(8, 4)
 par(mfrow = c(1, 2), cex = 0.8, font.main = 1)
 plot(density(as.numeric(gene_density[1, ])),
@@ -231,6 +234,7 @@ max(abs(sample[, "es", drop = F]))
 max(sample[, "es", drop = F], 0) - min(sample[, "es", drop = F], 0)
 
 #' ## GSVA using R package
+#' In this section, I demonstrate GSVA using `GSVA` library in R.
 
 /*
 #' <details><summary>Session Info</summary>
