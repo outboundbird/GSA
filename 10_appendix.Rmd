@@ -1,0 +1,38 @@
+# Appendix {-}
+
+```{r echo = F, cache = T}
+library(readxl)
+library(DT)
+library(here)
+ora <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 1)
+fcs <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 2)
+ptb <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 3)
+multi <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 4)
+path_db <- read.csv(file.path(here::here(), "data/public_pathway_db.csv"))
+```
+
+## Biological process data bases
+
+
+```{r echo = F}
+
+datatable(path_db,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
+```
+
+## Summary of currently available pathway analysis methods
+### Over-representation analysis
+
+```{r echo = F}
+
+datatable(ora)
+```
+
+### Gene set enrichment analysis
+
+```{r echo = F}
+datatable(fcs)
+```
+
