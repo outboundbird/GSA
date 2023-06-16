@@ -1,4 +1,4 @@
-#' ---
+/*#' ---
 #' title: Intro
 #' subtitle: 'SAR: sar , Study: study'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
@@ -12,19 +12,9 @@
 #'     toc_float:
 #'       collapse: no
 #' ---
-#+ setup, include = FALSE
-
+#+ setup, include = FALSE*/
 knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
 options(width = 100)
-#+ echo = F, cache = T
-library(readxl)
-library(DT)
-library(here)
-ora <- read_xlsx(file.path(here(), 'data/pa_method.xlsx'), sheet = 1)
-fcs <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 2)
-ptb <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 3)
-multi <- read_xlsx(file.path(here(), "data/pa_method.xlsx"), sheet = 4)
-path_db <- read.csv(file.path(here::here(), 'data/public_pathway_db.csv'))
 
 #' # Gene sets and pathways
 #'
@@ -32,10 +22,17 @@ path_db <- read.csv(file.path(here::here(), 'data/public_pathway_db.csv'))
 #' gene set , biological pathway
 #' :::
 #'
-#'
-#' ## Biological process data bases
-#+ echo = F
-DT::datatable(path_db, rownames = F)
+#' ## Organization of this e-book
+#' I will illustrate the gene pathway analysis using a public dataset for smoking study.
+#' Chapter 2 contains information on this study and how to obtain the dataset
+#' from NCBI website to an R environment.
+#' Chapter 3 quickly illustrate the differential gene expression analysis. This
+#' result will be used in some of the parametrical pathway analysis method.
+#' Chapter 4 introduce over-representation analysis
+#' Chapter 5 introduce the classic gene set enrichment analysis
+#' Chapter 6 talks abou the gene set variation analysis
+#' Chapter 7 discusses other methods for gene set enrichment analysis
+#' Chapter 8 talks about advanced topic regarding gene set analysis
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()
@@ -43,4 +40,5 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/01_intro.R', output_dir = 'output')
-# knitr::spin('src/01_intro.R', format = 'Rmd', knit = FALSE)*/
+# knitr::spin('src/01_intro.R', format = 'Rmd', knit = FALSE)
+*/

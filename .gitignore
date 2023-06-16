@@ -1,6 +1,6 @@
 # work env
 *.code-workspace
-
+*.Rproj
 # output types
 
 # spcific files or director
@@ -12,3 +12,5 @@ _main_files/
 _bookdown_files/
 output/
 docs/
+.Rproj.user
+.Rhistory

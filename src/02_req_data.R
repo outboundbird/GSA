@@ -47,13 +47,18 @@ options(width = 100)*/
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4719 SLE
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3920 MS
 # https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3886 MS
-# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4270 UC*/
+# https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4270 UC
+# publication of smoking study: https://link.springer.com/article/10.1007/s00251-010-0431-6
+*/
 
 #' # Study dataset
 #'
 #' In this tutorial, I still use the pulic smoking study dataset from NCBI
 #' Gene Expression Omnibus (GEO) [database](https://www.ncbi.nlm.nih.gov/gds)
 #' - GDS3713 (GSE18723).
+#'
+#' ### Summary of the study
+#' This study aims to analyze peripheral circulating B cells from smoking and non-smoking healthy US white females. B cells are directly associated with the onset and development of many smoking-induced diseases. Results provide insight into the molecular basis of B cell involvement in smoking-related pathogenesis. It contains 39 smoker and 40 non-smokers. A total of 22283 genes of whom the expession levels are measured on Affymetrix HG-133A GeneChip microarray.
 #'
 #' ## Extracting data from NCBI Gene Expression Omnibus databse
 #'
@@ -69,12 +74,7 @@ gds <- getGEO("GDS3713")
 # gds@dataTable@columns # phenotype data
 #' structure of the `gds` object
 str(gds, max.level = 3)
-
-#' ### Summary of the study
-#' This study aim to analyze peripheral circulating B cells from smoking and non-smoking healthy US white females. B cells are directly associated with the onset and development of many smoking-induced diseases. Results provide insight into the molecular basis of B cell involvement in smoking-related pathogenesis. It contains 39 smoker and 40 non-smokers. A total of 22283 genes of whom the expession levels are measured on Affymetrix HG-133A GeneChip microarray.
-#'
 /*show(Meta(gds))*/
-
 #' ### Assigning the expression and phenotype data
 #' The expression data is stored in the `gds@dataTable@tabl` with gene in
 #' The rows and subjects in the columns.
