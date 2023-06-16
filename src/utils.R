@@ -64,6 +64,12 @@ volc_plot <- function(data,
 
   }
 
+get_args <- function(args, key, default) {
+  if (is.null(args[[key]])) {
+    return(default)
+  }
+  args[[key]]
+}
 
 #' ks_test_plot
 #'
@@ -74,19 +80,31 @@ volc_plot <- function(data,
 #' @param fc str, colname of fold change, should not be on the log scale.
 #' @param pathway_genes a character vector indicating genes of interest, which should be contained in the data set.
 #' @param pathway_name str, the name to put on the plot.
-#' @param plot logical, if TRUE (default) will return ggplot, otherwise, will retur the result of ks.test.
+#' @param xlab, str, x-axis label.
+#' @param ... other keyword argument pass to ks.test
+#' @mexclude boolean, logical; indicate if the gene set and background gene set test should be mutually exclusive. TRUE, correspond to GSEA KS test, FALSE (default) correspond to GSVA KS test.
+#' @param plot logical, if TRUE (default) will return ggplot, otherwise, will return the result of ks.test.
 #'
 #' @return RETURN_DESCRIPTION
 ks_test_plot <- function(data, genename, fc, pathway_genes,
-                         pathway_name, plot = TRUE) {
+                         pathway_name, ..., xlab = "Fold Change", mexclude = F,
+                         plot = TRUE) {
   if ("tbl" %in% class(data[, 1])) {
     stop("The data cannot be tbl_df, tbl objects")
   }
+
+args <- list(...)
+ks_exact <- get_args(args, "exact", T)
+
   rank_fc <- arrange(data, .data[[fc]]) %>%
-    select(.data[[genename]], .data[[fc]])
+    select_at(c(genename, fc))
   idx <- rank_fc[, genename] %in% pathway_genes
   genelist <- rank_fc[idx, ]
-  ks_rst <- ks.test(genelist[, fc], rank_fc[, fc], exact = T)
+  if (mexclude) {
+    rank_fc <- rank_fc %>%
+      filter(!ID %in% pathway_genes)
+  }
+  ks_rst <- ks.test(genelist[, fc], rank_fc[, fc], exact = ks_exact)
 
   if (!plot) {
     return(ks_rst)
@@ -103,17 +121,16 @@ ks_test_plot <- function(data, genename, fc, pathway_genes,
       color = "#6f00ff57", linetype = "dashed"
     ) +
     labs(
-      x = "Fold change", y = "CDF",
+      x = xlab, y = "CDF",
       title = "Kolmogorov-Smirnov test",
       subtitle = pathway_name,
       caption = glue::glue(
-        "P value: ", format(ks_rst$p.value, digits = 4, scientific = T),
+        "P value: ", format(ks_rst$p.value, digits = 3, scientific = T),
         " D= ", round(unname(ks_rst$statistic), 3)
       )
     ) +
     theme_bw()
 }
-
 
 
 #' Calculate enrichment score
@@ -168,6 +185,21 @@ method ='sub', plot= TRUE) {
   if (plot) {
     plot(data$es, type = "l", ylab = "Enrichment score")
     abline(h = 0, lty = 2, col = "red")
+    axis(
+      side = 3, at = which(data$gs_idx),
+      col.ticks = "red",
+      labels = F
+    )
   }
-
 }
+
+# GSVA
+compute_rank_score <- function(sort_idx_vec ) {
+  num_genes <- length(sort_idx_vec)
+  tmp <- rep(0, num_genes)
+  tmp[sort_idx_vec] <- abs(seq(from = num_genes, to = 1) - num_genes / 2)
+  return(tmp)
+}
+
+sort_idx_vec <- c(1, 3, 4, 2)
+compute_rank_score(sort_idx_vec)
