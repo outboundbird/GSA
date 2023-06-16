@@ -25,7 +25,7 @@ gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
 #' # Gene Set Enrichment analysis
 #' The idea of gene set enrichment analysis was proposed first by Mootha et al @moothaPGC1aresponsiveGenesInvolved2003 .
-#' Later on, Subramanian et al @subramanianGeneSetEnrichment2005 made the modifictions based on their idea. This method now is widely used in the genetic study nowadays.
+#' Later on, [*Subramanian et al*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/) @subramanianGeneSetEnrichment2005 made the modifictions based on their idea. This method now is widely used in the genetic study nowadays.
 #' I'd like to point out that this enrichment analysis can be applied in other omic data, not soley in the transcriptomic field.
 #' ![](https://www.pnas.org/cms/10.1073/pnas.0506580102/asset/c5e213a9-4247-4506-bae4-908054152f97/assets/graphic/zpq0370595180001.jpeg)
 #'
@@ -120,7 +120,7 @@ calc_enrich_score(rst, gs2, "ID", "t", "mootha")
 calc_enrich_score(rst, gs3, "ID", "t", "mootha")
 
 #' ### Estimation of Significance Level of ES
-#' This random walk feature correspond to Kolmogorov–Smirnov-like statistic. In the Subramanian et al method, each step the augmentation is differentially weighted given the correlation with the profile or phenotype.
+#' This random walk feature correspond to [one-sample Kolmogorov–Smirnov](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test#One-sample_Kolmogorov%E2%80%93Smirnov_statistic)-like statistic. In the Subramanian et al method, each step the augmentation is differentially weighted given the correlation with the profile or phenotype.
 #'
 #' #### Kolmogorov-Smirnov Tests
 #'
@@ -193,9 +193,26 @@ abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
 #' ## Null distribution of GSEA
-#' The null distribution of GSEA is bimodal.
-#' TBC
-#' 
+#'
+#' Unlike classic gaussian Null distribution, the null distribution of GSEA
+#' is **bimodal**.
+#' ![GSEA paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/bin/pnas_0506580102v2_06580Fig4A.jpg)
+#'
+#' This character was addressed in the supplemental material in their paper in the section
+#' of computing statistical significance:
+#'
+#' > **Computing Significance By Using Positive or Negative Sides of the Observed and
+#' > Null Bimodal ES Distributions**
+#' >
+#' >  ... constructing the null by
+#' > using random phenotype assignments tends to produce a more symmetric distribution that
+#' > may not exactly coincide with the bulk, nonextreme part of the distribution of the
+#' > observed values. To address this issue, we determine significance and adjust for multiple
+#' > hypotheses testing by independently using the positive and negative sides of the observed
+#' > and null bimodal ES distributions. In this way, the significance tests [nominal P value,
+#' > familywise-error rate (FWER), and false discovery rate (FDR)] are single tail tests on the
+#' > appropriate (positive/negative) side of the null distribution.
+#'
 #' ## GSEA using R packages
 #'
 /*
