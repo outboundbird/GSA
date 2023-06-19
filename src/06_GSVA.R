@@ -169,6 +169,13 @@ plot(ecdf(as.numeric(gene_density[1, ])),
   main = "CDF after normalization"
 )
 
+m <- mean(as.numeric(gene_density[1, ]))
+s <- sd(as.numeric(gene_density[1, ]))
+plot(function(x) pnorm(x, m, s),
+  from = -10, to = 10,
+  add = T, lwd = 2, col = "orange"
+)
+
 invisible(lapply(seq(2, length(gs1)), function(i) {
   plot(ecdf(as.numeric(gene_density[i, ])),
     verticals = T, do.points = F,
@@ -178,8 +185,10 @@ invisible(lapply(seq(2, length(gs1)), function(i) {
   )
 }))
 
-legend("bottomright", gs1, col = 1:10, lty = 1:10, cex = 0.6, bty = "n")
-
+legend("bottomright", c(gs1, "F_gauss"),
+  col = c(1:10, "orange"),
+  lty = c(1:10, 1), cex = 0.6, bty = "n"
+)
 #' ## Sample-wise enrichment scores
 #' Next, within each sample, the gene expression levels are reordered. To normalize further, a rank score is computated within each sample.
 #'
@@ -268,6 +277,7 @@ max(sample[, "es", drop = F], 0) - min(sample[, "es", drop = F], 0)
 #' Like the distribution in Eenrichment Score in GSEA, the null distribution of first option Eenrichment Statistics in GSVA  is also bimodal.
 #'
 #' > ![](images/gsva_null.png){width="520"}
+#' >
 #' > -- Supplemental material
 #'
 #' ## GSVA using R package
@@ -320,6 +330,7 @@ grid::grid.draw(p)
 #' ## Implication of GSVA score
 #' The most frequencly used output from GSVA is the GSVA score, which is usually in a format of matrix. This matrix can be used for downstream analyses, such as hypothesis testing, classification, etc. There are some questions raise from using GSVA score in the downstream analysis.
 #'
+#' ## Pros and Cons
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()
