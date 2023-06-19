@@ -1,6 +1,6 @@
 #' ---
 #' title: GSVA
-#' subtitle: 'SAR: sar , Study: study'
+#' subtitle: 'SAR: NA , Study: NA'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
 #' date: 'created: 2023-06-09 , updated (`r Sys.Date()`)'
 #' always_allow_html: true
@@ -266,7 +266,7 @@ max(sample[, "es", drop = F], 0) - min(sample[, "es", drop = F], 0)
 #' ####  Distribution of GSVA score
 #'
 #' Like the distribution in Eenrichment Score in GSEA, the null distribution of first option Eenrichment Statistics in GSVA  is also bimodal.
-#' 
+#'
 #' > ![](images/gsva_null.png){width="520"}
 #' > -- Supplemental material
 #'
@@ -284,35 +284,42 @@ es_gsva <- gsva(
 )
 
 #' ### Visualize pathway level enrichment in each sample
-#+ fig.dim = c(6, 3), echo = F
+#+ fig.dim = c(6, 2), echo = F, cache = T
+labels <- data.frame(status = rep(c("non-smokers", "smokers"), each = 5))
+rownames(labels) <- c(ctrl_ids, case_ids)
 grid::grid.newpage()
 p <- pheatmap::pheatmap(es_gsva,
   annotation_col = labels,
   border_color = NA,
-  # breaks = seq(-6,6, length.out = 100),
   legend_labels = "",
   main = "",
-  clustering_distance_rows = "correlation",
-  clustering_distance_cols = "correlation",
-  clusstering_method = "complete",
   cluster_rows = F, show_rownames = T,
   cluster_cols = F, show_colnames = T,
-  fontsize = 10,
+  fontsize = 8,
   fontsize_col = 5,
-  fontsize_row = 15,
+  fontsize_row = 10,
   angle_col = 45,
   silent = TRUE
 )
 grid::grid.draw(p)
 
 #' ## Other GSVA-like methods
+#' It is possible to use three other methods in the `GSVA` package. These are PLAGE, Z-scores and ssGSEA. I briefly describe these methods below.
 #'
-#' - ssGSEA @barbieSystematicRNAInterference2009:
-#' - zscore @leeInferringPathwayActivity2008:
-#' - PLAGE @tomfohrPathwayLevelAnalysis2005:
+#' ### [PLAGE](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1261155/) @tomfohrPathwayLevelAnalysis2005
+#' > standardizes each gene expression profile over the samples and then estimates the pathway activity profiles for each gene set as the coefficients of the first right-singular vector of the singular value decomposition of the gene set. It assume joint normal distributions in gene expression profiles.
 #'
-
-
+#' ### [Z-scores](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000217) @leeInferringPathwayActivity2008
+#' > The combined z-score method standardizes first, as PLAGE, each gene expression profile into z-scores but the pathway activity profile is then obtained by combining the individual gene z-scores per sample. It assumes the gene expression profile are jointly normally distributioned. The combined z-score additionally assumes that genes act **independently** within each gene set.
+#' ![](images/zscore.png)
+#'
+#' ### [ssGSEA](https://www.nature.com/articles/nature08460) @barbieSystematicRNAInterference2009
+#' > It uses the difference in *empirical cumulative distribution functions* of gene expression ranks inside and outside the gene set to calculate an enrichment statistic per sample which is further normalized by the range of values taken throughout all gene sets and samples.
+#' (The demonstration above uses eCDF.)
+#'
+#' ## Implication of GSVA score
+#' The most frequencly used output from GSVA is the GSVA score, which is usually in a format of matrix. This matrix can be used for downstream analyses, such as hypothesis testing, classification, etc. There are some questions raise from using GSVA score in the downstream analysis.
+#'
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()
