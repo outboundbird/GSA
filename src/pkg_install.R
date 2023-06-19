@@ -35,10 +35,19 @@ if (length(to_install)) {
 }
 
 
+req_libs <- c("shinybusy", "rmarkdown")
 # stable version on CRAN
-install.packages("rmarkdown",
-  dependencies = TRUE,
-  INSTALL_opts = c("--no-lock")
-)
+lapply(req_libs, function(pkg){
+  tryCatch({
+      install.packages(pkg,
+    dependencies = TRUE,
+    INSTALL_opts = c("--no-lock")
+  )
+
+  }, error = function(e){
+    warning(paste('Error installing package', pkg))
+  })
+})
+
 # or development version on GitHub
 # remotes::install_github('rstudio/bookdown')
