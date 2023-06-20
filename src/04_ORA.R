@@ -1,4 +1,4 @@
-/*#' ---
+#' ---
 #' title: Over-representation Analysis
 #' subtitle: 'SAR: NA , Study: NA'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
@@ -19,7 +19,7 @@ options(width = 100)
 library(here)
 library(DT)
 library(clusterProfiler)
-library(org.Hs.eg.db)*/
+library(org.Hs.eg.db)
 #' # Over-representation Analysis
 #' In this chapter, I will illustrate the principle of overpresentation analysis. There exist a variety of tools with different statistical methods.
 #' A few review papers for details: @huangBioinformaticsEnrichmentTools2009
@@ -97,7 +97,7 @@ fisher.test(conttab_gs2, alternative = "greater")
 #' that the functions combine the step of database query and the step of testing
 #' in one go. The `clusterProfile` package currently provide following
 #' biological database.
-#' ![curtesy of clusterProfiler](https://yulab-smu.top/biomedical-knowledge-mining-book/figures/clusterProfiler-diagram.png)
+#' ![curtesy of clusterProfiler](images/clusterProfiler-diagram.png)
 #'
 #' As shown in the graph, the ORA tests with different db queries are prefixed
 #' with `enrich`, such as `enrichGO`, `enrichDO`. Note that these functions
@@ -177,7 +177,7 @@ rst_go@geneSets["GO:0043186"]
 #' reference and set `use_internal_data = TRUE`.
 #' I can't upgrade R in my local enviroment and don't have space to download
 #' massive data. So I won't be able to illustrate KEGG here.
-#+ cache = T, warning = T
+#+ cache = T, warning = T, error = T
 rst_kegg <- enrichKEGG(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id),
   minGSSize = 1,
@@ -186,9 +186,11 @@ rst_kegg <- enrichKEGG(gs3_ids,
   use_internal_data = F
 )
 #' KEGG module
+#+ cache = T, error = T
 rst_mkegg <- enrichMKEGG(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id),
-  organism = "hsa"
+  organism = "hsa",
+  keyType = 'ncbi-geneid'
 )
 
 str(rst_mkegg, max.levels = 1)
@@ -199,7 +201,7 @@ datatable(rst_mkegg@result,
 
 #' ### WikiPathways
 #' [WikiPathways](https://www.wikipathways.org/)
-#+ cache = T
+#+ cache = T, error = T
 enrichWP(gs3_ids,
   organism = "Homo sapiens",
   universe = as.character(gene_ids$entrezgene_id)
@@ -207,7 +209,7 @@ enrichWP(gs3_ids,
 
 #' ### Reactome
 #' [Reactome](https://reactome.org/)
-#+ cache = T
+#+ cache = T, error = T
 rst_react <- ReactomePA::enrichPathway(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id),
   qvalueCutoff = 0.1
@@ -221,14 +223,14 @@ datatable(rst_react@result,
 
 #' ### DO
 #' [Disease Ontology](https://disease-ontology.org/)
-#+ cache = T
+#+ cache = T, error = T
 DOSE::enrichDO(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id)
 )
 
 #' ### DisGeNET
 #' [DisGeNET](https://www.disgenet.org/)
-#+ cache = T
+#+ cache = T, error = T
 rst_dgn <- DOSE::enrichDGN(gs3_ids,
   universe = as.character(gene_ids$entrezgene_id),
   readable = F
@@ -248,7 +250,7 @@ datatable(rst_dgn@result,
 #' The location of the local cache can be found (and updated)
 #' with `getAnnotationHubCache` and `setAnnotationHubCache`;
 #' `removeCache` removes all cache resources.
-#+  eval = F
+#+  eval = F, error = T
 annot <- AnnotationHub::AnnotationHub(localHub = F)
 print(annot)
 # query annotation hub for MeSH database
@@ -258,7 +260,7 @@ print(str(hsa))
 ref_hsa <- hsa[[1]]
 MeSHDB <- MeSHDbi::MeSHDb(ref_hsa)
 #' Otherwise one can install `MeSH.Hsa.eg.db` package in the local environment.
-#+ cache = T
+#+ cache = T, error = T
 # require installation of `MeSH.Hsa.eg.db` package.
 # replace `MeSHDb = MeSHDB` if using local reference database.
 rst_mesh <- meshes::enrichMeSH(gs3_ids,
@@ -284,12 +286,6 @@ datatable(rst_mesh@result,
 #' e.g. up-regulated or down-regulated. This is not so helpful when particularly
 #' interested in the pathways that a drug modulate.
 #' - does not address the intercorelations of genes.
-#' ## Further info
-#' Below is an incomplete sumamry of the ORA.
-datatable(ora,
-  rownames = F,
-  options = list(scrollX = "400px")
-)
 #' ## Reference
 /*
 #' <details><summary>Session Info</summary>
