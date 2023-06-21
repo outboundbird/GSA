@@ -23,8 +23,11 @@ library(ggplot2)
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #' # Other methods
-#' https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3134237/
-#' - maxmean statsitics, restandardization https://arxiv.org/pdf/math/0610667.pdf @efronTestingSignificanceSets GSA package
+#' - [p value combination](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3134237/)
+#' - [maxmean statsitics, restandardization](https://arxiv.org/pdf/math/0610667.pdf)
+#' @efronTestingSignificanceSets GSA package
+#' - [quantile method]()ttps://www.pnas.org/doi/10.1073/pnas.0506577102)
+#' - PAGE
 set.seed(123)
 gs1 <- sample(rst$ID, 30)
 gs2 <- c(head(rst$ID, 15), tail(rst$ID, 15))
@@ -61,7 +64,11 @@ legend("topleft",
   bty = "n"
 )
 
-
+#' # Comparison of gene set analysis methods
+#' https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9882404/
+#' ## Reviews
+#' https://www.frontiersin.org/articles/10.3389/fphys.2015.00383/full
+#'
 #' <details><summary>Session Info</summary>
 sessionInfo()
 #' </details>

@@ -43,7 +43,6 @@ lapply(req_libs, function(pkg){
     dependencies = TRUE,
     INSTALL_opts = c("--no-lock")
   )
-
   }, error = function(e){
     warning(paste('Error installing package', pkg))
   })

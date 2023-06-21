@@ -132,8 +132,6 @@ p2 <- ks_test_plot(rst, "ID", "t", gs2, "gs2")
 p3 <- ks_test_plot(rst, "ID", "t", gs3, "gs3")
 ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 
-#' limitations:
-#'
 #' #### Permutation test
 #' In Subramanian et al method, the test significance is achieved by permutation:
 #'
@@ -141,13 +139,14 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' > an empirical phenotype-based permutation test procedure that
 #' >  **preserves the complex correlation structure of the gene expression data**.
 #'
+#' - Phenotype permutation
 #' The phenotype is permutated and the ES scores are derived to achieve the
 #' null distribution, whereas the genetic
 #' structure is perserved. This method is wildly accepted in univariate genetic sudies.
 #' However, it turned out to be controversial and received the criticism of
 #' generating "false positive results" later on. Several methods were proposed to
 #' alleviate the intercorrelation of the genes.
-#'
+#' - Gene sampling
 #' ###  Adjustment for Multiple Hypothesis Testing.
 #'
 #' #### Normalized Enrichment Score (NES)
@@ -215,6 +214,8 @@ rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 #'
 #' ## GSEA using R packages
 #'
+#' ## Pros and Cons
+#' 
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()
