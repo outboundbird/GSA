@@ -1,8 +1,23 @@
+
+```{r }
+knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
+options(width = 100)
+```
+
 # Gene sets and pathways
 
 ::: {.definition #label name="definition name"}
 gene set , biological pathway
 :::
 
-
-## Biological process data bases
+## Organization of this e-book
+I will illustrate the gene pathway analysis using a public dataset for smoking study.
+Chapter 2 contains information on this study and how to obtain the dataset
+from NCBI website to an R environment.
+Chapter 3 quickly illustrate the differential gene expression analysis. This
+result will be used in some of the parametrical pathway analysis method.
+Chapter 4 introduce over-representation analysis
+Chapter 5 introduce the classic gene set enrichment analysis
+Chapter 6 talks abou the gene set variation analysis
+Chapter 7 discusses other methods for gene set enrichment analysis
+Chapter 8 talks about advanced topic regarding gene set analysis

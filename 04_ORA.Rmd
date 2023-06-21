@@ -176,7 +176,10 @@ rst_go <- enrichGO(gs3_ids,
 )
 
 str(rst_go, max.level = 2)
-datatable(rst_go@result)
+datatable(rst_go@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 rst_go@geneSets["GO:0043186"]
 ```
 
@@ -208,7 +211,10 @@ rst_mkegg <- enrichMKEGG(gs3_ids,
 )
 
 str(rst_mkegg, max.levels = 1)
-datatable(rst_mkegg@result, rownames = F)
+datatable(rst_mkegg@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 ```
 
 ### WikiPathways
@@ -231,7 +237,10 @@ rst_react <- ReactomePA::enrichPathway(gs3_ids,
 )
 
 str(rst_react, max.level = 2)
-datatable(rst_react@result, rownames = F)
+datatable(rst_react@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 ```
 
 ### DO
@@ -252,7 +261,10 @@ rst_dgn <- DOSE::enrichDGN(gs3_ids,
   readable = F
 )
 str(rst_dgn, max.level = 2)
-datatable(rst_dgn@result, rownames = F)
+datatable(rst_dgn@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 ```
 
 ### MeSH
@@ -285,7 +297,10 @@ rst_mesh <- meshes::enrichMeSH(gs3_ids,
   MeSHDb = "MeSH.Hsa.eg.db"
 )
 str(rst_mesh, max.level = 2)
-datatable(rst_mesh@result, rownames = F)
+datatable(rst_mesh@result,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 
 
 # library(RDAVIDWebService)
@@ -307,7 +322,10 @@ interested in the pathways that a drug modulate.
 Below is an incomplete sumamry of the ORA.
 
 ```{r }
-datatable(ora, rownames = F)
+datatable(ora,
+  rownames = F,
+  options = list(scrollX = "400px")
+)
 ```
 
 ## Reference
