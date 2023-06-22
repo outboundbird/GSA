@@ -20,7 +20,7 @@ options(width = 100)
 library(here)
 library(dplyr)
 source(file.path(here(), "src/utils.R"))
-#+ io
+#+ io, cache = T
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
@@ -38,7 +38,7 @@ gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #' ## Enrichment test
 #' I demonstrate the principle of GSEA using the DGEA results from the [smoking study](https://link.springer.com/article/10.1007/s00251-010-0431-6).
 #' And I use the same gene sets $(S)$ in the ORA session for illustration of GSEA.
-#'
+#+ cache = T
 set.seed(123)
 gs1 <- sample(rst$ID, 10)
 gs2 <- c(head(rst$ID, 5), tail(rst$ID, 5))
@@ -89,10 +89,10 @@ rst <- rst %>%
 
 #' The max value of the enrichment score is `r round(max(abs(rst$es_gs1)),2)`
 #'
-#' **Method from *@subramanianGeneSetEnrichment2005* **
+#' **Method from @subramanianGeneSetEnrichment2005 **
 #' $$\begin{equation*}\;P_{{\mathrm{hit}}}(S,i)={{\sum_{\begin{matrix}\scriptstyle{g_{j}{\in}S}\\ \scriptstyle{j{\leq}i}\end{matrix}}}}\frac{|r_{j}|^{p}}{N_{R}},\hspace{1em}{\mathrm{where}}{\;}N_{R}={{\sum_{g_{j}{\in}S}}}|r_{j}|^{p} \end{equation*}$$
 #' $$\begin{equation*}\;P_{{\mathrm{miss}}}(S,i)={{\sum_{\begin{matrix}\scriptstyle{g_{j}{\not\in}S}\\ \scriptstyle{j{\leq}i}\end{matrix}}}}\frac{1}{(N-N_{H})}.\;\end{equation*}$$
-#+ fig.cap="Comparison between two methods"
+#+ fig.cap="Comparison between two methods", cache = T
 p_miss <- -1 / (n_tot - n_h)
 nr <- sum(abs(t_stat[gs1]))
 rst <- rst %>%
@@ -110,7 +110,7 @@ rst <- rst %>%
     col.ticks = "red",
     labels = F
   )
-  plot(rst$es2_gs1, type = "l", ylab = "Enrichment Score", main = "ES (Subramanian et al 2005)")
+  plot(rst$es2_gs1, type = "l", ylab = "Enrichment Score", main = "ES (Subramanian et al)")
   abline(h = 0, lty = 2, col = "red")
   axis(
     side = 3, at = which(rst$gs1),
@@ -123,7 +123,7 @@ rst <- rst %>%
 #' the way that genes were selected in the sets. The Subramanian panelizes the
 #' genes in the middle of rank by assigning less weight on the ES.
 #'
-#+ gs23, fig.dim = c(8,6), fig.cap ="Random walk of ES for gene set 2 and 3. Upper panel with Mootha method, lower panel with Subramanian method"
+#+ gs23, fig.dim = c(8,6), fig.cap ="Random walk of ES for gene set 2 and 3. Upper panel with Mootha method, lower panel with Subramanian method", cache = T
 par(mfrow = c(2, 2), cex = 0.8, mar = c(4, 4, 1, 1))
 calc_enrich_score(rst, gs2, "ID", "t", "mootha")
 calc_enrich_score(rst, gs3, "ID", "t", "mootha")
@@ -131,10 +131,11 @@ calc_enrich_score(rst, gs2, "ID", "t")
 calc_enrich_score(rst, gs3, "ID", "t")
 
 #' #### Normalized Enrichment Score (NES)
-#' > when adjusting for variation in gene set size, we normalize the ES(S, π) for a
+#' > when adjusting for variation in gene set size, we normalize the $ES(S, \pi)$ for a
 #' >  given S, separately rescaling the positive and negative scores by dividing by
-#' >  their mean value, yielding NES(S, π) and NES(S) (normalized scores, NES).
-#' > - supporting doc
+#' >  their mean value, yielding $NES(S, \pi)$ and $NES(S)$ (normalized scores, NES).
+#' >
+#' > -- Supplement @subramanianGeneSetEnrichment2005
 #'
 #' Here I use gene set 1 as an example and I only illustrate the normalization
 #' for the observed ES.
@@ -155,7 +156,7 @@ rst <- rst %>%
 #'
 #' [K-S test](https://fr.wikipedia.org/wiki/Test_de_Kolmogorov-Smirnov) is designed to find general difference in the cumulative distribution. Here I plot simplied the K-S test of the three gene sets.
 #'
-#+ fig.dim = c(8, 3.5)
+#+ fig.dim = c(8, 3.5), cache = T
 p1 <- ks_test_plot(rst, "ID", "t", gs1, "gs1")
 p2 <- ks_test_plot(rst, "ID", "t", gs2, "gs2")
 p3 <- ks_test_plot(rst, "ID", "t", gs3, "gs3")
@@ -163,6 +164,7 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' #### Significance assessment
 #'
 #' - Phenotype permutation
+#'
 #' In Subramanian et al method, the test significance is achieved by permutation:
 #'
 #' > We estimate the statistical significance (nominal P value) of the ES by using
@@ -177,6 +179,7 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' alleviate the intercorrelation of the genes.
 #'
 #' - Gene sampling
+#'
 #' In gene sampling method, a group of genes are randomly selected from the
 #' reference or background gene set to form the null gene sets. The the ES of
 #' a given gene set $G_i$ is compared against the ES formed from the null
@@ -187,12 +190,13 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' this method is computationally demanding.
 #'
 #' ###  Adjustment for Multiple Hypothesis Testing.
-#' When testing biological pathway enrichment, a group of gene sets are usually queried.
+#' When testing biological pathway enrichment, several gene sets are usually queried.
 #' Therefore GSEA usually involves adjustment for multiple comparisons.
 #' Classic methods are availble in the R package for addressing this issue.
-#' However, the pathways themselves can be correlated thus violeting the
+#' However, the pathways themselves can be correlated thus violating the
 #' independence assumption in many of the methods for adjusting multiple testing,
-#' such as Bonferroni, Benjamini-Hocheberg.
+#' such as Bonferroni, Benjamini-Hochberg.
+#' To properly adjust for multiplicity issue, requires advanced techniques.
 #' I will not discuss this subject here. A detailed discussion should be proposed
 #' elsewhere.
 #'
@@ -203,22 +207,24 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' > running sum reaches its maximum deviation from zero
 #' > The leading-edge subset can be interpreted as the core of a gene set
 #' > that accounts for the enrichment signal.
-#'
+#' > ...
 #' > High scoring gene sets can be grouped on the basis of leading-edge
 #' > subsets of genes that they share. Such groupings can reveal which of
 #' > those gene sets correspond to the same biological processes and
 #' > which represent distinct processes.
+#' > -- @subramanianGeneSetEnrichment2005
+#'
 #' I illustrate this idea with an example using gene set 1. Here I find the max
 #' ES in the random walk plot. I can see the ES reaches to max at gene
 #' `207479_at` then decreases. According to the definition by Subramanian et al,
 #' The leading edge genes are EIF3I, DYRK3, and 207479_at.
 #'
+#+ cache = T
 calc_enrich_score(rst, gs1, "ID", "t")
 abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
-#' ## Null distribution of GSEA
-#' **Null hypothesis**:
+#' ## Distribution of GSEA enrichment score
 #'
 #' Unlike classic gaussian Null distribution, the null distribution of GSEA
 #' is **bimodal**.
@@ -238,6 +244,8 @@ rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 #' > and null bimodal ES distributions. In this way, the significance tests [nominal P value,
 #' > familywise-error rate (FWER), and false discovery rate (FDR)] are single tail tests on the
 #' > appropriate (positive/negative) side of the null distribution.
+#' >
+#' > -- Supllemental material @subramanianGeneSetEnrichment2005
 #'
 #' ## GSEA using R packages
 #'
