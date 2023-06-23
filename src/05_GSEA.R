@@ -1,6 +1,6 @@
 #' ---
-#' title: GSEA
-#' subtitle: 'SAR: sar , Study: study'
+#' title: Gene Set Enrichment Analysis - GSEA
+#' subtitle: 'Tutorial'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
 #' date: 'created: 2023-06-06 , updated (`r Sys.Date()`)'
 #' always_allow_html: true
@@ -24,7 +24,7 @@ source(file.path(here(), "src/utils.R"))
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
-#' # Gene Set Enrichment analysis
+#' # Gene Set Enrichment Analysis
 #' The idea of gene set enrichment analysis was proposed first by @moothaPGC1alpharesponsiveGenesInvolved2003.
 #' Later on, [*@subramanianGeneSetEnrichment2005 *](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/) made the modifictions based on their idea. This method now is widely used in the genetic study nowadays. These methods are considered as univariate funcitonal class scoring methods. It uses *gene scores* to summarize the differences between the comparison groups then uses gene set scores to summarize the expression levels of genes in a set and use a single statstic for signficance assessment.
 #'
@@ -92,7 +92,7 @@ rst <- rst %>%
 #' **Method from @subramanianGeneSetEnrichment2005 **
 #' $$\begin{equation*}\;P_{{\mathrm{hit}}}(S,i)={{\sum_{\begin{matrix}\scriptstyle{g_{j}{\in}S}\\ \scriptstyle{j{\leq}i}\end{matrix}}}}\frac{|r_{j}|^{p}}{N_{R}},\hspace{1em}{\mathrm{where}}{\;}N_{R}={{\sum_{g_{j}{\in}S}}}|r_{j}|^{p} \end{equation*}$$
 #' $$\begin{equation*}\;P_{{\mathrm{miss}}}(S,i)={{\sum_{\begin{matrix}\scriptstyle{g_{j}{\not\in}S}\\ \scriptstyle{j{\leq}i}\end{matrix}}}}\frac{1}{(N-N_{H})}.\;\end{equation*}$$
-#+ fig.cap="Comparison between two methods", cache = T
+#+  cache = T
 p_miss <- -1 / (n_tot - n_h)
 nr <- sum(abs(t_stat[gs1]))
 rst <- rst %>%
@@ -101,7 +101,8 @@ rst <- rst %>%
     score2_gs1 = case_when(row_number() == 1 ~ 0, TRUE ~ score2_gs1),
     es2_gs1 = cumsum(score2_gs1)
   )
-  #+  plot, fig.dim = c(8, 4), cache = T
+#'
+#+  plot, fig.dim = c(8, 4), fig.cap="\\label{fig:fig}Comparison between two methods", cache = T, fig.topcaption=TRUE
   par(mfrow = c(1, 2), cex = 0.8)
   plot(rst$es_gs1, type = "l", ylab = "Enrichment score", main = "ES (Mootha et al)")
   abline(h = 0, lty = 2, col = "red")
@@ -120,10 +121,10 @@ rst <- rst %>%
 
 #' Similarily, I can calculate the ES for gene set 2 and gene set 3 (Figure \@ref(fig:gs23) below).
 #' And one can clearly see the extreme pattern in the random walk plot due to
-#' the way that genes were selected in the sets. The Subramanian panelizes the
-#' genes in the middle of rank by assigning less weight on the ES.
+#' the way that genes were selected in the sets. The Subramanian et al method panelizes the
+#' genes in the middle of rank by assigning less weight on the hits.
 #'
-#+ gs23, fig.dim = c(8,6), fig.cap ="Random walk of ES for gene set 2 and 3. Upper panel with Mootha method, lower panel with Subramanian method", cache = T
+#+ gs23, fig.dim = c(8,6), fig.cap ="Random walk of ES for gene set 2 and 3. Upper panel with Mootha method, lower panel with Subramanian method", cache = T, fig.topcaption=TRUE
 par(mfrow = c(2, 2), cex = 0.8, mar = c(4, 4, 1, 1))
 calc_enrich_score(rst, gs2, "ID", "t", "mootha")
 calc_enrich_score(rst, gs3, "ID", "t", "mootha")
@@ -146,7 +147,7 @@ rst %>%
 
 rst <- rst %>%
   mutate(sign = if_else(es2_gs1 > 0, T, F)) %>%
-    mutate(nes = if_else(sign, es2_gs1 / 0.16, es2_gs1 / -0.09))
+    mutate(nes = if_else(sign, es2_gs1 / 0.16, es2_gs1 / 0.09))
 
 #' Ehe enrichment score  `r max(abs(rst[, "es2_gs1"]))` and the normalized
 #' enrichement score is `r max(abs(rst[, 'nes']))`.
@@ -251,7 +252,7 @@ abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
 #' ## GSEA using R packages
-#' I demonstrate the GSEA with `clusterProfiler` package with the acknoledgement of other packages in different languages for this type of analysis such as [GSEA-MSigDB](https://github.com/GSEA-MSigDB).
+#' I demonstrate the GSEA with [`clusterProfiler` package](https://github.com/YuLab-SMU/clusterProfiler/tree/master) with the acknoledgement of other packages in different languages for this type of analysis such as [GSEA-MSigDB](https://github.com/GSEA-MSigDB).
 #+ cache = T
 library(clusterProfiler)
 library(org.Hs.eg.db)
@@ -277,7 +278,7 @@ head(glist)
 #' > - Tags. The percentage of gene hits before (for positive ES) or after (for negative ES) the peak in the running enrichment score.
 #' > - List. The percentage of genes in the ranked gene list before (for positive ES) or after (for negative ES) the peak in the running enrichment score.
 #' > - Signal. The enrichment signal strength that combines the two previous statistics:
-#' > ${(Tag\%)(1-Gene\%)(\frac{N}{N-Nh}})$, where N is the number of genes in the list and Nh is the number of genes in the gene set.
+#' > ${(Tag\%)(1-Gene\%)(\frac{N}{N-Nh}})$, where N is the number of genes in the list and N<sub>h</sub> is the number of genes in the gene set.
 #'
 #' #### GO
 #+ cache = T
@@ -321,19 +322,29 @@ head(rst_kegg)
 #' - Or the fast-GSEA by @korotkevichFastGeneSet2016 , which can be specified in `by = 'fgsea'`.
 #'
 gs1_id <- rst[which(rst$ID %in% gs1), "entrezgene_id", drop = F] %>%
-  mutate(gs.name = "gs1") %>%
+  mutate(gs.name = "Siying's random set") %>%
   relocate(gs.name, .before = entrezgene_id)
 
 head(gs1_id)
 #+ cache = T
-GSEA(glist,
+rst_gsea <- GSEA(glist,
   minGSSize = 1,
   TERM2GENE = gs1_id,
   pvalueCutoff = 1,
   by = "fgsea",
+  nPerm = 1000
+)
+
+gseaplot2(rst_gsea,
+  geneSetID = 1,
+  pvalue_table = T
 )
 
 #' ## Pros and Cons
+#'
+#' - Able to see the direction of pathway regulation
+#' - Some complained that KS test is not sensitive, the others complain about
+#'  the correlations among genes in a patwhay would render *"false positive"* results.
 #'
 #' ## Reference
 #'
