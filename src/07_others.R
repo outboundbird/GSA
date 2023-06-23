@@ -1,5 +1,5 @@
 #' ---
-#' title: title
+#' title: Other methods in gene set analysis
 #' subtitle: 'SAR: sar , Study: study'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
 #' date: 'created: 2023-06-08 , updated (`r Sys.Date()`)'
@@ -11,6 +11,7 @@
 #'     toc: yes
 #'     toc_float:
 #'       collapse: no
+#' bibliography: references.bib
 #' ---
 #+ setup, include = FALSE
 knitr::opts_knit$set(root_dir = "/mnt/c/Users/e0482362/Work/pathway_analysis/src")
@@ -23,11 +24,13 @@ library(ggplot2)
 rst <- readRDS(file.path(here(), "data/de_rst.rds"))
 gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #' # Other methods
-#' - [p value combination](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3134237/)
-#' - [maxmean statsitics, restandardization](https://arxiv.org/pdf/math/0610667.pdf)
-#' @efronTestingSignificanceSets GSA package
-#' - [quantile method]()ttps://www.pnas.org/doi/10.1073/pnas.0506577102)
-#' - PAGE
+#' - @irizarryGeneSetEnrichment2009a [p value combination RGene set analysis ](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3134237/)
+#' - @efronTestingSignificanceSets2007 [maxmean statsitics, restandardization](https://arxiv.org/pdf/math/0610667.pdf)
+#'  GSA package
+#' - @tianDiscoveringStatisticallySignificant2005 [quantile method](https://www.pnas.org/doi/10.1073/pnas.0506577102)
+#' - @kimPAGEParametricAnalysis2005 [PAGE](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-6-144)
+#'
+#' # Density plot
 set.seed(123)
 gs1 <- sample(rst$ID, 30)
 gs2 <- c(head(rst$ID, 15), tail(rst$ID, 15))
@@ -65,14 +68,18 @@ legend("topleft",
 )
 
 #' # Comparison of gene set analysis methods
-#' https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9882404/
+#'
+#' [Comparison of gene set scoring methods for reproducible evaluation of multiple tuberculosis gene signatures](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9882404/)
+#'
 #' ## Reviews
 #' https://www.frontiersin.org/articles/10.3389/fphys.2015.00383/full
 #'
-#' <details><summary>Session Info</summary>
+#' ## Reference
+#' 
+/*#' <details><summary>Session Info</summary>
 sessionInfo()
 #' </details>
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/07_others.R', output_dir = 'output')
-# knitr::spin('src/07_others.R', format = 'Rmd', knit = FALSE)
+# knitr::spin('src/07_others.R', format = 'Rmd', knit = FALSE)*/
