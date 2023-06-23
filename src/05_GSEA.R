@@ -137,14 +137,17 @@ calc_enrich_score(rst, gs3, "ID", "t")
 #' >
 #' > -- Supplement @subramanianGeneSetEnrichment2005
 #'
-#' Here I use gene set 1 as an example and I only illustrate the normalization
-#' for the observed ES.
+#' Here I use gene set 1 as an example and I only illustrate the normalization procedure
+#' for the **observed ES**. Note that this is different from the NES output from the normalization for the permutated ES.
 rst %>%
-  group_by(gs1) %>%
+  mutate(sign = if_else(es2_gs1> 0, T, F)) %>%
+  group_by(sign) %>%
   summarise(mean_es = mean(es2_gs1))
 
 rst <- rst %>%
-  mutate(nes = if_else(gs1, es2_gs1 / 0.16, es2_gs1 / 0.0853))
+  mutate(sign = if_else(es2_gs1 > 0, T, F)) %>%
+    mutate(nes = if_else(sign, es2_gs1 / 0.16, es2_gs1 / -0.09))
+
 #' Ehe enrichment score  `r max(abs(rst[, "es2_gs1"]))` and the normalized
 #' enrichement score is `r max(abs(rst[, 'nes']))`.
 #'
@@ -248,7 +251,7 @@ abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
 #' ## GSEA using R packages
-#' I demonstrate the GSEA with `clusterProfiler` package with the acknoledgement of other packages for this type of analysis.
+#' I demonstrate the GSEA with `clusterProfiler` package with the acknoledgement of other packages in different languages for this type of analysis such as [GSEA-MSigDB](https://github.com/GSEA-MSigDB).
 #+ cache = T
 library(clusterProfiler)
 library(org.Hs.eg.db)
