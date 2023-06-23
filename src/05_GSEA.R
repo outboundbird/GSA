@@ -30,7 +30,7 @@ gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 #'
 #' I'd like to point out that this enrichment analysis can be applied in other omic data, not soley in the transcriptomic field.
 #'
-#' **Disclaimer:  All quoted text are from original @subramanianGeneSetEnrichment2005 paper.**
+#' **Disclaimer:  Unless otherwise pointed out, all quoted text are from original @subramanianGeneSetEnrichment2005 paper.**
 #'
 #' ## Scheme of gene set enrichment analysis
 #' ![](https://www.pnas.org/cms/10.1073/pnas.0506580102/asset/c5e213a9-4247-4506-bae4-908054152f97/assets/graphic/zpq0370595180001.jpeg)
@@ -139,7 +139,7 @@ calc_enrich_score(rst, gs3, "ID", "t")
 #' > -- Supplement @subramanianGeneSetEnrichment2005
 #'
 #' Here I use gene set 1 as an example and I only illustrate the normalization procedure
-#' for the **observed ES**. Note that this is different from the NES output from the normalization for the permutated ES.
+#' for the **observed ES**. Note that this is different from the NES output from the normalization of the permutated ES.
 rst %>%
   mutate(sign = if_else(es2_gs1> 0, T, F)) %>%
   group_by(sign) %>%
