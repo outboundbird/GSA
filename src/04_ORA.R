@@ -110,10 +110,10 @@ chisq.test(conttab_gs2)
 fisher.test(conttab_gs2, alternative = "greater")
 
 #' ## Over-respensentation analysis from R package
-#' The advantage of performing ORA using R packages `clusterProfile`
+#' The advantage of performing ORA using R packages `clusterProfiler`
 #' (which is the fusion of a few packages) is
 #' that the functions combine the step of database query and the step of testing
-#' in one go. The `clusterProfile` package currently provide
+#' in one go. The `clusterProfiler` package currently provide
 #' biological database indicated in the *Over-representation analysis* box in
 #' the graph below.
 #' ![curtesy of clusterProfiler](images/clusterProfiler-diagram.png)
@@ -169,7 +169,7 @@ tab <- as.table(matrix(c(1, 59, 4, 11535), ncol = 2))
 fisher.test(tab, alternative = "greater")
 #' ## Examples {.tabset}
 #' I list the example queries in the mostly used databases.
-#' If not specified, all the functions are from the `clusterProfile` package.
+#' If not specified, all the functions are from the `clusterProfiler` package.
 #'
 #' ### GO
 #' [Gene Ontology](http://geneontology.org/)
