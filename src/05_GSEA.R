@@ -14,7 +14,7 @@
 #' bibliography: references.bib
 #' ---
 #+ setup, include = FALSE
-knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
+knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = T)
 options(width = 100)
 #+
 library(here)
@@ -182,7 +182,7 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #'
 #' In gene sampling method, a group of genes are randomly selected from the
 #' reference or background gene set to form the null gene sets. The the ES of
-#' a given gene set $G_i$ is compared against the ES formed from the null
+#' a given gene set $S_i$ is compared against the ES formed from the null
 #' gene sets. The advantage of this method is that it does not depends on the
 #' sample size therefore can be applied to the small sample size datasets.
 #' However this method unrealistically assumes that all the genes in the
@@ -196,9 +196,32 @@ ggpubr::ggarrange(p1, p2, p3, ncol = 3)
 #' However, the pathways themselves can be correlated thus violating the
 #' independence assumption in many of the methods for adjusting multiple testing,
 #' such as Bonferroni, Benjamini-Hochberg.
-#' To properly adjust for multiplicity issue, requires advanced techniques.
-#' I will not discuss this subject here. A detailed discussion should be proposed
+#' To properly adjust for multiplicity issue is an advanced topic.
+#' I will not discuss it here. A detailed discussion should be proposed
 #' elsewhere.
+#'
+#' ### Distribution of GSEA enrichment score
+#'
+#' Unlike classic gaussian Null distribution, the null distribution of GSEA
+#' is **bimodal**.
+#' ![GSEA paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/bin/pnas_0506580102v2_06580Fig4A.jpg)
+#'
+#' This character was addressed in the supplemental material in their paper in the section
+#' of computing statistical significance:
+#'
+#' > **Computing Significance By Using Positive or Negative Sides of the Observed and
+#' > Null Bimodal ES Distributions**
+#' >
+#' >  ... constructing the null by
+#' > using random phenotype assignments tends to produce a more symmetric distribution that
+#' > may not exactly coincide with the bulk, nonextreme part of the distribution of the
+#' > observed values. To address this issue, we determine significance and adjust for multiple
+#' > hypotheses testing by independently using the positive and negative sides of the observed
+#' > and null bimodal ES distributions. In this way, the significance tests [nominal P value,
+#' > familywise-error rate (FWER), and false discovery rate (FDR)] are single tail tests on the
+#' > appropriate (positive/negative) side of the null distribution.
+#' >
+#' > -- Supllemental material, @subramanianGeneSetEnrichment2005
 #'
 #' ## The Leading-Edge Subset analysis.
 #'
@@ -224,31 +247,89 @@ calc_enrich_score(rst, gs1, "ID", "t")
 abline(v = which.max(rst$es2_gs1), lty = 3, col = "purple")
 rst[rst$gs1, c("ID", "es2_gs1", "nes")]
 
-#' ## Distribution of GSEA enrichment score
-#'
-#' Unlike classic gaussian Null distribution, the null distribution of GSEA
-#' is **bimodal**.
-#' ![GSEA paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/bin/pnas_0506580102v2_06580Fig4A.jpg)
-#'
-#' This character was addressed in the supplemental material in their paper in the section
-#' of computing statistical significance:
-#'
-#' > **Computing Significance By Using Positive or Negative Sides of the Observed and
-#' > Null Bimodal ES Distributions**
-#' >
-#' >  ... constructing the null by
-#' > using random phenotype assignments tends to produce a more symmetric distribution that
-#' > may not exactly coincide with the bulk, nonextreme part of the distribution of the
-#' > observed values. To address this issue, we determine significance and adjust for multiple
-#' > hypotheses testing by independently using the positive and negative sides of the observed
-#' > and null bimodal ES distributions. In this way, the significance tests [nominal P value,
-#' > familywise-error rate (FWER), and false discovery rate (FDR)] are single tail tests on the
-#' > appropriate (positive/negative) side of the null distribution.
-#' >
-#' > -- Supllemental material @subramanianGeneSetEnrichment2005
-#'
 #' ## GSEA using R packages
+#' I demonstrate the GSEA with `clusterProfiler` package with the acknoledgement of other packages for this type of analysis.
+#+ cache = T
+library(clusterProfiler)
+library(org.Hs.eg.db)
+rst <- rst %>%
+  right_join(gene_ids, by = c("ID" = "hgnc_symbol")) %>%
+  arrange(desc(t))
+glist <- rst[, "t"] %>% setNames(rst[, "entrezgene_id"])
+head(glist)
+#' ### Explore biological process database {.tabset}
+#' When exploring the potentially enriched pathway without prior knowledge, one can use the functions in `clusterProfiler` that prefixed with `gse*`.
 #'
+#' **Intrepretation of results:**
+#' For a detailed explaination see [GSEA user guide](https://www.gsea-msigdb.org/gsea/doc/GSEAUserGuideFrame.html).
+#' I briefly desbribe in below.
+#'
+#' - **Description** provides the biological description of the functionality of this pathway.
+#' - **setSize** indicates how many genes are involved in this pathway
+#' - **enrichmentScore** and **NES** are the enrichment score and normalized enrichment score explained above.
+#' - **pvalue**, **p.adjust**, **qvalues** correponds to the significance test result. User can modify the methods used for multiple comparisons.
+#' - **rank** indicates the position in the ranked list at which the maximum enrichment score occurred.
+#' - **leading_edge**:
+#'
+#' > - Tags. The percentage of gene hits before (for positive ES) or after (for negative ES) the peak in the running enrichment score.
+#' > - List. The percentage of genes in the ranked gene list before (for positive ES) or after (for negative ES) the peak in the running enrichment score.
+#' > - Signal. The enrichment signal strength that combines the two previous statistics:
+#' > ${(Tag\%)(1-Gene\%)(\frac{N}{N-Nh}})$, where N is the number of genes in the list and Nh is the number of genes in the gene set.
+#'
+#' #### GO
+#+ cache = T
+rst_go <- gseGO(
+  geneList = glist,
+  OrgDb = org.Hs.eg.db,
+  ont = "CC",
+  verbose = FALSE
+)
+
+datatable(rst_go@result)
+#' #### WikiPathways
+#+ cache = T
+rst_wp <- gseWP(glist, organism = "Homo sapiens")
+datatable(rst_wp@result)
+
+#' #### Reactome
+#+ cache = T
+rst_react <- ReactomePA::gsePathway(glist)
+datatable(rst_react@result)
+
+#' #### DO
+#+ cache = T
+gseDO(glist)
+
+#' #### KEGG
+# needs ncbi gene id
+rst_kegg <- gseKEGG(
+  geneList = glist,
+  organism = "hsa",
+  verbose = FALSE
+)
+head(rst_kegg)
+#' ### Test preselected pathway
+#' One can use `GSEA` function to test preselected pathways.
+#' Here I use gene set1 as an example.
+#'
+#' There are two options for performing GSEA:
+#'
+#' - The classical GSEA procedure which performs permutation and takes long time. This can be specified in the `by ='DOSE'` argument.
+#' - Or the fast-GSEA by @korotkevichFastGeneSet2016 , which can be specified in `by = 'fgsea'`.
+#'
+gs1_id <- rst[which(rst$ID %in% gs1), "entrezgene_id", drop = F] %>%
+  mutate(gs.name = "gs1") %>%
+  relocate(gs.name, .before = entrezgene_id)
+
+head(gs1_id)
+#+ cache = T
+GSEA(glist,
+  minGSSize = 1,
+  TERM2GENE = gs1_id,
+  pvalueCutoff = 1,
+  by = "fgsea",
+)
+
 #' ## Pros and Cons
 #'
 #' ## Reference
