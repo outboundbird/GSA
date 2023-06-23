@@ -11,6 +11,7 @@
 #'     toc: yes
 #'     toc_float:
 #'       collapse: no
+#' bibliography: references.bib
 #' ---
 #+ setup, include = FALSE
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
@@ -258,7 +259,8 @@ p3 <- ks_test_plot(sample, "ID", "rscore",
 ggpubr::ggarrange(p2, p3, nrow = 1, ncol = 2)
 
 #' ### Enrichemnent statistics
-#' In GSVA, two approaches were prposed to turn KS random walk statistics into enrichment statistics,AKA, GSVA score.
+#' In GSVA, two approaches were prposed to turn KS random walk statistics into enrichment statistics,AKA, **GSVA score**.
+#'
 #' > We offer two approaches for turning the KS like random walk statistic into an enrichment statistic (ES) (also called GSVA score), the classical maximum deviation method and a normalized ES. The first ES is the maximum deviation from zero of the random walk of the j-th sample with respect to the k-th gene set:
 #'
 #' $$ES_{jk}^{max}= \nu_{jk}[arg max_{l = 1..p}(|\nu_{jk}{l}|)]$$
