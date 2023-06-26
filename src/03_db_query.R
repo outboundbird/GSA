@@ -1,4 +1,4 @@
-/*#' ---
+#' ---
 #' title: Query bioloical pathway databases
 #' subtitle: 'SAR: NA , Study: NA'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
@@ -11,18 +11,16 @@
 #'     toc: yes
 #'     toc_float:
 #'       collapse: no
+#' bibliography: references.bib
 #' ---
 #+ setup, include = FALSE
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = T, error = F)
-options(width = 100)*/
+options(width = 100)
 #' # Query bioloical pathway databases
 #' For this practice, we'll use the result from differential gene expression
 #' analysis.
 #+ echo = F
 library(here)
-require(clusterProfiler)
-require(enrichplot)
-require(DOSE)
 require(org.Hs.eg.db)
 library(biomaRt)
 library(DT)
@@ -61,13 +59,18 @@ datatable(annot[which(annot$Gene.symbol == "ICOSLG"), ],
 # available database
 datatable(listEnsembl())
 # available biological species for the gene databases
-mart <- useEnsembl("genes", mirror = 'www')
+#+ cache = T
+mart <- useEnsembl("genes",
+  dataset = "hsapiens_gene_ensembl",
+  mirror = "www"
+)
 datatable(listDatasets(mart))
+searchAttributes(mart, "entrez|hgnc")
 #' Since we want to convert gene symbol to Entrez gene IDs in human subjects,
 #' we select `biomart = 'genes'` and `dataset= 'hsapiens_gene_ensembl'`.
 #' Use `useEnsembl` function to setup the connection with ensembl site host.
 # convert from gene symbol to gene ID
-
+#+ cache = T
 ensembl <- useEnsembl(
   biomart = "genes",
   dataset = "hsapiens_gene_ensembl",
@@ -93,8 +96,9 @@ geneset 2: {paste0(gs2, collapse =", ")}\ngeneset 3: {paste0(gs3, collapse =", "
 #' the `filter` argument (`filters = "hgnc_symbol"`). We would like to output
 #' the `hgnc_symbol`,`entrezgene_id` reference.
 #'
+#+ cache = T
 annotgs3 <- getBM(
-  attributes = c("hgnc_symbol", "entrezgene_id"),
+  attributes = c("hgnc_symbol", "entrezgene_id", "ensembl_gene_id"),
   filters = "hgnc_symbol",
   values = gs3,
   mart = ensembl
@@ -120,7 +124,7 @@ all_genes <- rst$ID
 #' the dataset. We annotate these genes.
 #+ cache = T, eval = F
 annot_all <- getBM(
-  attributes = c("hgnc_symbol", "entrezgene_id"),
+  attributes = c("hgnc_symbol", "entrezgene_id", "ensembl_gene_id"),
   filters = "hgnc_symbol",
   values = all_genes,
   mart = ensembl
@@ -147,7 +151,9 @@ bitr(gs1,
 #' Upon selection genes of interest, we can start to curate the biological
 #' functions of these genes. The most popular databases are GO, KEGG, Reactome,
 #' etc. For full understanding the property of each of these databases, see
-#' these references [xxx].
+#' these references :
+#' @gillespieReactomePathwayKnowledgebase2022
+#' @gillespieReactomePathwayKnowledgebase2022 , @kanehisaKEGGTaxonomybasedAnalysis2023, @liberzonMolecularSignaturesDatabase2011, @liberzonMolecularSignaturesDatabase2015, @tureiOmniPathGuidelinesGateway2016
 #'
 #' For example, I'd like to query the biological functions of genes in the set 3
 #' . One can use the `groupGO` function to look up biological functions:
