@@ -305,10 +305,15 @@ datatable(rst_react@result)
 gseDO(glist)
 
 #' #### KEGG
-# needs ncbi gene id
+#' There's a [bug](https://github.com/YuLab-SMU/clusterProfiler/issues/561) in the order `clusterProfiler` package.do
+#' It is recommended to update R version and `DOSE` package. I won't be able illustrate
+#' this in my local setting.
+#+ eval = F
+g_ensl <- rst[, "t"] %>% setNames(rst[, "ensembl_gene_id"])
 rst_kegg <- gseKEGG(
-  geneList = glist,
+  geneList = g_ensl,
   organism = "hsa",
+  keyType = 'ncbi-geneid',
   verbose = FALSE
 )
 head(rst_kegg)
