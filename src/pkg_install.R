@@ -8,10 +8,11 @@
    "MeSH.Hsa.eg.db",
    "bookdown",
    'rmarkdown',
-   'GSVA'
+   'GSVA',
+   'GSAR'
 
  )
- to_install <- req_libs[!req_libs %in% env_pkgs]
+to_install <- req_libs[!req_libs %in% env_pkgs]
 to_install <- 'GSVA'
 
 if (length(to_install)) {
