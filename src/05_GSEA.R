@@ -156,15 +156,15 @@ rst <- rst %>%
 #' This random walk feature correspond to [one-sample Kolmogorov–Smirnov](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test#One-sample_Kolmogorov%E2%80%93Smirnov_statistic)-like statistic. In the Subramanian et al method, each step the augmentation is differentially weighted given the correlation with the profile or phenotype.
 #'
 #' #### Kolmogorov-Smirnov Tests
-#' > **Null hypothei**s: No gene set is associated with the class distinction (@moothaPGC1alpharesponsiveGenesInvolved2003), where the rank ordering is used as measure of association.
+#' > **Null hypothesis**: No gene set is associated with the class distinction -- @moothaPGC1alpharesponsiveGenesInvolved2003, where the rank ordering is used as measure of association.
 #'
 #' [K-S test](https://fr.wikipedia.org/wiki/Test_de_Kolmogorov-Smirnov) is designed to find general difference in the cumulative distribution. Here I plot simplied the K-S test of the three gene sets.
 #'
-#+ fig.dim = c(8, 3.5), cache = T
-p1 <- ks_test_plot(rst, "ID", "t", gs1, "gs1")
-p2 <- ks_test_plot(rst, "ID", "t", gs2, "gs2")
-p3 <- ks_test_plot(rst, "ID", "t", gs3, "gs3")
-ggpubr::ggarrange(p1, p2, p3, ncol = 3)
+#+ fig.dim = c(6, 5), cache = T
+ks_test_plot(rst, "ID", "es2_gs1", gs1, "gs1",
+  xlab = "Enrichment Score"
+)
+
 #' #### Significance assessment
 #'
 #' - Phenotype permutation
