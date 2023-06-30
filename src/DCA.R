@@ -14,7 +14,6 @@
 #' bibliography: references.bib
 #' ---
 #+ setup, include = FALSE
-knitr::opts_knit$set(root_dir = "/mnt/c/Users/e0482362/Work/pathway_analysis/src")
 knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
 options(width = 100)
 #+ libs
@@ -74,31 +73,32 @@ dim(expr_ctrl)
 library(GSAR)
 library(igraph)
 
-B1 <- cor(t(expr_case[gs3,]))
+B1 <- cor(t(expr_case[gs3, ]))
 rst1_igen <- eigen(B1)
 l11 <- sum(abs(rst1_igen$values))
-w1 <- rst1_igen$values/l11
+w1 <- rst1_igen$values / l11
 
-B0 <- cor(t(expr_ctrl[gs3,]))
+B0 <- cor(t(expr_ctrl[gs3, ]))
 rst0_igen <- eigen(B0)
 l10 <- sum(abs(rst0_igen$values))
 w0 <- rst0_igen$values / l10
 
-sum(abs(w1-w0))
+sum(abs(w1 - w0))
 
 # minimum span tree on genes
 B <- cor(t(expr_g))
-dst <- 1-abs(B)
+dst <- 1 - abs(B)
 rst_mst <- ape::mst(dst)
-plot(rst_mst, graph ='nsca')
+plot(rst_mst, graph = "nsca")
 str(rst_mst)
-which(rst_mst["MYDGF", ]==1)
+which(rst_mst["MYDGF", ] == 1)
 
 mst_g <- findMST2(as.matrix(expr_g))
 str(mst_g)
 
-plotMST2.pathway(as.matrix(expr_g[gs3,]),
-group = rep(c(1,2), each = 5))
+plotMST2.pathway(as.matrix(expr_g[gs3, ]),
+  group = rep(c(1, 2), each = 5)
+)
 dim(expr_g)
 
 # minimum spanning tree on samples
@@ -116,19 +116,17 @@ plot(rst_mst,
 gr <- igraph::graph.adjacency(dst)
 mst_ <- igraph::minimum.spanning.tree(gr)
 
-
-
 #' # Differential gene set coexpression analysis in R
 #'
 library(GSAR)
-labs <- rep(c(1,2), each = 5)
+labs <- rep(c(1, 2), each = 5)
 WWtest(as.matrix(expr_g[gs1, ]), labs)
 WWtest(as.matrix(expr_g[gs3, ]), labs)
 
 GSNCAtest(as.matrix(expr_g[gs1, ]), labs)
 GSNCAtest(as.matrix(expr_g[gs3, ]), labs)
 
-plotMST2.pathway(as.matrix(expr_g[gs1,]), labs)
+plotMST2.pathway(as.matrix(expr_g[gs1, ]), labs)
 plotMST2.pathway(as.matrix(expr_g[gs3, ]), labs)
 #' ## Reference
 /*
