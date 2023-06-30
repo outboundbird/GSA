@@ -22,7 +22,7 @@ library(dplyr)
 library(pheatmap)
 source(file.path(here(), "src/utils.R"))
 #' # Gene set variation analysis (GSVA)
-#' The gene set variation analysis (GSVA) was developed by [*Hänzelmann et al*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3618321/#sec-4title) in 2013, which is a non-parametric, unsupervised method for gene set enrichement analysis. @hanzelmannGSVAGeneSet2013 ^[All quoted text are from original paper.]
+#' The gene set variation analysis (GSVA) was developed by [*Hänzelmann et al*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3618321/#sec-4title) in 2013, which is a non-parametric, unsupervised method for gene set enrichement analysis. @hanzelmannGSVAGeneSet2013a ^[All quoted text are from original paper.]
 #'
 #' > GSVA calculates sample-wise gene set enrichment scores as a function of
 #' > genes inside and outside the gene set, analogously to a competitive gene
@@ -191,7 +191,7 @@ legend("bottomright", c(gs1, "F_gauss"),
   lty = c(1:10, 1), cex = 0.6, bty = "n"
 )
 #' ## Sample-wise enrichment scores
-#' Next, within each sample, the gene expression levels are reordered. To normalize further, a rank score is computated within each sample.
+#' Next, within each **sample**, the gene expression levels are reordered. To normalize further, a rank score is computated within each sample.
 #'
 #' ### Compute rank score
 #' > To reduce the influence of potential outliers, we first convert $z_{ij}$ to ranks $z(i)j$ for each sample j and normalize further $r_{ij}=|p/2−z_{(i)j}|$ to make the ranks symmetric around zero.
@@ -235,14 +235,14 @@ axis(side = 3, at = which(sample$gs1), label = F, col.ticks = "red")
 
 #' #### KS statistics
 #' Here I simplify the test to a classic KS test. Notice the difference in weight at each step from the random walk plot above.
-#+ cache = T
+#+ cache = T, fig.dim = c(6, 6)
 ks_test_plot(sample, "ID", "rscore",
   gs1, "gs1 enrichment in sample 1",
-  xlab = "rank score",
+  xlab = "Rank score",
   exact = F,
   mexclude = T
 )
-#' Similarly one can look at the other two pathways
+#' Similarly one can look at the other two pathways in sample 1.
 #+ fig.dim = c(8, 3), cache = T, echo = F
 p2 <- ks_test_plot(sample, "ID", "rscore",
   gs2, "gs2 enrichment in sample 1",
@@ -259,7 +259,7 @@ p3 <- ks_test_plot(sample, "ID", "rscore",
 ggpubr::ggarrange(p2, p3, nrow = 1, ncol = 2)
 
 #' ### Enrichemnent statistics
-#' In GSVA, two approaches were prposed to turn KS random walk statistics into enrichment statistics,AKA, **GSVA score**.
+#' In GSVA, two approaches were proposed to turn KS random walk statistics into enrichment statistics, AKA, **GSVA score**.
 #'
 #' > We offer two approaches for turning the KS like random walk statistic into an enrichment statistic (ES) (also called GSVA score), the classical maximum deviation method and a normalized ES. The first ES is the maximum deviation from zero of the random walk of the j-th sample with respect to the k-th gene set:
 #'
@@ -333,6 +333,8 @@ grid::grid.draw(p)
 #' The most frequencly used output from GSVA is the GSVA score, which is usually in a format of matrix. This matrix can be used for downstream analyses, such as hypothesis testing, classification, etc. There are some questions raise from using GSVA score in the downstream analysis.
 #'
 #' ## Pros and Cons
+#'
+#' ## Reference
 /*
 #' <details><summary>Session Info</summary>
 sessionInfo()

@@ -232,7 +232,8 @@ ref_ks_test <- function(data, gset, param_col, ref = "pnorm", title = "", ...) {
       "D =", round(rst_ks$statistic, 2),
       ", p =", round(rst_ks$p.value, 4)
     )),
-    cex = 0.5
+    cex = 0.5,
+    adj = 0
   )
 }
 
