@@ -38,7 +38,7 @@ rownames(rst) <- rst$ID
 #' - [mean shift test](https://www.pnas.org/doi/10.1073/pnas.0506577102) @tianDiscoveringStatisticallySignificant2005 , @irizarryGeneSetEnrichment2009a
 #' - [PAGE](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-6-144) @kimPAGEParametricAnalysis2005
 #'  - [SAFE](https://academic.oup.com/bioinformatics/article/21/9/1943/408983?login=true) @barrySignificanceAnalysisFunctional2005
-#' - [Camera](https://academic.oup.com/nar/article/40/17/e133/2411151?login=true) @barrySignificanceAnalysisFunctional2005
+#' - [Camera](https://academic.oup.com/nar/article/40/17/e133/2411151?login=true) @wuCameraCompetitiveGene2012
 #' - [ROAST](https://academic.oup.com/bioinformatics/article/26/17/2176/200022?login=true) @wuROASTRotationGene2010
 #'
 #' Here I use the smoking study to illustrate the ideas of these methods. Instead of choosing a particular biological pathway, I choose these pathway with intention to evaluate the property of each method.
@@ -227,19 +227,70 @@ chisq_test(rst[gs2, "t"])
 chisq_test(rst[gs3, "t"])
 
 #' ## Maxmean statistics and restarndardization
-#' This method was proposed by @efronTestingSignificanceSets2007.
-
+#' This method was proposed by @efronTestingSignificanceSets2007 and is available in the R package `GSA`.
 library(GSA)
+expr <- readRDS(file.path(here(), "data/expr.rds"))
+# I simplily removed the duplicated genes here. In practice removing
+# duplicated genes should be given careful consideration.
+expr <- expr[!duplicated(expr$IDENTIFIER), ] %>%
+  `rownames<-`(NULL) %>%
+  tibble::column_to_rownames("IDENTIFIER")%>%
+  dplyr::select(-ID_REF)
+
+pheno <- readRDS(file.path(here(), "data/pheno.rds")) %>%
+  mutate(status = if_else(stress == "control", 1, 2)) %>%
+  dplyr::select(status)
+class(pheno)
+GSA.func(
+  as.matrix(log(expr)),
+  pheno[, 1],
+  genesets = list(gs1),
+  genenames= rownames(expr), resp.type = "Two class unpaired"
+)
+
+summary(expr)
+
+expr[gs2,]
+
+x <- matrix(rnorm(1000 * 20), ncol = 20)
+summary(x)
+dd <- sample(1:1000, size = 100)
+u <- matrix(2 * rnorm(100), ncol = 10, nrow = 100)
+x[dd, 11:20] <- x[dd, 11:20] + u
+y <- c(rep(1, 10), rep(2, 10))
+genenames <- paste("g", 1:1000, sep = "")
+# create some random gene sets
+genesets <- vector("list", 50)
+for (i in 1:50) {
+  genesets[[i]] <- paste("g", sample(1:1000, size = 30), sep = "")
+}
+geneset.names <- paste("set", as.character(1:50), sep = "")
+GSA.func.obj <- GSA.func(x, y, genenames = genenames, genesets = genesets, resp.type = "Two class unpaired")
+
+str(GSA.func.obj)
+
+#' ## SAFE
+#'
+#' ## Camera
+#'
+#' ## Roast
+#'
+#'
 #' # Comparison of gene set analysis methods
 #'
 #' [Comparison of gene set scoring methods for reproducible evaluation of multiple tuberculosis gene signatures](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9882404/)
 #'
 #' ## Reviews
-#' https://www.frontiersin.org/articles/10.3389/fphys.2015.00383/full
-#' [Analyzing gene expression data in terms of gene sets: methodological issues](https://academic.oup.com/bioinformatics/article/23/8/980/198511?login=true)
-#' [Gene set analysis methods: statistical models and methodological differences](https://academic.oup.com/bib/article/15/4/504/407653?login=true)
+#' - [Pathway Analysis: State of the Art](https://www.frontiersin.org/articles/10.3389/fphys.2015.00383/full) @garcia-camposPathwayAnalysisState2015
+#' - [Analyzing gene expression data in terms of gene sets: methodological issues](https://academic.oup.com/bioinformatics/article/23/8/980/198511?login=true)
+#' - [Gene set analysis methods: statistical models and methodological differences](https://academic.oup.com/bib/article/15/4/504/407653?login=true) @maciejewskiGeneSetAnalysis2014
+#' - The Statistical Properties of Gene-Set Analysis @deleeuwStatisticalPropertiesGeneset2016
+#' - @khatriTenYearsPathway2012
+#' - @malekiGeneSetAnalysis2020
+#' - @malekiMethodChoiceGene2019
+#' - @mathurGeneSetAnalysis2018a
 #'
-#' 
+#'
 #' ## Reference
 #'
 /*#' <details><summary>Session Info</summary>
