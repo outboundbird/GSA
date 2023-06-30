@@ -203,3 +203,51 @@ compute_rank_score <- function(sort_idx_vec ) {
 
 sort_idx_vec <- c(1, 3, 4, 2)
 compute_rank_score(sort_idx_vec)
+
+
+
+#' KS test against reference distribution
+#'
+#' @param data data frame, rownames contain items in gset.
+#' @param gset a string vector contains gene identifiers, e.g. symbol, IDs.
+#' @param param_col parameter column.
+#' @param ref string, name of the reference, default normal distribution.
+#' @param title title of the plot.
+#'
+#' @return plot and test results
+ref_ks_test <- function(data, gset, param_col, ref = "pnorm", title = "", ...) {
+  rst_ks <- ks.test(data[gset, param_col], ref, ...)
+  plot(ecdf(data[gset, param_col]),
+    do.points = FALSE, verticals = TRUE,
+    main = title
+  )
+  plot(ecdf(rnorm(length(gset))),
+    do.points = FALSE, verticals = TRUE,
+    lty = 3, lwd = 2,
+    add = TRUE, col = "#6F00FF"
+  )
+
+  mtext(
+    c(paste(
+      "D =", round(rst_ks$statistic, 2),
+      ", p =", round(rst_ks$p.value, 4)
+    )),
+    cex = 0.5
+  )
+}
+
+
+
+#' one-sample z-test in
+#' @param data DEA result data with rownames contains gene indicator.
+#' @param gset a list of gene.
+#' @param param parameter to be normalized.
+#'
+#' @return probability
+#' @examples
+#' # ADD_EXAMPLES_HERE
+z_test <- function(data, gset, param) {
+  m <- mean(data[gset, param], na.rm = T)
+  z <- sqrt(length(gset)) * m
+  pnorm(z, lower.tail = FALSE)
+}
