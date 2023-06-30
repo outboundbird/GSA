@@ -36,9 +36,13 @@ if (length(to_install)) {
 }
 
 
-req_libs <- c("shinybusy", "rmarkdown")
+req_libs <- c(
+  "shinybusy",
+  "rmarkdown",
+  "GSA"
+)
 # stable version on CRAN
-lapply(req_libs, function(pkg){
+lapply(to_install, function(pkg){
   tryCatch({
       install.packages(pkg,
     dependencies = TRUE,
