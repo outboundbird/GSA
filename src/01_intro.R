@@ -22,6 +22,10 @@ options(width = 100)
 #' gene set , biological pathway
 #' :::
 #'
+#' ## Overal of the gene set analysis
+#' @deleeuwStatisticalPropertiesGeneset2016
+#' @goemanAnalyzingGeneExpression2007
+#' 
 #' ## Organization of this e-book
 #' I will illustrate the gene pathway analysis using a public dataset for smoking study.
 #' Chapter 2 contains information on this study and how to obtain the dataset
