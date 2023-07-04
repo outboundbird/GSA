@@ -4,12 +4,13 @@
    "GEOquery",
    "logger",
    "meshes",
-   "RDAVIDWebService",
+  #  "RDAVIDWebService",
    "MeSH.Hsa.eg.db",
    "bookdown",
    'rmarkdown',
    'GSVA',
-   'GSAR'
+   'GSAR',
+  "GSReg" # DIRAC
 
  )
 to_install <- req_libs[!req_libs %in% env_pkgs]
@@ -39,7 +40,8 @@ if (length(to_install)) {
 req_libs <- c(
   "shinybusy",
   "rmarkdown",
-  "GSA"
+  "GSA",
+
 )
 # stable version on CRAN
 lapply(to_install, function(pkg){
