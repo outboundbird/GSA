@@ -20,9 +20,13 @@ options(width = 100)
 #' In this section, I talk about the null hypothesis, multiple comparison issue and statistical power for pathway analysis.
 #'
 #' # Null hypothesis
+#' Here I cited the concepts of different types of null hypothesis from @deleeuwStatisticalPropertiesGeneset2016, @goemanAnalyzingGeneExpression2007 [Goeman et al](https://academic.oup.com/bioinformatics/article/23/8/980/198511?login=true#401164258)
+#'
 #' ## Competitive null hypothesis
+#' > competitive GSA considers all genes in the data, testing the null hypothesis that the genes in the gene set are no more strongly associated with the phenotype than other genes.
 #'
 #' ## Self-contained null hypothesis
+#' > Self-contained GSA considers only the genes in the gene set and tests the null hypothesis that none of those genes are associated with the phenotype. @deleeuwStatisticalPropertiesGeneset2016
 #'
 #' ## Hybrid null hypothesis
 #'
