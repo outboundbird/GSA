@@ -26,9 +26,9 @@ gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
 #' # Gene Set Enrichment Analysis
 #' The idea of gene set enrichment analysis was proposed first by @moothaPGC1alpharesponsiveGenesInvolved2003.
-#' Later on, [*@subramanianGeneSetEnrichment2005 *](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/) made the modifictions based on their idea. This method now is widely used in the genetic study nowadays. These methods are considered as univariate funcitonal class scoring methods. It uses *gene scores* to summarize the differences between the comparison groups then uses gene set scores to summarize the expression levels of genes in a set and use a single statstic for signficance assessment.
+#' Later on, the same group [*@subramanianGeneSetEnrichment2005 *](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1239896/) made the modifications based on their original idea. This method now is widely used in the genetic study nowadays. These methods are considered as univariate funcitonal class scoring methods. It uses *gene scores* to summarize the differences between the comparison groups then uses gene set scores to summarize the expression levels of genes in a set and use a single statstic for signficance assessment.
 #'
-#' I'd like to point out that this enrichment analysis can be applied in other omic data, not soley in the transcriptomic field.
+#' I'd like to point out that this enrichment analysis can be applied in other omic data, not uniquely in the transcriptomic data.
 #'
 #' **Disclaimer:  Unless otherwise pointed out, all quoted text are from original @subramanianGeneSetEnrichment2005 paper.**
 #'

@@ -21,11 +21,25 @@ options(width = 100)
 #' ::: {.definition #label name="definition name"}
 #' gene set , biological pathway
 #' :::
+#' The purpose of gene set analysis is to circumvent the limiations from single-gene
+#' analysis, such as difficulty of interpreting the biological meaning of single genes,
+#' understanding the multiple-comparison adjusted results, poor reproducibility
+#' from independent studies.
 #'
 #' ## Overal of the gene set analysis
 #' @deleeuwStatisticalPropertiesGeneset2016
 #' @goemanAnalyzingGeneExpression2007
+#'
+#' ## Biological vs. statistical categorizations of gene set analysis
+#'
+#' ### Satatistical categorization of GSA
+#'
+#' The statistical categorization of GSA methods is based on the type of null
+#' hypothesis: self-contained vs. competetive null hypothesis.
+#'
 #' 
+#'
+#'
 #' ## Organization of this e-book
 #' I will illustrate the gene pathway analysis using a public dataset for smoking study.
 #' Chapter 2 contains information on this study and how to obtain the dataset

@@ -57,3 +57,5 @@ lapply(to_install, function(pkg){
 
 # or development version on GitHub
 # remotes::install_github('rstudio/bookdown')
+remove.packages('scriptResume')
+devtools::install_github("outboundbird/scriptResume")

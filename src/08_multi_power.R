@@ -22,6 +22,13 @@ options(width = 100)
 #' # Null hypothesis
 #' Here I cited the concepts of different types of null hypothesis from @deleeuwStatisticalPropertiesGeneset2016, @goemanAnalyzingGeneExpression2007 [Goeman et al](https://academic.oup.com/bioinformatics/article/23/8/980/198511?login=true#401164258)
 #'
+#'
+#' || Differentially expressed gene| non-differentially expressed gene| Total|
+#' | --- | --- | --- | --- |
+#' |In gene set| $m_{gD}$| $m_{g\bar{D}}$| $m_G$|
+#' |Not in gene set| $m_{\bar{g}D}$| $m_{\bar{G}\bar{D}}$| $m_{\bar{G}}$|
+#' |Total| $m_D$| $m_{\bar{D}}$| $m$|
+#'
 #' ## Competitive null hypothesis
 #' > competitive GSA considers all genes in the data, testing the null hypothesis that the genes in the gene set are no more strongly associated with the phenotype than other genes.
 #'

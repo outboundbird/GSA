@@ -331,6 +331,7 @@ grid::grid.draw(p)
 #'
 #' ## Implication of GSVA score
 #' The most frequencly used output from GSVA is the GSVA score, which is usually in a format of matrix. This matrix can be used for downstream analyses, such as hypothesis testing, classification, etc. There are some questions raise from using GSVA score in the downstream analysis.
+#' One of the example is the R [`xCell`](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1349-1) package, which calculate cell type enrichment score using ssGSEA method from `GSVA` package.
 #'
 #' ## Pros and Cons
 #'

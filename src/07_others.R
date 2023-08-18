@@ -27,6 +27,9 @@ rownames(rst) <- rst$ID
 # gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
 #' # Other methods
+#' ![](images/gamethrone.jpg)
+#' ![](images/tab_gsa_method.png)
+#'
 #' These methods are challengers of the GSEA methods that first proposed by
 #' @moothaPGC1alpharesponsiveGenesInvolved2003. Many of them critize the Kolmogorov–Smirnov
 #' test used for enrichment score are not sensitive. And all of these alternatives
@@ -112,6 +115,17 @@ mtext("Results from DEG analysis",
   cex = 1, side = 3,
   line = 2, outer = F, adj = 0
 )
+#+ bxplt
+par(mfrow = c(1, 4))
+boxplot(log(rst$logFC),
+  ylim = c(-5, 10),
+  at = 4
+)
+boxplot(log(rst[gs1, "logFC"]),
+  ylim = c(-5, 10)
+)
+boxplot(log(rst[gs2, "logFC"]), ylim = c(-5, 10))
+boxplot(log(rst[gs3, "logFC"]), ylim = c(-5, 10))
 
 #' ## Parametric Analysis of Gene Set Enrichment (PAGE)
 #' > PAGE calculates a Z score for a given gene set from a parameter such as **fold change** value between two experimental groups and infers statistical significance of the Z score against standard normal distribution.
@@ -123,62 +137,19 @@ mtext("Results from DEG analysis",
 m <- mean(rst$logFC)
 s <- sd(rst$logFC)
 # calc z score
-rst <- rst %>%
-  mutate(z_fc = (logFC - m) / s)
-#+ echo = F, cache = T, fig.dim = c(9,4)
-# KS test
-par(mfrow = c(1, 3), font.main = 1, cex.main = 1)
-qqnorm(rst$z_fc, main = "Genomewide Z scores")
-qqline(rst$z_fc)
 
-qqnorm(rst[gs3, "z_fc"],
-  xlab = "Z score",
-  main = "Gene set 3"
-)
-qqline(rst[gs3, "z_fc"])
+page <- function(data, gs, params ='logFC'){
+  mn <- mean(data[,params])
+  sd <- sd(data[,params])
+  m_s <- mean(data[gs, params])
+  m <- length(gs)
+  z <- sqrt(m) * (mn - m_s) / sd
+  c(z, pnorm(z))
+}
 
-rst_ks <- ks.test(rst[gs3, "z_fc"], "pnorm")
-plot(ecdf(rst[gs3, "z_fc"]),
-  do.points = F, verticals = T,
-  main = "Gene set 3"
-)
-plot(ecdf(rnorm(length(gs3))),
-  do.points = F, verticals = T,
-  lty = 3, lwd = 2,
-  add = T, col = "red"
-)
-mtext(
-  c(paste(
-    "D =", round(rst_ks$statistic, 2),
-    ", p =", round(rst_ks$p.value, 4)
-  )),
-  cex = 0.7
-)
-legend("topleft", c("Theoretical", "Observed"),
-  col = c("red", "black"),
-  lty = c(2, 1),
-  bty = "n",
-  cex = 0.8
-)
-
-#' The other two gene sets. Notice that gene set 2 is composed of 50 non-significantly
-#' differentially expressed genes. However the distribution of the fold change
-#' does not follows unimodal gaussian distribution.
-#+ fig.dim = c(5,7), echo = F
-par(mfrow = c(3, 2), mar = c(4, 3, 2, 1))
-qqnorm(rst[gs1, "z_fc"],
-  xlab = "Fold change",
-  main = "Gene set1"
-)
-qqline(rst[gs1, "z_fc"])
-ref_ks_test(rst, gs1, "z_fc", title = "gs1")
-
-qqnorm(rst[gs2, "z_fc"],
-  xlab = "Fold change",
-  main = "Gene set2"
-)
-qqline(rst[gs2, "z_fc"])
-ref_ks_test(rst, gs2, "z_fc", title = "gs2")
+page(rst, gs1)
+page(rst, gs2)
+page(rst, gs3)
 
 #' ## Mean shift methods
 #' These are the challengers of K-S test in the GSEA.
@@ -228,6 +199,7 @@ chisq_test(rst[gs3, "t"])
 
 #' ## Maxmean statistics and restarndardization
 #' This method was proposed by @efronTestingSignificanceSets2007 and is available in the R package `GSA`.
+#+ eval = F
 library(GSA)
 expr <- readRDS(file.path(here(), "data/expr.rds"))
 # I simplily removed the duplicated genes here. In practice removing
