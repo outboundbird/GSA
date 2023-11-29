@@ -287,7 +287,7 @@ max(sample[, "es", drop = F], 0) - min(sample[, "es", drop = F], 0)
 #' In this section, I demonstrate GSVA using `GSVA` library in R.
 #' The `gsva`function mainly takes expression data, gene set list and calculate enrichment statistics (GSVA score) with two options mentioned above. By default `gsva` and `gaussian` kernel are selected for the GSVA calculation. Other methods are implemented in this function as well (details in the next section).
 library(GSVA)
-gene_sets <- list(g1 = gs1, gs2 = gs2, gs3 = gs3)
+gene_sets <- list(gs1 = gs1, gs2 = gs2, gs3 = gs3)
 expr_mtx <- as.matrix(expr_g)
 es_gsva <- gsva(
   expr_mtx,
