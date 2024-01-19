@@ -1,0 +1,28 @@
+## public dataset source
+https://www.ncbi.nlm.nih.gov/geo/
+https://www.ebi.ac.uk/biostudies/arrayexpress
+
+
+# for clustering / subgroup analysis
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS1235
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4181
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4182
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4210
+
+# time series 
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4180
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4868
+
+# batch effect or preprocess 
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS2819
+
+
+# case control
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3057
+
+# treatment effect
+https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3829
+
+# scRNAseq
+https://biocellgen-public.svi.edu.au/mig_2019_scrnaseq-workshop/datasets.html
+https://jdblischak.github.io/singleCellSeq/analysis/
