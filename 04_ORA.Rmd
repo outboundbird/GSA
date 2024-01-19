@@ -321,7 +321,7 @@ interested in the pathways that a drug modulate.
 ## Further info
 Below is an incomplete sumamry of the ORA.
 
-```{r }
+```{r , eval = F}
 datatable(ora,
   rownames = F,
   options = list(scrollX = "400px")
