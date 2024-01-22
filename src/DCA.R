@@ -7,7 +7,7 @@
 #' output:
 #'   html_document:
 #'     css: sanofi.css
-#'     code_folding: "show"
+#'     code_folding: "hide"
 #'     toc: yes
 #'     toc_float:
 #'       collapse: no
@@ -45,8 +45,8 @@ gs <- Reduce(union, list(gs1, gs3, bg))
 expr_case <- expr[gs, case_ids]
 expr_ctrl <- expr[gs, ctrl_ids]
 expr_g <- expr[gs, c(case_ids, ctrl_ids)]
-dim(expr_case)
-dim(expr_ctrl)
+# dim(expr_case)
+# dim(expr_ctrl)
 
 #' Gene set coexpression analysis and gene set net correlation analysis are classified as
 #' topology-based methods. This type of analysis addresses the issue that not all
@@ -56,12 +56,16 @@ dim(expr_ctrl)
 #' # Gene Set Coexpression Analysis (GSCA)
 #' [Gene set coexpression analysis](https://www.biostat.wisc.edu/~kendzior/GSCA/) was first proposed by @choiStatisticalMethodsGene2009a.
 #'
-#'  ## Scheme
+#' ## Scheme
 #'
 #' ![](images/gsca.png){width="344"}
+#' T1 and T2 represent two biological conditions, Nk represents the number of
+#' arrays in condition k, k= 1,2. The dispersion index is given by the Edulidean distance, adjusted for the size of the gene set considered:
 #'
+#' $$Ds(\rho_c^{T1}, \rho_c^{T2})= \sqrt{\frac{1}{P_c} \sum_{p=1}^{P_c}(\tilde{\rho}_p^{T_1, T_2})^2} $$
+#' 
 #+ cache = T
-
+library(GSCA)
 #' # Gene Sets Net Correlation Analysis (GSNCA)
 #' GSNCA method was proposed by @rahmatallahGeneSetsNet2014.
 #'

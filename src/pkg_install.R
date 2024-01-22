@@ -4,17 +4,16 @@
    "GEOquery",
    "logger",
    "meshes",
-  #  "RDAVIDWebService",
+   #  "RDAVIDWebService",
    "MeSH.Hsa.eg.db",
    "bookdown",
-   'rmarkdown',
-   'GSVA',
-   'GSAR',
-  "GSReg" # DIRAC
-
+   "rmarkdown",
+   "GSVA",
+   "GSAR",
+   "GSReg" # DIRAC
  )
 to_install <- req_libs[!req_libs %in% env_pkgs]
-to_install <- 'GSVA'
+to_install <- 'bookdown'
 
 if (length(to_install)) {
   lapply(to_install, function(pkg) {
@@ -41,21 +40,23 @@ req_libs <- c(
   "shinybusy",
   "rmarkdown",
   "GSA",
-
 )
 # stable version on CRAN
-lapply(to_install, function(pkg){
-  tryCatch({
+lapply(to_install, function(pkg) {
+  tryCatch(
+    {
       install.packages(pkg,
-    dependencies = TRUE,
-    INSTALL_opts = c("--no-lock")
+        dependencies = TRUE,
+        INSTALL_opts = c("--no-lock")
+      )
+    },
+    error = function(e) {
+      warning(paste("Error installing package", pkg))
+    }
   )
-  }, error = function(e){
-    warning(paste('Error installing package', pkg))
-  })
 })
 
 # or development version on GitHub
 # remotes::install_github('rstudio/bookdown')
-remove.packages('scriptResume')
+remove.packages("scriptResume")
 devtools::install_github("outboundbird/scriptResume")
