@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Appendix | Pathway analysis methods</title>
   <meta name="description" content="This notebook is dedicated to genetic pathway analysis methods." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Appendix | Pathway analysis methods" />
   <meta property="og:type" content="book" />
@@ -20,17 +20,16 @@
   <meta name="twitter:description" content="This notebook is dedicated to genetic pathway analysis methods." />
   
 
-<meta name="author" content="Siying Huang (E0482362)" />
+<meta name="author" content="Siying Huang" />
 
 
-<meta name="date" content="2024-01-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="over-representation-analysis.html"/>
+<link rel="prev" href="references.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -132,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -144,69 +144,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefeace</a></li>
 <li class="chapter" data-level="1" data-path="gene-sets-and-pathways.html"><a href="gene-sets-and-pathways.html"><i class="fa fa-check"></i><b>1</b> Gene sets and pathways</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="gene-sets-and-pathways.html"><a href="gene-sets-and-pathways.html#organization-of-this-e-book"><i class="fa fa-check"></i><b>1.1</b> Organization of this e-book</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="study-dataset.html"><a href="study-dataset.html"><i class="fa fa-check"></i><b>2</b> Study dataset</a>
+<li class="chapter" data-level="2" data-path="hello-bookdown.html"><a href="hello-bookdown.html"><i class="fa fa-check"></i><b>2</b> Hello bookdown</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="study-dataset.html"><a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse"><i class="fa fa-check"></i><b>2.1</b> Extracting data from NCBI Gene Expression Omnibus databse</a>
+<li class="chapter" data-level="2.1" data-path="hello-bookdown.html"><a href="hello-bookdown.html#a-section"><i class="fa fa-check"></i><b>2.1</b> A section</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="study-dataset.html"><a href="study-dataset.html#summary-of-the-study"><i class="fa fa-check"></i><b>2.1.1</b> Summary of the study</a></li>
-<li class="chapter" data-level="2.1.2" data-path="study-dataset.html"><a href="study-dataset.html#assigning-the-expression-and-phenotype-data"><i class="fa fa-check"></i><b>2.1.2</b> Assigning the expression and phenotype data</a></li>
+<li class="chapter" data-level="" data-path="hello-bookdown.html"><a href="hello-bookdown.html#an-unnumbered-section"><i class="fa fa-check"></i>An unnumbered section</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="study-dataset.html"><a href="study-dataset.html#convert-to-gds-to-expression-set"><i class="fa fa-check"></i><b>2.2</b> convert to GDS to expression set</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html"><i class="fa fa-check"></i><b>3</b> Differential gene expression analysis (DGEA)</a>
+<li class="chapter" data-level="3" data-path="study-dataset.html"><a href="study-dataset.html"><i class="fa fa-check"></i><b>3</b> Study dataset</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html#comparison-between-smokers-and-non-smokers"><i class="fa fa-check"></i><b>3.1</b> Comparison between smokers and non-smokers</a></li>
-<li class="chapter" data-level="3.2" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html#results-visualization"><i class="fa fa-check"></i><b>3.2</b> Results visualization</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html"><i class="fa fa-check"></i><b>4</b> Query bioloical pathway databases</a>
+<li class="chapter" data-level="3.1" data-path="study-dataset.html"><a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse"><i class="fa fa-check"></i><b>3.1</b> Extracting data from NCBI Gene Expression Omnibus databse</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#gene-annotation"><i class="fa fa-check"></i><b>4.1</b> Gene annotation</a></li>
-<li class="chapter" data-level="4.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#convert-gene-symbol-to-gene-id-using-biomart."><i class="fa fa-check"></i><b>4.2</b> Convert gene symbol to gene ID using <code>biomaRt</code>.</a>
+<li class="chapter" data-level="3.1.1" data-path="study-dataset.html"><a href="study-dataset.html#summary-of-the-study"><i class="fa fa-check"></i><b>3.1.1</b> Summary of the study</a></li>
+<li class="chapter" data-level="3.1.2" data-path="study-dataset.html"><a href="study-dataset.html#assigning-the-expression-and-phenotype-data"><i class="fa fa-check"></i><b>3.1.2</b> Assigning the expression and phenotype data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="study-dataset.html"><a href="study-dataset.html#convert-to-gds-to-expression-set"><i class="fa fa-check"></i><b>3.2</b> convert to GDS to expression set</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>4</b> Cross-references</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#connect-to-the-selected-biomart-database-using-useensembl-function."><i class="fa fa-check"></i><b>4.2.1</b> Connect to the selected <em>BioMart</em> database using <code>useEnsembl</code> function.</a></li>
-<li class="chapter" data-level="4.2.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#annotate-genes"><i class="fa fa-check"></i><b>4.2.2</b> Annotate genes</a></li>
-<li class="chapter" data-level="4.2.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#alternative-methods-for-annotation"><i class="fa fa-check"></i><b>4.2.3</b> Alternative methods for annotation</a></li>
+<li class="chapter" data-level="4.1" data-path="cross.html"><a href="cross.html#chapters-and-sub-chapters"><i class="fa fa-check"></i><b>4.1</b> Chapters and sub-chapters</a></li>
+<li class="chapter" data-level="4.2" data-path="cross.html"><a href="cross.html#captioned-figures-and-tables"><i class="fa fa-check"></i><b>4.2</b> Captioned figures and tables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#curate-biological-functions"><i class="fa fa-check"></i><b>4.3</b> Curate biological functions</a></li>
-<li class="chapter" data-level="4.4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#reference"><i class="fa fa-check"></i><b>4.4</b> Reference</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html"><i class="fa fa-check"></i><b>5</b> Over-representation Analysis</a>
+<li class="chapter" data-level="5" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html"><i class="fa fa-check"></i><b>5</b> Query bioloical pathway databases</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#data-prepartion"><i class="fa fa-check"></i><b>5.1</b> Data prepartion</a></li>
-<li class="chapter" data-level="5.2" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#gene-set-selection"><i class="fa fa-check"></i><b>5.2</b> Gene set selection</a>
+<li class="chapter" data-level="5.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#gene-annotation"><i class="fa fa-check"></i><b>5.1</b> Gene annotation</a></li>
+<li class="chapter" data-level="5.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#convert-gene-symbol-to-gene-id-using-biomart."><i class="fa fa-check"></i><b>5.2</b> Convert gene symbol to gene ID using <code>biomaRt</code>.</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#define-differentially-expressed-gene"><i class="fa fa-check"></i><b>5.2.1</b> Define differentially expressed gene</a></li>
+<li class="chapter" data-level="5.2.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#connect-to-the-selected-biomart-database-using-useensembl-function."><i class="fa fa-check"></i><b>5.2.1</b> Connect to the selected <em>BioMart</em> database using <code>useEnsembl</code> function.</a></li>
+<li class="chapter" data-level="5.2.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#annotate-genes"><i class="fa fa-check"></i><b>5.2.2</b> Annotate genes</a></li>
+<li class="chapter" data-level="5.2.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#alternative-methods-for-annotation"><i class="fa fa-check"></i><b>5.2.3</b> Alternative methods for annotation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#over-representation-analysis-1"><i class="fa fa-check"></i><b>5.3</b> Over-representation analysis</a></li>
-<li class="chapter" data-level="5.4" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#over-respensentation-analysis-from-r-package"><i class="fa fa-check"></i><b>5.4</b> Over-respensentation analysis from R package</a></li>
-<li class="chapter" data-level="5.5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#test-set-up-and-result-interpretations"><i class="fa fa-check"></i><b>5.5</b> Test set up and result interpretations</a></li>
-<li class="chapter" data-level="5.6" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#examples"><i class="fa fa-check"></i><b>5.6</b> Examples</a>
+<li class="chapter" data-level="5.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#curate-biological-functions"><i class="fa fa-check"></i><b>5.3</b> Curate biological functions</a></li>
+<li class="chapter" data-level="5.4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#reference"><i class="fa fa-check"></i><b>5.4</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>6</b> Parts</a></li>
+<li class="chapter" data-level="7" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>7</b> Footnotes and citations</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#go"><i class="fa fa-check"></i><b>5.6.1</b> GO</a></li>
-<li class="chapter" data-level="5.6.2" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#kegg"><i class="fa fa-check"></i><b>5.6.2</b> KEGG</a></li>
-<li class="chapter" data-level="5.6.3" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#wikipathways"><i class="fa fa-check"></i><b>5.6.3</b> WikiPathways</a></li>
-<li class="chapter" data-level="5.6.4" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#reactome"><i class="fa fa-check"></i><b>5.6.4</b> Reactome</a></li>
-<li class="chapter" data-level="5.6.5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#do"><i class="fa fa-check"></i><b>5.6.5</b> DO</a></li>
-<li class="chapter" data-level="5.6.6" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#disgenet"><i class="fa fa-check"></i><b>5.6.6</b> DisGeNET</a></li>
-<li class="chapter" data-level="5.6.7" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#mesh"><i class="fa fa-check"></i><b>5.6.7</b> MeSH</a></li>
+<li class="chapter" data-level="7.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>7.1</b> Footnotes</a></li>
+<li class="chapter" data-level="7.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>7.2</b> Citations</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#pros-and-cons-of-ora"><i class="fa fa-check"></i><b>5.7</b> Pros and Cons of ORA</a></li>
-<li class="chapter" data-level="5.8" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#reference-1"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
+<li class="chapter" data-level="8" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>8</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>8.1</b> Equations</a></li>
+<li class="chapter" data-level="8.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>8.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="8.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>8.3</b> Callout blocks</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>9</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>9.1</b> Publishing</a></li>
+<li class="chapter" data-level="9.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>9.2</b> 404 pages</a></li>
+<li class="chapter" data-level="9.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>9.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
 <ul>
-<li class="chapter" data-level="5.9" data-path="appendix.html"><a href="appendix.html#biological-process-data-bases"><i class="fa fa-check"></i><b>5.9</b> Biological process data bases</a></li>
-<li class="chapter" data-level="5.10" data-path="appendix.html"><a href="appendix.html#summary-of-currently-available-pathway-analysis-methods"><i class="fa fa-check"></i><b>5.10</b> Summary of currently available pathway analysis methods</a>
+<li class="chapter" data-level="9.4" data-path="appendix.html"><a href="appendix.html#biological-process-data-bases"><i class="fa fa-check"></i><b>9.4</b> Biological process data bases</a></li>
+<li class="chapter" data-level="9.5" data-path="appendix.html"><a href="appendix.html#summary-of-currently-available-pathway-analysis-methods"><i class="fa fa-check"></i><b>9.5</b> Summary of currently available pathway analysis methods</a>
 <ul>
-<li class="chapter" data-level="5.10.1" data-path="appendix.html"><a href="appendix.html#over-representation-analysis-2"><i class="fa fa-check"></i><b>5.10.1</b> Over-representation analysis</a></li>
-<li class="chapter" data-level="5.10.2" data-path="appendix.html"><a href="appendix.html#gene-set-enrichment-analysis"><i class="fa fa-check"></i><b>5.10.2</b> Gene set enrichment analysis</a></li>
+<li class="chapter" data-level="9.5.1" data-path="appendix.html"><a href="appendix.html#over-representation-analysis"><i class="fa fa-check"></i><b>9.5.1</b> Over-representation analysis</a></li>
+<li class="chapter" data-level="9.5.2" data-path="appendix.html"><a href="appendix.html#gene-set-enrichment-analysis"><i class="fa fa-check"></i><b>9.5.2</b> Gene set enrichment analysis</a></li>
 </ul></li>
 </ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -226,32 +235,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="appendix" class="section level1 unnumbered hasAnchor">
 <h1>Appendix<a href="appendix.html#appendix" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="biological-process-data-bases" class="section level2 hasAnchor" number="5.9">
-<h2><span class="header-section-number">5.9</span> Biological process data bases<a href="appendix.html#biological-process-data-bases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-50b1494591c8b9b789e5" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-50b1494591c8b9b789e5">{"x":{"filter":"none","vertical":false,"data":[["BioGRID","CORUM","CPDB","CTD","DAVID","DIP","DrugBank","GO knowledgebase","HPRD","HumanCyc (part of BioCyc)","Ingenuity Pathway Knowledge Base","InnateDB","INOH","IntAct","KEGG","MetaCore","miRTarBase","MSigDB","NCI","NetPath","PANTHER","Pathway Commons","Pathway Studio","PhosphoSitePlus","PID","Reactome","Recon X","TRANSPATH","WikiPathways"],["","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interaction","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways","","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways","","Metabolic Pathways","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interactions","InnateDB is publicly available database of the genes, proteins, experimentally-verified interactions and signaling pathways involved in the innate immune response of humans, mice and bovines to microbial infection. ","","","Metabolic Pathways, Pathway Diagrams","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interactions, Genetic Interaction Networks","","","","","Signaling Pathways, Pathway Diagrams, Protein Sequence Focused","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Protein-Compound Interactions","Protein-Protein Interactions, Signaling Pathways, Protein-Compound Interactions","","","Metabolic Pathways, Signaling Pathways, Pathway Diagrams","","Metabolic Pathways, Signaling Pathway","Metabolic Pathways, Signaling Pathways, Pathway Diagrams"],["","","Human, Yeast, Mouse","","&gt; 65000 species","","","&gt;350000 species","","Human","Rat, Human, Mouse","mice, human, bovines","","","&gt; 5000 species","Human","","","","","112 genomes","Human, Mouse, Viruses…","Human, Rat, Mouse, Fly, Yeast, Plants…","","","Human, Rat, Mouse, Fly…","","Human, Mouse, Rat…","25 species"],["","","32 public ressources, list on the web site","","BBID, BioCarta, GO, KEGG","","","secondary","","primary","primary","","","","primary","primary","","","","","primary","BIND, BioGRID, CORUM, CTD, DIP, DrugBank, HPRD, HumanCyc, IntAct, INOH, KEGG, miRTarBase, MSigDB, NetPath, PANTHER, PID, PhosphoSitePlus, Reactome, Recon X, SMPD, WikiPathways","PubMed, BIND, HPRD, KEGG, GO","","","primary","","primary","primary"],["","","manual / electronic","","manual / electronic","","","manual / electronic","","manual","manual","","","","manual","manual","","","","","manual","manual / electronic","manual","","","manual","","manual","manual"],["","","Jan 11th, 2017","","May, 2016","","","Sept 26th, 2017","","Nov 28th, 2017","June 30th, 2017","","","","Aug 1st, 2017","July 12th, 2017","","","","","July 10th, 2017","Aug 16th, 2017, variable according database","Nov 1st, 2015","","","July 5th, 2017","","Feb 1st, 2017","Aug 10th, 2017"],["","","8,342 pathways 840,792 react/interact","","","","","","","314 pathways 2887 react/interact","","18,780 interactions","","","525,000 pathways, 10,652 react/interact ","1,600 pathways, 1,700,000 react/interact","","","","","177 pathways","5,900 pathways,\n1,931,035 react/interact","1,800 pathways","","","22,928 pathways, 84,759 react/interact","","190 pathways,521,323 react/interact","2475 pathways"],["","","http://cpdb.molgen.mpg.de/CPDB","","https://david-d.ncifcrf.gov/","","","http://www.geneontology.org","","https://humancyc.org/","https://www.qiagenbioinformatics.com/products/ingenuity-pathway-analysis/","https://www.innatedb.com/","","","http://www.genome.jp/kegg/","https://portal.genego.com/","","","","","http://www.pantherdb.org","http://www.pathwaycommons.org","https://www.elsevier.com/solutions/pathway-studio-biological-research","","","http://www.reactome.org","","http://genexplain.com/transpath/","http://wikipathways.org/index.php/WikiPathways"],["","","academic","","free","","","free","","license","License,TM4P","","","","academic","License,TM4P","","","","","free","free","license","","","free","","license","free"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>PDB<\/th>\n      <th>Type.of.data<\/th>\n      <th>Species<\/th>\n      <th>Source<\/th>\n      <th>Curation<\/th>\n      <th>Last.update<\/th>\n      <th>Content<\/th>\n      <th>url<\/th>\n      <th>access<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="biological-process-data-bases" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Biological process data bases<a href="appendix.html#biological-process-data-bases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3486349adfa5d821dc44" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3486349adfa5d821dc44">{"x":{"filter":"none","vertical":false,"data":[["BioGRID","CORUM","CPDB","CTD","DAVID","DIP","DrugBank","GO knowledgebase","HPRD","HumanCyc (part of BioCyc)","Ingenuity Pathway Knowledge Base","InnateDB","INOH","IntAct","KEGG","MetaCore","miRTarBase","MSigDB","NCI","NetPath","PANTHER","Pathway Commons","Pathway Studio","PhosphoSitePlus","PID","Reactome","Recon X","TRANSPATH","WikiPathways"],["","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interaction","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways","","","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways","","Metabolic Pathways","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interactions","InnateDB is publicly available database of the genes, proteins, experimentally-verified interactions and signaling pathways involved in the innate immune response of humans, mice and bovines to microbial infection. ","","","Metabolic Pathways, Pathway Diagrams","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Transcription Factors / Gene Regulatory Networks, Protein-Compound Interactions, Genetic Interaction Networks","","","","","Signaling Pathways, Pathway Diagrams, Protein Sequence Focused","Protein-Protein Interactions, Metabolic Pathways, Signaling Pathways, Protein-Compound Interactions","Protein-Protein Interactions, Signaling Pathways, Protein-Compound Interactions","","","Metabolic Pathways, Signaling Pathways, Pathway Diagrams","","Metabolic Pathways, Signaling Pathway","Metabolic Pathways, Signaling Pathways, Pathway Diagrams"],["","","Human, Yeast, Mouse","","&gt; 65000 species","","","&gt;350000 species","","Human","Rat, Human, Mouse","mice, human, bovines","","","&gt; 5000 species","Human","","","","","112 genomes","Human, Mouse, Viruses…","Human, Rat, Mouse, Fly, Yeast, Plants…","","","Human, Rat, Mouse, Fly…","","Human, Mouse, Rat…","25 species"],["","","32 public ressources, list on the web site","","BBID, BioCarta, GO, KEGG","","","secondary","","primary","primary","","","","primary","primary","","","","","primary","BIND, BioGRID, CORUM, CTD, DIP, DrugBank, HPRD, HumanCyc, IntAct, INOH, KEGG, miRTarBase, MSigDB, NetPath, PANTHER, PID, PhosphoSitePlus, Reactome, Recon X, SMPD, WikiPathways","PubMed, BIND, HPRD, KEGG, GO","","","primary","","primary","primary"],["","","manual / electronic","","manual / electronic","","","manual / electronic","","manual","manual","","","","manual","manual","","","","","manual","manual / electronic","manual","","","manual","","manual","manual"],["","","Jan 11th, 2017","","May, 2016","","","Sept 26th, 2017","","Nov 28th, 2017","June 30th, 2017","","","","Aug 1st, 2017","July 12th, 2017","","","","","July 10th, 2017","Aug 16th, 2017, variable according database","Nov 1st, 2015","","","July 5th, 2017","","Feb 1st, 2017","Aug 10th, 2017"],["","","8,342 pathways 840,792 react/interact","","","","","","","314 pathways 2887 react/interact","","18,780 interactions","","","525,000 pathways, 10,652 react/interact ","1,600 pathways, 1,700,000 react/interact","","","","","177 pathways","5,900 pathways,\n1,931,035 react/interact","1,800 pathways","","","22,928 pathways, 84,759 react/interact","","190 pathways,521,323 react/interact","2475 pathways"],["","","http://cpdb.molgen.mpg.de/CPDB","","https://david-d.ncifcrf.gov/","","","http://www.geneontology.org","","https://humancyc.org/","https://www.qiagenbioinformatics.com/products/ingenuity-pathway-analysis/","https://www.innatedb.com/","","","http://www.genome.jp/kegg/","https://portal.genego.com/","","","","","http://www.pantherdb.org","http://www.pathwaycommons.org","https://www.elsevier.com/solutions/pathway-studio-biological-research","","","http://www.reactome.org","","http://genexplain.com/transpath/","http://wikipathways.org/index.php/WikiPathways"],["","","academic","","free","","","free","","license","License,TM4P","","","","academic","License,TM4P","","","","","free","free","license","","","free","","license","free"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>PDB<\/th>\n      <th>Type.of.data<\/th>\n      <th>Species<\/th>\n      <th>Source<\/th>\n      <th>Curation<\/th>\n      <th>Last.update<\/th>\n      <th>Content<\/th>\n      <th>url<\/th>\n      <th>access<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"400px","columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="summary-of-currently-available-pathway-analysis-methods" class="section level2 hasAnchor" number="5.10">
-<h2><span class="header-section-number">5.10</span> Summary of currently available pathway analysis methods<a href="appendix.html#summary-of-currently-available-pathway-analysis-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="over-representation-analysis-2" class="section level3 hasAnchor" number="5.10.1">
-<h3><span class="header-section-number">5.10.1</span> Over-representation analysis<a href="appendix.html#over-representation-analysis-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1e0b8c06711f1c0327b2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1e0b8c06711f1c0327b2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["FuncAssociate","Onto-Express","GoMiner","GOstat","GOToolBox","GeneMerge","GOEAST","LAGO","WEGO","ClueGO","PathVisio","g:Profiler","Enrichr"],["GO","GO","GO","GO","GO","GO","GO","GO","GO","GO, KEGG,","WikiPathways","KEGG, Reactome","GO, KEGG, Reactome, PANTHER,BioCarta, HumanCyc, WikiPathways"],["Hypergeometric","Hypergeometric, binomial, chi-square","Relative enrichment, Hypergeometric","Chi-square","Hypergeometric","Hypergeometric","Hypergeometric, Chi-square","Hypergeometric","Chi-square","Hypergeometric","Hypergeometric","Hypergeometric","Fisher's exact , Hypergeometric"],["Bootstrap","FDR, Bonferroni, Sidak, Holm","None","FDR","Bonferroni, Holm, FDR, Hommel, Hochberg","Bonferroni","Benjamini-Yekutieli","Bonferroni","None","Bonferroni, Bonferroni step-down, Benjamini Hochberg","None","Bonferroni, Benjamini-Hochberg, FDR","Benjamini-Hochberg"],["web","web","standalone","web","web","web","web","web","web","standalone","standalone","web, R package","web, R package"],["http://llama.mshri.on.ca/funcassociate/","http://vortex.cs.wayne.edu/projects.htm","https://discover.nci.nih.gov/gominer/index.jsp","http://gostat.wehi.edu.au/","http://genome.crg.es/GOToolBox/","http://www.genemerge.net/","http://omicslab.genetics.ac.cn/GOEAST/","http://go.princeton.edu/cgi-bin/LAGO","http://wego.genomics.org.cn/","http://apps.cytoscape.org/apps/cluego","https://www.pathvisio.org/","https://cran.r-project.org/web/packages/gProfileR/   https://biit.cs.ut.ee/gprofiler/","http://amp.pharm.mssm.edu/Enrichr/#\r\nhttps://cran.r-project.org/web/packages/enrichR/index.html"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>software<\/th>\n      <th>Annotations<\/th>\n      <th>Method<\/th>\n      <th>Correction for multiple hypotheses<\/th>\n      <th>Availability<\/th>\n      <th>url<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="summary-of-currently-available-pathway-analysis-methods" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Summary of currently available pathway analysis methods<a href="appendix.html#summary-of-currently-available-pathway-analysis-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="over-representation-analysis" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Over-representation analysis<a href="appendix.html#over-representation-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-474b3e8cd160f85a9825" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-474b3e8cd160f85a9825">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["FuncAssociate","Onto-Express","GoMiner","GOstat","GOToolBox","GeneMerge","GOEAST","LAGO","WEGO","ClueGO","PathVisio","g:Profiler","Enrichr"],["GO","GO","GO","GO","GO","GO","GO","GO","GO","GO, KEGG,","WikiPathways","KEGG, Reactome","GO, KEGG, Reactome, PANTHER,BioCarta, HumanCyc, WikiPathways"],["Hypergeometric","Hypergeometric, binomial, chi-square","Relative enrichment, Hypergeometric","Chi-square","Hypergeometric","Hypergeometric","Hypergeometric, Chi-square","Hypergeometric","Chi-square","Hypergeometric","Hypergeometric","Hypergeometric","Fisher's exact , Hypergeometric"],["Bootstrap","FDR, Bonferroni, Sidak, Holm","None","FDR","Bonferroni, Holm, FDR, Hommel, Hochberg","Bonferroni","Benjamini-Yekutieli","Bonferroni","None","Bonferroni, Bonferroni step-down, Benjamini Hochberg","None","Bonferroni, Benjamini-Hochberg, FDR","Benjamini-Hochberg"],["web","web","standalone","web","web","web","web","web","web","standalone","standalone","web, R package","web, R package"],["http://llama.mshri.on.ca/funcassociate/","http://vortex.cs.wayne.edu/projects.htm","https://discover.nci.nih.gov/gominer/index.jsp","http://gostat.wehi.edu.au/","http://genome.crg.es/GOToolBox/","http://www.genemerge.net/","http://omicslab.genetics.ac.cn/GOEAST/","http://go.princeton.edu/cgi-bin/LAGO","http://wego.genomics.org.cn/","http://apps.cytoscape.org/apps/cluego","https://www.pathvisio.org/","https://cran.r-project.org/web/packages/gProfileR/   https://biit.cs.ut.ee/gprofiler/","http://amp.pharm.mssm.edu/Enrichr/#\r\nhttps://cran.r-project.org/web/packages/enrichR/index.html"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>software<\/th>\n      <th>Annotations<\/th>\n      <th>Method<\/th>\n      <th>Correction for multiple hypotheses<\/th>\n      <th>Availability<\/th>\n      <th>url<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="gene-set-enrichment-analysis" class="section level3 hasAnchor" number="5.10.2">
-<h3><span class="header-section-number">5.10.2</span> Gene set enrichment analysis<a href="appendix.html#gene-set-enrichment-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-35f75cfb3df031bc7ab5" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-35f75cfb3df031bc7ab5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["GSEA","sigPathway","Category","SAFE","GlobalTest","camera","roast","PAGE","ssGSEA","GSVA","PLAGE","romer","seqGSEA"],["Signal-to-noise ratio, t-test, cosine,euclidian and manhattan distance,Pearson correlation,(log2) fold-change, log difference","t-statistic","t-statistic","Student’s t-test, Welch’s t-test, SAM t-test, f-statistic, Cox proportional hazards model, linear regression","NA","acount for inter-gene correlation",null,null,null,null,"SVD",null,null],["leading edge analysis, Kolmogorov-Smirnov","Wilcoxon rank sum",null,"Wilcoxon rank sum, Fisher’s exact test statistic, Pearson’s test, t-test of Average difference","simple and multinomial logistic regression, Q-statistics mean",null,null,null,null,null,null,null,null],["Phenotype permutation,\r\nGene set permutation","Phenotype permutation, Gene set permutation","Phenotype permutation","Phenotype permutation","Phenotype permutation, asymptotic distribution, Gamma distribution",null,null,null,null,null,null,null,null],["FDR","FDR (NPMLE)","NA","FWER (Bonferroni, Holm’s step-up), FDR (Benjamini-Hochberg, Yekutieli-Benjamini)","NA",null,null,null,null,null,null,null,null],["Standalone\r\nR package","R package",null,"R package","R package","R package","R package","R package","R package, web","R package","R package","R package","R package"],["https://software.broadinstitute.org/gsea/index.jsp\r\nhttps://bioconductor.org/packages/release/bioc/html/GSEABase.html\r\nhttps://bioconductor.org/packages/release/bioc/html/fgsea.html","https://www.bioconductor.org/packages/sigPathway/","https://www.bioconductor.org/packages/Category","https://master.bioconductor.org/packages/safe/","https://bioconductor.org/packages/globaltest/","limma","limma","https://www.bioconductor.org/packages//2.10/bioc/html/PGSEA.html","https://github.com/broadinstitute/ssGSEA2.0","https://www.bioconductor.org/packages/release/bioc/html/GSVA.html","GSVA","limma","https://bioconductor.org/packages/release/bioc/html/SeqGSEA.html"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>software<\/th>\n      <th>Gene-level Statistic<\/th>\n      <th>Gene set Satatistic<\/th>\n      <th>Significance Assessment<\/th>\n      <th>Correction for multiple hypotheses<\/th>\n      <th>Availability<\/th>\n      <th>url<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="gene-set-enrichment-analysis" class="section level3 hasAnchor" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> Gene set enrichment analysis<a href="appendix.html#gene-set-enrichment-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-14ce28ae593bde0f735d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-14ce28ae593bde0f735d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["GSEA","sigPathway","Category","SAFE","GlobalTest","camera","roast","PAGE","ssGSEA","GSVA","PLAGE","romer","seqGSEA"],["Signal-to-noise ratio, t-test, cosine,euclidian and manhattan distance,Pearson correlation,(log2) fold-change, log difference","t-statistic","t-statistic","Student’s t-test, Welch’s t-test, SAM t-test, f-statistic, Cox proportional hazards model, linear regression","NA","acount for inter-gene correlation",null,null,null,null,"SVD",null,null],["leading edge analysis, Kolmogorov-Smirnov","Wilcoxon rank sum",null,"Wilcoxon rank sum, Fisher’s exact test statistic, Pearson’s test, t-test of Average difference","simple and multinomial logistic regression, Q-statistics mean",null,null,null,null,null,null,null,null],["Phenotype permutation,\r\nGene set permutation","Phenotype permutation, Gene set permutation","Phenotype permutation","Phenotype permutation","Phenotype permutation, asymptotic distribution, Gamma distribution",null,null,null,null,null,null,null,null],["FDR","FDR (NPMLE)","NA","FWER (Bonferroni, Holm’s step-up), FDR (Benjamini-Hochberg, Yekutieli-Benjamini)","NA",null,null,null,null,null,null,null,null],["Standalone\r\nR package","R package",null,"R package","R package","R package","R package","R package","R package, web","R package","R package","R package","R package"],["https://software.broadinstitute.org/gsea/index.jsp\r\nhttps://bioconductor.org/packages/release/bioc/html/GSEABase.html\r\nhttps://bioconductor.org/packages/release/bioc/html/fgsea.html","https://www.bioconductor.org/packages/sigPathway/","https://www.bioconductor.org/packages/Category","https://master.bioconductor.org/packages/safe/","https://bioconductor.org/packages/globaltest/","limma","limma","https://www.bioconductor.org/packages//2.10/bioc/html/PGSEA.html","https://github.com/broadinstitute/ssGSEA2.0","https://www.bioconductor.org/packages/release/bioc/html/GSVA.html","GSVA","limma","https://bioconductor.org/packages/release/bioc/html/SeqGSEA.html"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>software<\/th>\n      <th>Gene-level Statistic<\/th>\n      <th>Gene set Satatistic<\/th>\n      <th>Significance Assessment<\/th>\n      <th>Correction for multiple hypotheses<\/th>\n      <th>Availability<\/th>\n      <th>url<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 
 </div>
 </div>
 </div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="over-representation-analysis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -283,8 +298,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10_appendix.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
@@ -294,7 +309,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf", "_main.epub"],
 "search": {
 "engine": "fuse",
 "options": null
@@ -306,6 +321,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

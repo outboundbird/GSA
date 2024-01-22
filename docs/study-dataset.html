@@ -4,34 +4,33 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Study dataset | Pathway analysis methods</title>
+  <title>3 Study dataset | Pathway analysis methods</title>
   <meta name="description" content="This notebook is dedicated to genetic pathway analysis methods." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Study dataset | Pathway analysis methods" />
+  <meta property="og:title" content="3 Study dataset | Pathway analysis methods" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This notebook is dedicated to genetic pathway analysis methods." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Study dataset | Pathway analysis methods" />
+  <meta name="twitter:title" content="3 Study dataset | Pathway analysis methods" />
   
   <meta name="twitter:description" content="This notebook is dedicated to genetic pathway analysis methods." />
   
 
-<meta name="author" content="Siying Huang (E0482362)" />
+<meta name="author" content="Siying Huang" />
 
 
-<meta name="date" content="2024-01-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="gene-sets-and-pathways.html"/>
-<link rel="next" href="differential-gene-expression-analysis-dgea.html"/>
+<link rel="prev" href="hello-bookdown.html"/>
+<link rel="next" href="cross.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -132,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -144,69 +144,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefeace</a></li>
 <li class="chapter" data-level="1" data-path="gene-sets-and-pathways.html"><a href="gene-sets-and-pathways.html"><i class="fa fa-check"></i><b>1</b> Gene sets and pathways</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="gene-sets-and-pathways.html"><a href="gene-sets-and-pathways.html#organization-of-this-e-book"><i class="fa fa-check"></i><b>1.1</b> Organization of this e-book</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="study-dataset.html"><a href="study-dataset.html"><i class="fa fa-check"></i><b>2</b> Study dataset</a>
+<li class="chapter" data-level="2" data-path="hello-bookdown.html"><a href="hello-bookdown.html"><i class="fa fa-check"></i><b>2</b> Hello bookdown</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="study-dataset.html"><a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse"><i class="fa fa-check"></i><b>2.1</b> Extracting data from NCBI Gene Expression Omnibus databse</a>
+<li class="chapter" data-level="2.1" data-path="hello-bookdown.html"><a href="hello-bookdown.html#a-section"><i class="fa fa-check"></i><b>2.1</b> A section</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="study-dataset.html"><a href="study-dataset.html#summary-of-the-study"><i class="fa fa-check"></i><b>2.1.1</b> Summary of the study</a></li>
-<li class="chapter" data-level="2.1.2" data-path="study-dataset.html"><a href="study-dataset.html#assigning-the-expression-and-phenotype-data"><i class="fa fa-check"></i><b>2.1.2</b> Assigning the expression and phenotype data</a></li>
+<li class="chapter" data-level="" data-path="hello-bookdown.html"><a href="hello-bookdown.html#an-unnumbered-section"><i class="fa fa-check"></i>An unnumbered section</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="study-dataset.html"><a href="study-dataset.html#convert-to-gds-to-expression-set"><i class="fa fa-check"></i><b>2.2</b> convert to GDS to expression set</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html"><i class="fa fa-check"></i><b>3</b> Differential gene expression analysis (DGEA)</a>
+<li class="chapter" data-level="3" data-path="study-dataset.html"><a href="study-dataset.html"><i class="fa fa-check"></i><b>3</b> Study dataset</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html#comparison-between-smokers-and-non-smokers"><i class="fa fa-check"></i><b>3.1</b> Comparison between smokers and non-smokers</a></li>
-<li class="chapter" data-level="3.2" data-path="differential-gene-expression-analysis-dgea.html"><a href="differential-gene-expression-analysis-dgea.html#results-visualization"><i class="fa fa-check"></i><b>3.2</b> Results visualization</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html"><i class="fa fa-check"></i><b>4</b> Query bioloical pathway databases</a>
+<li class="chapter" data-level="3.1" data-path="study-dataset.html"><a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse"><i class="fa fa-check"></i><b>3.1</b> Extracting data from NCBI Gene Expression Omnibus databse</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#gene-annotation"><i class="fa fa-check"></i><b>4.1</b> Gene annotation</a></li>
-<li class="chapter" data-level="4.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#convert-gene-symbol-to-gene-id-using-biomart."><i class="fa fa-check"></i><b>4.2</b> Convert gene symbol to gene ID using <code>biomaRt</code>.</a>
+<li class="chapter" data-level="3.1.1" data-path="study-dataset.html"><a href="study-dataset.html#summary-of-the-study"><i class="fa fa-check"></i><b>3.1.1</b> Summary of the study</a></li>
+<li class="chapter" data-level="3.1.2" data-path="study-dataset.html"><a href="study-dataset.html#assigning-the-expression-and-phenotype-data"><i class="fa fa-check"></i><b>3.1.2</b> Assigning the expression and phenotype data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="study-dataset.html"><a href="study-dataset.html#convert-to-gds-to-expression-set"><i class="fa fa-check"></i><b>3.2</b> convert to GDS to expression set</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>4</b> Cross-references</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#connect-to-the-selected-biomart-database-using-useensembl-function."><i class="fa fa-check"></i><b>4.2.1</b> Connect to the selected <em>BioMart</em> database using <code>useEnsembl</code> function.</a></li>
-<li class="chapter" data-level="4.2.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#annotate-genes"><i class="fa fa-check"></i><b>4.2.2</b> Annotate genes</a></li>
-<li class="chapter" data-level="4.2.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#alternative-methods-for-annotation"><i class="fa fa-check"></i><b>4.2.3</b> Alternative methods for annotation</a></li>
+<li class="chapter" data-level="4.1" data-path="cross.html"><a href="cross.html#chapters-and-sub-chapters"><i class="fa fa-check"></i><b>4.1</b> Chapters and sub-chapters</a></li>
+<li class="chapter" data-level="4.2" data-path="cross.html"><a href="cross.html#captioned-figures-and-tables"><i class="fa fa-check"></i><b>4.2</b> Captioned figures and tables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#curate-biological-functions"><i class="fa fa-check"></i><b>4.3</b> Curate biological functions</a></li>
-<li class="chapter" data-level="4.4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#reference"><i class="fa fa-check"></i><b>4.4</b> Reference</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html"><i class="fa fa-check"></i><b>5</b> Over-representation Analysis</a>
+<li class="chapter" data-level="5" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html"><i class="fa fa-check"></i><b>5</b> Query bioloical pathway databases</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#data-prepartion"><i class="fa fa-check"></i><b>5.1</b> Data prepartion</a></li>
-<li class="chapter" data-level="5.2" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#gene-set-selection"><i class="fa fa-check"></i><b>5.2</b> Gene set selection</a>
+<li class="chapter" data-level="5.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#gene-annotation"><i class="fa fa-check"></i><b>5.1</b> Gene annotation</a></li>
+<li class="chapter" data-level="5.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#convert-gene-symbol-to-gene-id-using-biomart."><i class="fa fa-check"></i><b>5.2</b> Convert gene symbol to gene ID using <code>biomaRt</code>.</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#define-differentially-expressed-gene"><i class="fa fa-check"></i><b>5.2.1</b> Define differentially expressed gene</a></li>
+<li class="chapter" data-level="5.2.1" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#connect-to-the-selected-biomart-database-using-useensembl-function."><i class="fa fa-check"></i><b>5.2.1</b> Connect to the selected <em>BioMart</em> database using <code>useEnsembl</code> function.</a></li>
+<li class="chapter" data-level="5.2.2" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#annotate-genes"><i class="fa fa-check"></i><b>5.2.2</b> Annotate genes</a></li>
+<li class="chapter" data-level="5.2.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#alternative-methods-for-annotation"><i class="fa fa-check"></i><b>5.2.3</b> Alternative methods for annotation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#over-representation-analysis-1"><i class="fa fa-check"></i><b>5.3</b> Over-representation analysis</a></li>
-<li class="chapter" data-level="5.4" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#over-respensentation-analysis-from-r-package"><i class="fa fa-check"></i><b>5.4</b> Over-respensentation analysis from R package</a></li>
-<li class="chapter" data-level="5.5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#test-set-up-and-result-interpretations"><i class="fa fa-check"></i><b>5.5</b> Test set up and result interpretations</a></li>
-<li class="chapter" data-level="5.6" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#examples"><i class="fa fa-check"></i><b>5.6</b> Examples</a>
+<li class="chapter" data-level="5.3" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#curate-biological-functions"><i class="fa fa-check"></i><b>5.3</b> Curate biological functions</a></li>
+<li class="chapter" data-level="5.4" data-path="query-bioloical-pathway-databases.html"><a href="query-bioloical-pathway-databases.html#reference"><i class="fa fa-check"></i><b>5.4</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>6</b> Parts</a></li>
+<li class="chapter" data-level="7" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>7</b> Footnotes and citations</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#go"><i class="fa fa-check"></i><b>5.6.1</b> GO</a></li>
-<li class="chapter" data-level="5.6.2" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#kegg"><i class="fa fa-check"></i><b>5.6.2</b> KEGG</a></li>
-<li class="chapter" data-level="5.6.3" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#wikipathways"><i class="fa fa-check"></i><b>5.6.3</b> WikiPathways</a></li>
-<li class="chapter" data-level="5.6.4" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#reactome"><i class="fa fa-check"></i><b>5.6.4</b> Reactome</a></li>
-<li class="chapter" data-level="5.6.5" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#do"><i class="fa fa-check"></i><b>5.6.5</b> DO</a></li>
-<li class="chapter" data-level="5.6.6" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#disgenet"><i class="fa fa-check"></i><b>5.6.6</b> DisGeNET</a></li>
-<li class="chapter" data-level="5.6.7" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#mesh"><i class="fa fa-check"></i><b>5.6.7</b> MeSH</a></li>
+<li class="chapter" data-level="7.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>7.1</b> Footnotes</a></li>
+<li class="chapter" data-level="7.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>7.2</b> Citations</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#pros-and-cons-of-ora"><i class="fa fa-check"></i><b>5.7</b> Pros and Cons of ORA</a></li>
-<li class="chapter" data-level="5.8" data-path="over-representation-analysis.html"><a href="over-representation-analysis.html#reference-1"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
+<li class="chapter" data-level="8" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>8</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>8.1</b> Equations</a></li>
+<li class="chapter" data-level="8.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>8.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="8.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>8.3</b> Callout blocks</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>9</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>9.1</b> Publishing</a></li>
+<li class="chapter" data-level="9.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>9.2</b> 404 pages</a></li>
+<li class="chapter" data-level="9.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>9.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
 <ul>
-<li class="chapter" data-level="5.9" data-path="appendix.html"><a href="appendix.html#biological-process-data-bases"><i class="fa fa-check"></i><b>5.9</b> Biological process data bases</a></li>
-<li class="chapter" data-level="5.10" data-path="appendix.html"><a href="appendix.html#summary-of-currently-available-pathway-analysis-methods"><i class="fa fa-check"></i><b>5.10</b> Summary of currently available pathway analysis methods</a>
+<li class="chapter" data-level="9.4" data-path="appendix.html"><a href="appendix.html#biological-process-data-bases"><i class="fa fa-check"></i><b>9.4</b> Biological process data bases</a></li>
+<li class="chapter" data-level="9.5" data-path="appendix.html"><a href="appendix.html#summary-of-currently-available-pathway-analysis-methods"><i class="fa fa-check"></i><b>9.5</b> Summary of currently available pathway analysis methods</a>
 <ul>
-<li class="chapter" data-level="5.10.1" data-path="appendix.html"><a href="appendix.html#over-representation-analysis-2"><i class="fa fa-check"></i><b>5.10.1</b> Over-representation analysis</a></li>
-<li class="chapter" data-level="5.10.2" data-path="appendix.html"><a href="appendix.html#gene-set-enrichment-analysis"><i class="fa fa-check"></i><b>5.10.2</b> Gene set enrichment analysis</a></li>
+<li class="chapter" data-level="9.5.1" data-path="appendix.html"><a href="appendix.html#over-representation-analysis"><i class="fa fa-check"></i><b>9.5.1</b> Over-representation analysis</a></li>
+<li class="chapter" data-level="9.5.2" data-path="appendix.html"><a href="appendix.html#gene-set-enrichment-analysis"><i class="fa fa-check"></i><b>9.5.2</b> Gene set enrichment analysis</a></li>
 </ul></li>
 </ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -224,12 +233,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="study-dataset" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> Study dataset<a href="study-dataset.html#study-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="study-dataset" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Study dataset<a href="study-dataset.html#study-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this tutorial, I still use the pulic smoking study dataset from NCBI
 Gene Expression Omnibus (GEO) <a href="https://www.ncbi.nlm.nih.gov/gds">database</a> - GDS3713 (GSE18723).</p>
-<div id="extracting-data-from-ncbi-gene-expression-omnibus-databse" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Extracting data from NCBI Gene Expression Omnibus databse<a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="extracting-data-from-ncbi-gene-expression-omnibus-databse" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Extracting data from NCBI Gene Expression Omnibus databse<a href="study-dataset.html#extracting-data-from-ncbi-gene-expression-omnibus-databse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Using <code>GEOquery</code> library to retrieve data from NCBI database. The GDS dataset
 is stored in the <code>gds</code> R4 class object.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="study-dataset.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
@@ -268,12 +277,12 @@ is stored in the <code>gds</code> R4 class object.</p>
   .. ..$ update_date             : chr &quot;Jul 11 2010&quot;
   .. ..$ value_type              : chr &quot;count&quot;
   .. ..$ web_link                : chr &quot;http://www.ncbi.nlm.nih.gov/geo&quot;</code></pre>
-<div id="summary-of-the-study" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Summary of the study<a href="study-dataset.html#summary-of-the-study" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="summary-of-the-study" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Summary of the study<a href="study-dataset.html#summary-of-the-study" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This study aim to analyze peripheral circulating B cells from smoking and non-smoking healthy US white females. B cells are directly associated with the onset and development of many smoking-induced diseases. Results provide insight into the molecular basis of B cell involvement in smoking-related pathogenesis. It contains 39 smoker and 40 non-smokers.</p>
 </div>
-<div id="assigning-the-expression-and-phenotype-data" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Assigning the expression and phenotype data<a href="study-dataset.html#assigning-the-expression-and-phenotype-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="assigning-the-expression-and-phenotype-data" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Assigning the expression and phenotype data<a href="study-dataset.html#assigning-the-expression-and-phenotype-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The expression data is stored in the <code>gds@dataTable@tabl</code> with gene in
 The rows and subjects in the columns.
 The phenotype data is store at <code>gds@dataTable@columns</code>.</p>
@@ -294,8 +303,8 @@ The phenotype data is store at <code>gds@dataTable@columns</code>.</p>
  Mode  :character                        Mode  :character  </code></pre>
 </div>
 </div>
-<div id="convert-to-gds-to-expression-set" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> convert to GDS to expression set<a href="study-dataset.html#convert-to-gds-to-expression-set" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="convert-to-gds-to-expression-set" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> convert to GDS to expression set<a href="study-dataset.html#convert-to-gds-to-expression-set" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Converting the gds object to expression set will generate a series of sub documents, including an annotation file of the genes in the expression data.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="study-dataset.html#cb9-1" aria-hidden="true" tabindex="-1"></a>eset <span class="ot">&lt;-</span> <span class="fu">GDS2eSet</span>(gds)</span>
 <span id="cb9-2"><a href="study-dataset.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">pData</span>(eset)) <span class="co"># pheno data, data.frame</span></span></code></pre></div>
@@ -316,7 +325,7 @@ The phenotype data is store at <code>gds@dataTable@columns</code>.</p>
   .. .. ..@ preprocessing    : list()
   .. .. ..@ other            :List of 23
   .. .. ..@ .__classVersion__:Formal class &#39;Versions&#39; [package &quot;Biobase&quot;] with 1 slot
-  ..@ assayData        :&lt;environment: 0x2d480628&gt; 
+  ..@ assayData        :&lt;environment: 0x1179ef70&gt; 
   ..@ phenoData        :Formal class &#39;AnnotatedDataFrame&#39; [package &quot;Biobase&quot;] with 4 slots
   .. .. ..@ varMetadata      :&#39;data.frame&#39;: 3 obs. of  1 variable:
   .. .. ..@ data             :&#39;data.frame&#39;: 79 obs. of  3 variables:
@@ -347,8 +356,8 @@ The phenotype data is store at <code>gds@dataTable@columns</code>.</p>
           </div>
         </div>
       </div>
-<a href="gene-sets-and-pathways.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="differential-gene-expression-analysis-dgea.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hello-bookdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -379,8 +388,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02_req_data.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
@@ -390,7 +399,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf", "_main.epub"],
 "search": {
 "engine": "fuse",
 "options": null
@@ -402,6 +411,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
