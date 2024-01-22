@@ -1,7 +1,7 @@
 ---
 title: "Pathway analysis methods"
-author: "Siying Huang (E0482362)"
-date: "`r Sys.Date()`"
+author: "Siying Huang"
+date: "Updated: `r Sys.Date()`"
 bibliography:
   - literature.bib
 biblio-style: apalike
