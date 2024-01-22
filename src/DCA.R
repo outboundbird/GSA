@@ -65,7 +65,7 @@ expr_g <- expr[gs, c(case_ids, ctrl_ids)]
 #' $$Ds(\rho_c^{T1}, \rho_c^{T2})= \sqrt{\frac{1}{P_c} \sum_{p=1}^{P_c}(\tilde{\rho}_p^{T_1, T_2})^2} $$
 #' 
 #+ cache = T
-library(GSCA)
+library(GSA)
 #' # Gene Sets Net Correlation Analysis (GSNCA)
 #' GSNCA method was proposed by @rahmatallahGeneSetsNet2014.
 #'
