@@ -8,6 +8,14 @@ Summary of notes on gene set analysis.
 - GSEA
 - GSVA
 - Other methods for enrichment analysis
-- Gene co-expression analysis
+
+## Gene co-expression analysis
+
+- WGCNA
+- DCA
+- DIRAC
+
+## Other topics in transcriptomic analysis
+
 - Power calculation
 - Multiplicity issues
