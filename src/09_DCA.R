@@ -66,11 +66,19 @@ expr_g <- expr[gs, c(case_ids, ctrl_ids)]
 #' 
 #+ cache = T
 library(GSA)
+library(GSAR)
+#' # GSCA in R pakcages
+#' Available R package for gene set coexpression analysis:
+#' [`csdR`](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-022-04605-1)
+#' [`GSAR`](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1482-6)
+#' [`CoGA`](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0135831)
+#' [`MetaGSCA`](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008976)
 #' # Gene Sets Net Correlation Analysis (GSNCA)
 #' GSNCA method was proposed by @rahmatallahGeneSetsNet2014.
 #'
 #' ## Scheme
 #' ![](images/gsnca.jpg){width="394"}
+#' 
 #' > in the gene coexpression network between two conditions. Importantly, we do not infer ‘gene coexpression networks’ explicitly, but, instead, we estimate net correlation changes by introducing for each gene a weight factor that characterizes its cross-correlations in the coexpression networks. Weight vectors in both conditions are found as eigenvectors of correlation matrices with zero diagonal elements. The Gene Sets Net Correlations Analysis (GSNCA) tests the hypothesis that for a gene set there is no difference in the gene weight vectors between two conditions.
 #'
 
