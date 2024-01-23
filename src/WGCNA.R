@@ -18,6 +18,11 @@ knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
 options(width = 100)
 #+ libs
 library(here)
+library(GWENA)
+# io -----------------------------------------
+rst <- readRDS(file.path(here(), "data/de_rst.rds"))
+gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
+
 
 #' <details><summary>Session Info</summary>
 sessionInfo()
