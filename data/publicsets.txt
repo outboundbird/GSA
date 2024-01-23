@@ -43,10 +43,20 @@ https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-11561
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-11563
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-12137
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8826
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9467
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8530
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8205
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8221
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-7895
+
 
 # miRNA
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-12500
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9288 #interactions
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9168
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA519
+
+
 
 # WGS
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-12307
@@ -76,6 +86,8 @@ https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9158
 # ATAC-seq 
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-10967
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9961
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-11804 # single cell
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9067
 
 
 # TCP-seq
@@ -84,5 +96,28 @@ https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-12264
 # nanostring
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-11315
 
+
 # mitoRiboSeq
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-11687
+
+# LncRNAseq
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-9167
+
+
+# platform comparison 
+https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-NASC-43
+
+
+## Metabolome
+https://www.ebi.ac.uk/biostudies/studies?facet.collection=hecatos&facet.released_year=2022&facet.released_year=2020
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA83
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA88
+
+
+## Proteomic
+https://www.ebi.ac.uk/biostudies/studies/S-BSST719
+https://www.ebi.ac.uk/biostudies/europepmc/studies/S-EPMC8093230
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA120
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA117
+https://www.ebi.ac.uk/biostudies/hecatos/studies/S-HECA119
+
