@@ -140,6 +140,10 @@ GSNCAtest(as.matrix(expr_g[gs3, ]), labs)
 
 plotMST2.pathway(as.matrix(expr_g[gs1, ]), labs)
 plotMST2.pathway(as.matrix(expr_g[gs3, ]), labs)
+
+#' WGCNA
+library(WGCNA)
+
 #' ## Reference
 /*
 #' <details><summary>Session Info</summary>

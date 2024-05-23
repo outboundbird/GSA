@@ -1,5 +1,5 @@
 #' ---
-#' title: title
+#' title: Gene co-Expression Network Analysis pipeline
 #' subtitle: 'SAR: sar , Study: study'
 #' author:  Siying Huang (E0482362), Biomarker statistics team
 #' date: 'created: 2023-06-26 , updated (`r Sys.Date()`)'
@@ -14,7 +14,7 @@
 #' ---
 #+ setup, include = FALSE
 # knitr::opts_knit$set(root_dir='/mnt/c/Users/e0482362/Work/pathway_analysis/src')
-knitr::opts_chunk$set(echo = T, comment = '',message = F, warning = F, error=F)
+knitr::opts_chunk$set(echo = T, comment = "", message = F, warning = F, error = F)
 options(width = 100)
 #+ libs
 library(here)
@@ -22,30 +22,40 @@ library(dplyr)
 library(GWENA)
 #+ io, cache = T
 # io -----------------------------------------
-rst <- readRDS(file.path(here(), "data/de_rst.rds"))
-gene_ids <- readRDS(file.path(here(), "data/gene_id.rds"))
 
-expr <- readRDS(file.path(here(), "data/expr.rds"))
+expr <- readRDS(here("data/expr.rds"))
 
 expr <- expr[!duplicated(expr$IDENTIFIER), ] %>%
   tibble::remove_rownames() %>%
   tibble::column_to_rownames("IDENTIFIER") %>%
   select(-ID_REF)
 
-pheno <- readRDS(file.path(here(), "data/pheno.rds")) %>%
-  mutate(status = as.factor(as.integer(stress)))
+# expr <- expr[1:200, ]
 
-head(pheno)
+pheno <- readRDS(here("data/pheno.rds")) %>%
+  mutate(
+    status = as.integer(stress),
+    stress = as.character(stress)
+  ) %>%
+  tibble::column_to_rownames("sample")
+str(pheno)
 
-#' # Gene network co-expression analysis
+#' # Gene co-expression analysis pipeline
+#' ![](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8152313/bin/12859_2021_4179_Fig1_HTML.jpg)
+#'
+#' [vignette](https://bioconductor.org/packages/release/bioc/vignettes/GWENA/inst/doc/GWENA_guide.html)
+#'
+#' [pipeline paper, Lemoine et al, 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8152313/)
 #' [here insert description of the co-expression analysis summary]
 #' Snapshot of the expression data.
 SummarizedExperiment::SummarizedExperiment(
   assays = list(expr = expr),
   colData = S4Vectors::DataFrame(pheno)
 )
-#'  skip filtering step since this is filtered gene
-#'  otherwise can use `filter_low_var` or `filter_RNA_seq` functions.
+#' ## Gene filtering
+#'   use `filter_low_var` or `filter_RNA_seq` functions.
+expr_filtered <- filter_low_var(t(expr))
+dim(expr_filtered)
 #'
 #' ## Network building
 #'
@@ -56,10 +66,12 @@ SummarizedExperiment::SummarizedExperiment(
 #' > 2. A **power law** is fitted on the correlation matrix. This step can be performed by itself through the function `get_fit.expr` if needed.
 #' > 3. An **adjacency score** is computed by adjusting previous correlations by the fitted power law.
 #' > 4. A **topological overlap score** is computed by accounting for the network's topology.
-#+ build-net, cache = T
-net <- build_net(t(expr),
+#'
+#' **Caution**: this process takes time!
+#+ build-network, cache = T
+net <- build_net(expr_filtered,
   cor_func = "spearman",
-  n_threads = 4
+  n_threads = 6
 )
 # Power selected :
 net$metadata$power
@@ -72,7 +84,7 @@ fit_power_table[fit_power_table$Power == net$metadata$power, "SFT.R.sq"]
 #' >
 #' > Such modules can be detected using unsupervised learning or modeling. GWENA use the hierarchical clustering but other methods can be used (kmeans, Gaussian mixture models, etc.).
 
-modules <- detect_modules(t(expr),
+modules <- detect_modules(expr_filtered,
   net$network,
   detailled_result = TRUE,
   merge_threshold = 0.25
@@ -80,7 +92,7 @@ modules <- detect_modules(t(expr),
 
 #' **Important**: Module 0 contains all genes that did not fit into any modules.
 #' > Since this operation tends to create multiple smaller modules with highly similar expression profile (based on the [eigengene](FAQ.html/#what-is-an-eigengene) of each), they are usually merged into one.
-#' 
+#'
 # Number of modules before merging :
 length(unique(modules$modules_premerge))
 # Number of modules after merging:
@@ -102,8 +114,8 @@ ggplot2::ggplot(
 #' > Each of the modules presents a distinct profile, which can be plotted in two figures to separate the positive (+ facet) and negative (- facet) correlations profile. As a summary of this profile, the eigengene (red line) is displayed to act as a signature.
 #' >
 #+ plot, cache = F
-plot_expression_profiles(t(expr_cut), modules$modules)
-#' 
+plot_expression_profiles(expr_filtered, modules$modules)
+#'
 #' ## Biological integration
 #'
 #' ### Functional enrichment
@@ -118,7 +130,7 @@ plot_expression_profiles(t(expr_cut), modules$modules)
 #' >
 phenotype_association <- associate_phenotype(
   modules$modules_eigengenes,
-  meta %>% dplyr::select(LESION, TRT)
+  pheno[, c("stress", "status")]
 )
 
 plot_modules_phenotype(phenotype_association)
@@ -134,27 +146,29 @@ plot_modules_phenotype(phenotype_association)
 #' > Manipulation of graph objects can be quite demanding in memory and CPU usage. Caution is advised when choosing to plot networks larger than 100 genes.
 #' > Since co-expression networks are complete graphs, readability is hard because all genes are connected with each other. In order to clarity visualization, edges with a similarity score below a threshold are removed.
 #+ net-vis
-module_example <- modules$modules$`2`
+module_example <- modules$modules$`0`
 graph <- build_graph_from_sq_mat(net$network[module_example, module_example])
 
-layout_mod_2 <- plot_module(graph,
-  upper_weight_th = 0.999,
-  vertex.label.cex = 0,
-  node_scaling_max = 7,
-  legend_cex = 1,
-  zoom = 1.5
+layout_mod_2 <- plot_module(
+  graph,
+  # upper_weight_th = 0.999,
+  # vertex.label.cex = 0,
+  # node_scaling_max = 7,
+  # legend_cex = 1,
+  # zoom = 1.5
 )
 
 #' > As modules also follow a modular topology inside, it may be interesting to detect the sub clusters inside them to find genes working toward the same function through enrichment. The sub cluster can then be plotted on the graph to see their interaction.
 #+ sub-clust, cache =F
-net_mod_2 <- net$network[modules$modules$`2`, modules$modules$`2`]
-sub_clusters <- get_sub_clusters(net_mod_2)
-layout_mod_2_sub_clust <- plot_module(graph,
-  upper_weight_th = 0.999995,
-  groups = sub_clusters,
-  vertex.label.cex = 0,
-  node_scaling_max = 7,
-  legend_cex = 1
+net_mod_1 <- net$network[modules$modules$`1`, modules$modules$`1`]
+sub_clusters <- get_sub_clusters(net_mod_1)
+layout_mod_2_sub_clust <- plot_module(
+  graph,
+  # upper_weight_th = 0.999995,
+  # groups = sub_clusters,
+  # vertex.label.cex = 0,
+  # node_scaling_max = 7,
+  # legend_cex = 1
 )
 #' ## Networks comparison
 #' > A co-expression network can be built for each of the experimental conditions studied (e.g. control/test) and then be compared with each other to detect differences of patterns in co-expression. These may indicate breaks of inhibition, inefficiency of a factor of transcription, etc. These analyses can focus on preserved modules between conditions (e.g. to detect housekeeping genes), or unpreserved modules (e.g. to detect genes contributing to a disease).
@@ -163,9 +177,10 @@ layout_mod_2_sub_clust <- plot_module(graph,
 #' > To perform the comparison, all previous steps leading to modules detection need to be done for each condition. To save CPU, memory and time, the parameter `keep_cor_mat` from the `build_net` function can be switched to TRUE so the similarity matrix is kept and can be passed to `compare_conditions`. If not, the matrix is re-computed in `compare_conditions`.
 #+ net-compare
 # Expression by condition with data.frame/matrix
-samples_by_cond <- lapply(meta$LESION %>% unique(), function(cond) {
-  df <- meta %>%
-    dplyr::filter(LESION == cond) %>%
+#+ net_compare, eval = F
+samples_by_cond <- lapply(levels(as.factor(pheno$stress)), function(cond) {
+  df <- pheno %>%
+    dplyr::filter(stress == cond) %>%
     dplyr::select(TRTLES1)
   apply(df, 1, paste, collapse = "_")
 }) %>% setNames(meta$LESION %>% unique())
@@ -178,19 +193,19 @@ expr_by_cond <- lapply(samples_by_cond %>% names(), function(cond) {
 expr_by_cond[[2]] %>%
   is.na() %>%
   any()
-#+ build-net, cache = F
+#+ build-net, cache = F, eval = F
 # Network building and modules detection by condition
 bound_spearman <- function(x) {
-  c <- cor(x, method ='spearman', use ='pairwise')
-  c[c>1] <- 1
-  c[c<-1] <- 1
+  c <- cor(x, method = "spearman", use = "pairwise")
+  c[c > 1] <- 1
+  c[c <- 1] <- 1
   c
 }
 
 net_by_cond <- lapply(expr_by_cond,
-build_net,
+  build_net,
   your_func = bound_spearman,
-  cor_func= 'other',
+  cor_func = "other",
   n_threads = 4,
   stop_if_fit_pb = F,
   keep_matrices = "both"
@@ -222,5 +237,5 @@ sessionInfo()
 #' </details>
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
-# rmarkdown::render('src/WGCNA.R', output_dir = 'output')
+# rmarkdown::render('src/GWENA.R', output_dir = 'output')
 # knitr::spin('src/WGCNA.R', format = 'Rmd', knit = FALSE)
