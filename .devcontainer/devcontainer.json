@@ -1,0 +1,28 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"features": {
+		"ghcr.io/rocker-org/devcontainer-features/r-apt:0": {
+			"installDevTools": true,
+			"installREnv": true,
+			"installRMarkdown": true,
+			"installJupyterlab": true,
+			"installRadian": true,
+			"installVscDebugger": true,
+			"useTesting": true,
+			"installBspm": true,
+			"vscodeRSupport": "minimal"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+			"installSystemRequirements": true,
+			"notCran": true,
+			"packages": "",
+			"pakVersion": "auto",
+			"additionalRepositories": ""
+		},
+		"ghcr.io/rocker-org/devcontainer-features/rstudio-server:0": {
+			"allowReinstall": true,
+			"singleUser": true,
+			"version": "stable"
+		}
+	}
+}
