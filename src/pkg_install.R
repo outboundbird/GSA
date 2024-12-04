@@ -1,10 +1,6 @@
  env_pkgs <- .packages(all.available = T)
  attached <- (.packages())
  req_libs <- c(
-  "BiocManager",
-  "here",
-  "dplyr",
-  "pandoc",
    "GEOquery",
    "logger",
    "meshes",
