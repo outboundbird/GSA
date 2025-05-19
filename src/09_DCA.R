@@ -63,7 +63,7 @@ expr_g <- expr[gs, c(case_ids, ctrl_ids)]
 #' arrays in condition k, k= 1,2. The dispersion index is given by the Edulidean distance, adjusted for the size of the gene set considered:
 #'
 #' $$Ds(\rho_c^{T1}, \rho_c^{T2})= \sqrt{\frac{1}{P_c} \sum_{p=1}^{P_c}(\tilde{\rho}_p^{T_1, T_2})^2} $$
-#' 
+#'
 #+ cache = T
 library(GSA)
 library(GSAR)
@@ -78,7 +78,7 @@ library(GSAR)
 #'
 #' ## Scheme
 #' ![](images/gsnca.jpg){width="394"}
-#' 
+#'
 #' > in the gene coexpression network between two conditions. Importantly, we do not infer ‘gene coexpression networks’ explicitly, but, instead, we estimate net correlation changes by introducing for each gene a weight factor that characterizes its cross-correlations in the coexpression networks. Weight vectors in both conditions are found as eigenvectors of correlation matrices with zero diagonal elements. The Gene Sets Net Correlations Analysis (GSNCA) tests the hypothesis that for a gene set there is no difference in the gene weight vectors between two conditions.
 #'
 
@@ -152,5 +152,5 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/DCA.R', output_dir = 'output')
-# knitr::spin('src/DCA.R', format = 'Rmd', knit = FALSE)
+# knitr::spin('src/09_DCA.R', format = 'Rmd', knit = FALSE)
 */

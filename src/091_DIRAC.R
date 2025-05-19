@@ -42,5 +42,5 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/DIRAC.R', output_dir = 'output')
-# knitr::spin('src/DIRAC.R', format = 'Rmd', knit = FALSE)
+# knitr::spin('src/091_DIRAC.R', format = 'Rmd', knit = FALSE)
 */

@@ -238,4 +238,4 @@ sessionInfo()
 #+ echo = F, eval = F
 # Markdown --------------------------------------------------------
 # rmarkdown::render('src/GWENA.R', output_dir = 'output')
-# knitr::spin('src/WGCNA.R', format = 'Rmd', knit = FALSE)
+# knitr::spin('src/GWENA.R', format = 'Rmd', knit = FALSE)
